@@ -169,8 +169,8 @@
 
     <ImageView
         android:id="@+id/umain_searchicon"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.172"
