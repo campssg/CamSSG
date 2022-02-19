@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserSigning.LoginActivity"
+    >
+
+    <ImageView
+        android:id="@+id/mypage_1img"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.12"
+        app:srcCompat="@drawable/user" />
+
+    <TextView
+        android:id="@+id/img_1text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="대표 이미지"
+        android:textColor="#676767"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_1img"
+        app:layout_constraintVertical_bias="0.071" />
+
+    <Button
+        android:id="@+id/img_1submitbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="선택"
+        android:textSize="18sp"
+        app:backgroundTint="@color/main_purple"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.112"
+        app:layout_constraintStart_toEndOf="@+id/img_1text"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_1img"
+        app:layout_constraintVertical_bias="0.056" />
+
+    <TextView
+        android:id="@+id/mypage_1name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이름"
+        android:textColor="#676767"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.178"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.528" />
+
+    <TextView
+        android:id="@+id/mypage_1email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이메일"
+        android:textColor="#676767"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.167"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_1nick"
+        app:layout_constraintVertical_bias="0.173" />
+
+    <TextView
+        android:id="@+id/mypage_1nametxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="홍길동"
+        android:textColor="#676767"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.224"
+        app:layout_constraintStart_toEndOf="@+id/mypage_1name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.527" />
+
+    <EditText
+        android:id="@+id/mypage_1nickedit"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="username"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.235"
+        app:layout_constraintStart_toEndOf="@+id/mypage_1nick"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_1nametxt"
+        app:layout_constraintVertical_bias="0.085" />
+
+    <TextView
+        android:id="@+id/mypage_1emailtxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="xxxx1234@naver.com"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.394"
+        app:layout_constraintStart_toEndOf="@+id/mypage_1email"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_1nickedit"
+        app:layout_constraintVertical_bias="0.137" />
+
+    <Button
+        android:id="@+id/mypage_1nickbtn"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:text="수정"
+        app:backgroundTint="@color/main_purple"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toEndOf="@+id/mypage_1nickedit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.62" />
+
+    <TextView
+        android:id="@+id/mypage_1nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="닉네임"
+        android:textColor="#676767"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.167"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mypage_1name"
+        app:layout_constraintVertical_bias="0.126" />
+
+    <Button
+        android:id="@+id/mypage_1pass"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:text="비밀번호 변경"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/main_purple"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.88" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
