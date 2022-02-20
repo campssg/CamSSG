@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".UserSigning.LoginActivity"
+    >
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity ="center"
+        android:fillViewport="true"
+        android:layout_marginTop="0dp"
+        android:id="@+id/scrollView">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/mart_img"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                app:srcCompat="@drawable/user"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:text="대표 이미지"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textColor="#676767"/>
+
+                <Button
+                    android:id="@+id/martimg_select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="선택"
+                    android:backgroundTint="@color/main_purple"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="70dp"/>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="마트 이름"
+                android:textSize="20sp"
+                android:textColor="#676767"
+                android:id="@+id/mart_name"/>
+
+            <EditText
+                android:id="@+id/mart_name_edit"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:text="ㅇㅇㅇ마트"/>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="30dp"/>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="마트 주소"
+                android:textSize="20sp"
+                android:textColor="#676767"
+                android:id="@+id/mart_address"/>
+
+            <EditText
+                android:id="@+id/mart_address_edit"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:text="ㅇㅇ도 ㅇㅇ시 ㅇㅇ동"/>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="마트 주소는 수정이 불가능합니다!"
+                android:textColor="#ff0000"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="30dp"/>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="영업 시간"
+                android:textSize="20sp"
+                android:textColor="#676767"
+                android:id="@+id/mart_time"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/mart_time_start"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text=" ~ "/>
+                <Spinner
+                    android:id="@+id/mart_time_end"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="30dp"/>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="물품 요청 허가 여부"
+                android:textSize="20sp"
+                android:textColor="#676767"
+                android:id="@+id/mart_request"/>
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="left">
+
+                <RadioGroup
+                    android:id="@+id/Radiogroup"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/mart_request_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="허용"
+                        android:layout_weight="1"
+                        android:textSize="20sp"/>
+
+                    <RadioButton
+                        android:id="@+id/mart_request_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="비허용"
+                        android:layout_weight="1"
+                        android:textSize="20sp"/>
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="30dp"/>
+
+            <Button
+                android:id="@+id/mart_info_submit"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="수정하기"
+                android:backgroundTint="@color/main_purple"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
