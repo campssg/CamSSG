@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity ="center"
+        android:fillViewport="true"
+        android:layout_marginTop="0dp"
+        android:id="@+id/scrollView">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/add_item_recyceler_view"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/textlayout"
+                android:layout_width="wrap_content"
+                android:layout_height="500dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="350dp"
+                    android:layout_height="100dp"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:text="상품 등록 체크리스트에서 선택하여 간단하게 추가하세요!"
+                    android:textSize="24sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/checklistBTN"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:backgroundTint="@color/main_purple"
+                    android:text="체크리스트로"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/itemsubmitBTN"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:backgroundTint="@color/main_purple"
+                    android:text="일괄 등록"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>
