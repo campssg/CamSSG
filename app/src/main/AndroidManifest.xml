@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GraduationProject">
-        <activity android:name=".ManagerItemListActivity"></activity>
+        <activity android:name=".ManageItemModifyActivity"></activity>
+        <activity android:name=".ManagerItemListActivity" />
         <activity android:name=".ManageItemActivity" />
         <activity android:name=".bookmark_campingActivity" />
         <activity android:name=".UserSigning.RegisterActivity" />

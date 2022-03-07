@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.button2.setOnClickListener {
+        binding.mypage1nickbtn.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
