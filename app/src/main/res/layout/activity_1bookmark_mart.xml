@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".User.bookmark_campingActivity">
+    tools:context=".User.bookmark_martActivity">
+
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -23,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:text="캠핑장 즐겨찾기"
+        android:text="마트 즐겨찾기"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
