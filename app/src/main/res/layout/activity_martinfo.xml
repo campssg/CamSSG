@@ -96,8 +96,9 @@
                 android:text="ㅇㅇ도 ㅇㅇ시 ㅇㅇ동"/>
 
             <TextView
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:gravity="left"
                 android:text="마트 주소는 수정이 불가능합니다!"
                 android:textColor="#ff0000"
