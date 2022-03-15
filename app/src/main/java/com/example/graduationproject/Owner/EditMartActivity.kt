@@ -6,6 +6,8 @@ import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.example.graduationproject.R
 
+//마트 정보 수정
+
 class EditMartActivity :AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
