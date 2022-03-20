@@ -54,7 +54,7 @@ class OwnerMenubarActivity : AppCompatActivity() {
         //로그아웃
         binding.menuLogout.setOnClickListener {
 
-            //로그아웃 코드
+            //로그아웃코드
 
         }
     }
