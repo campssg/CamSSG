@@ -57,4 +57,5 @@ class OwnerMenubarActivity : AppCompatActivity() {
             //로그아웃 코드
 
         }
+    }
 }
