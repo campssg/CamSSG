@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserSigning.LoginActivity"
+    tools:context=".Owner.OwnerMainActivity"
     >
 
     <ImageView
@@ -344,18 +344,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.383" />
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:background="#E3E3E3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.974" />
-
     <ImageView
         android:id="@+id/omain_gb6"
         android:layout_width="wrap_content"
@@ -367,5 +355,35 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.29"
         app:srcCompat="@drawable/graybar" />
+
+    <Button
+        android:id="@+id/setmartBtn"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="마트 등록 먼저 하기"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        android:backgroundTint="@color/main_purple"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.38" />
+
+    <Button
+        android:id="@+id/itemrequestBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/main_purple"
+        android:text="요청 보러가기"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/omain_requestT"
+        app:layout_constraintVertical_bias="0.39" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

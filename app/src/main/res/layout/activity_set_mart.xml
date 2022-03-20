@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    tools:context=".Owner.EditMartActivity"
+    tools:context=".Owner.SetMartActivity"
     >
 
 
@@ -74,7 +74,7 @@
                 android:id="@+id/mart_name_edit"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:text="ㅇㅇㅇ마트"/>
+                android:hint="ㅇㅇㅇ마트"/>
 
             <TextView
                 android:layout_width="350dp"
@@ -93,8 +93,7 @@
                 android:id="@+id/mart_address_edit"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-                android:text="ㅇㅇ도 ㅇㅇ시 ㅇㅇ동"/>
+                android:hint="ㅇㅇ도 ㅇㅇ시 ㅇㅇ동"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -194,7 +193,7 @@
                 android:id="@+id/mart_info_submit"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:text="수정하기"
+                android:text="등록하기"
                 android:backgroundTint="@color/main_purple"
                 android:textSize="20sp"/>
 
