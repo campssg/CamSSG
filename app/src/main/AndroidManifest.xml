@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GraduationProject">
-        <activity android:name=".CheapestCategoryActivity"></activity>
+        <activity android:name=".RegisterActivity2"></activity>
+        <activity android:name=".UserSigning.LoginActivity_User" />
+        <activity android:name=".SelectWhatToRegisterActivity" />
+        <activity android:name=".SelectWhatToLoginActivity" />
+        <activity android:name=".CheapestCategoryActivity" />
         <activity android:name=".SelectCategoryActivity" />
         <activity android:name=".User.orderlistActivity" />
         <activity android:name=".User.bookmark_martActivity" />
@@ -18,7 +22,7 @@
         <activity android:name=".Owner.ManageItemActivity" />
         <activity android:name=".User.bookmark_campingActivity" />
         <activity android:name=".UserSigning.RegisterActivity" />
-        <activity android:name=".UserSigning.LoginActivity" />
+        <activity android:name=".UserSigning.LoginActivity_Mart" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

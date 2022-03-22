@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity2">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="316dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/registerText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="회원가입"
+                    android:textAlignment="center"
+                    android:textColor="@color/main_purple"
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/verifyButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#988F8F"
+                        android:layout_marginBottom="20dp"
+                        android:text="사업자 등록 인증" />
+
+
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/CompanyRegisterationNumTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="사업자 등록번호" />
+
+
+
+                <EditText
+                    android:id="@+id/CompanyRegisterationNumInput"
+                    android:layout_width="match_parent"
+                    android:ems="10"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:hint="사업자 등록 번호 10자리 입력"
+                    android:inputType="number" />
+
+                <TextView
+                    android:id="@+id/RepresentativeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="대표자 성명" />
+
+
+                <EditText
+                    android:id="@+id/RepresentativeNameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:layout_marginBottom="20dp"
+                    android:inputType="textPassword" />
+
+                <TextView
+                    android:id="@+id/openTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="개업일자(YYYYMMDD)" />
+
+
+
+                <EditText
+                    android:id="@+id/OpeningDateInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="8"
+                    android:layout_marginBottom="20dp"
+                    android:hint="YYYYMMDD"
+                    android:inputType="number" />
+
+                <Button
+                    android:id="@+id/RegisterBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/main_purple"
+                    android:text="인증" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

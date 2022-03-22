@@ -27,11 +27,30 @@
             android:text="회원가입" />
 
         <Button
-            android:id="@+id/mypage_1nickbtn"
+        android:id="@+id/register2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#897A7A"
+        android:backgroundTint="#9D8C8C"
+        android:backgroundTintMode="add"
+        android:text="회원가입" />
+
+
+
+        <Button
+            android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTintMode="add"
             android:text="로그인" />
+
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTintMode="add"
+            android:text="홈화면" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

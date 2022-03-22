@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
-import com.example.graduationproject.UserSigning.LoginActivity
 import com.example.graduationproject.UserSigning.RegisterActivity
 import com.example.graduationproject.databinding.ActivityMainBinding
 
@@ -16,6 +15,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //타이틀 숨기기
+        var actionBar : ActionBar?
+        actionBar = supportActionBar
         actionBar?.hide()
 
 
@@ -24,10 +25,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.mypage1nickbtn.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
+      binding.register2.setOnClickListener {
+            val intent = Intent(this, RegisterActivity2::class.java)
             startActivity(intent)
         }
+
 
 
 

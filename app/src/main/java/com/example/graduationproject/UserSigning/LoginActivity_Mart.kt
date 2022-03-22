@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.graduationproject.databinding.ActivityLoginBinding
 
-class LoginActivity : Fragment() {
+class LoginActivity_Mart : Fragment() {
     private var binding1: ActivityLoginBinding? = null
     private val binding get()= binding1!!
 
