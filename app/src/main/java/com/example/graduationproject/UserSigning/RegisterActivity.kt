@@ -16,15 +16,27 @@ import com.example.graduationproject.RegisterActivity2
 import com.example.graduationproject.databinding.ActivityLoginBinding
 import com.example.graduationproject.databinding.ActivityMainBinding
 import com.example.graduationproject.databinding.ActivityRegisterBinding
+import com.google.gson.GsonBuilder
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
+import java.util.concurrent.TimeUnit
 
 class RegisterActivity : AppCompatActivity() {
 
-    val TAG:String = "Register"
+    val TAG: String = "Register"
     var isExistBlank = false
     var isPWSame = false
 
     private lateinit var binding: ActivityRegisterBinding
-    val EmailData = arrayOf("naver.com","nate.com","daum.net","gmail.com")
+    val EmailData = arrayOf("naver.com", "nate.com", "daum.net", "gmail.com")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,103 +44,146 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //타이틀 숨기기
-        var actionBar : ActionBar?
+        var actionBar: ActionBar?
         actionBar = supportActionBar
         actionBar?.hide()
 
+        //val gson = GsonBuilder().setLenient().create()
+
+        val client = OkHttpClient.Builder().connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS).build()
+
+        //http://13.124.13.202:8080/api/v1/login
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://13.124.13.202:8080/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client).build()
+
+
+        val service = retrofit.create(SignService::class.java)
 
 
         //이메일 선택 스피너
 
-        val emailAdapter = ArrayAdapter(this,android.R.layout.simple_dropdown_item_1line,EmailData)
+        val emailAdapter =
+            ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, EmailData)
         emailAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.Emailspinner.adapter = emailAdapter
+
+
+        val emailAddress = EmailData[binding.Emailspinner.selectedItemPosition]
+
+        //스피너 값을 텍스트로 받기
 
 
 
         //정보 api 전송
         binding.RegisterBtn.setOnClickListener {
-            Log.d(TAG,"회원가입 버튼 클릭")
+            Log.d(TAG, "회원가입 버튼 클릭")
             val name = binding.editTextTextPersonName.text.toString()
-            val email = binding.editTextTextEmailAddress2.text.toString()
+            val email = binding.editTextTextEmailAddress2.text.toString()+emailAddress
             val phoneNumber = binding.editTextNumber1.text.toString()
             val phoneNumber2 = binding.editTextNumber2.text.toString()
             val phoneNumber3 = binding.editTextNumber3.text.toString()
+            val phoneNumberTotal = phoneNumber + phoneNumber2 + phoneNumber3
             val Password = binding.editTextTextPassword.text.toString()
             val PasswordCheck = binding.editTextTextPassword2.text.toString()
 
+            service.register(phoneNumberTotal, email, name, Password)
+                .enqueue(object : Callback<LoginResponse> {
+                    override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                        val result = response.body()
+                        Log.e("회원가입 성공","${result}")
+                    }
 
-            if(name.isEmpty()||email.isEmpty()||phoneNumber.isEmpty()||phoneNumber2.isEmpty()||phoneNumber3.isEmpty()||Password.isEmpty()||PasswordCheck.isEmpty()){
-               isExistBlank = true
-        }
-            else{
-                if(Password==PasswordCheck){
+                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                        Log.e("회원가입 실패",t.message.toString())
+                    }
+
+                })
+
+
+
+
+            if (name.isEmpty() || email.isEmpty() || phoneNumber.isEmpty() || phoneNumber2.isEmpty() || phoneNumber3.isEmpty() || Password.isEmpty() || PasswordCheck.isEmpty()) {
+                isExistBlank = true
+            } else {
+                if (Password == PasswordCheck) {
                     isPWSame = true
                 }
 
             }
 
-            if(!isExistBlank && isPWSame){
-                Toast.makeText(this, "회원가입 성공",Toast.LENGTH_SHORT).show()
+            if (!isExistBlank && isPWSame) {
+                Toast.makeText(this, "액티비티상 회원가입 성공", Toast.LENGTH_SHORT).show()
 
-                val sharedPreference = getSharedPreferences("file name", Context.MODE_PRIVATE)
+                val sharedPreference = getSharedPreferences("file name", MODE_PRIVATE)
                 val editor = sharedPreference.edit()
-                editor.putString("name",name)
-                editor.putString("email",email)
-                editor.putString("phoneNumber",phoneNumber)
-                editor.putString("phoneNumber2",phoneNumber2)
-                editor.putString("phoneNumber3",phoneNumber3)
-                editor.putString("Password",Password)
-                editor.putString("PasswordCheck",PasswordCheck)
+                editor.putString("name", name)
+                editor.putString("email", email)
+                editor.putString("phoneNumber", phoneNumber)
+                editor.putString("phoneNumber2", phoneNumber2)
+                editor.putString("phoneNumber3", phoneNumber3)
+                editor.putString("Password", Password)
+                editor.putString("PasswordCheck", PasswordCheck)
                 editor.apply()
 
+
                 //사업자번호 입력 페이지로 이동
-                val intent = Intent(this,RegisterActivity2::class.java)
+                val intent = Intent(this, RegisterActivity2::class.java)
                 startActivity(intent)
 
-            }
-            else{
-                if(isExistBlank){
+            } else {
+                if (isExistBlank) {
                     dialog("Blank")
-                }
-                else if(!isPWSame){
+                } else if (!isPWSame) {
                     dialog("not same")
                 }
             }
 
         }
 
-        //이메일 스피너 만들기
 
-        //버튼 눌렀을 때 입력되지 않은 곳 있으면 입력해달라고 하기(하나하나 찝지 말고 그냥 어딘가 비었다고만 알려주기)
-        //비밀번호 제한 걸기(8-20자 이내의 숫자와 대소문자 혼합)
-
+        //버튼 눌렀을 때 입력되지 않은 곳 있으면 입력해달라고 하기
+        //비밀번호 제한 걸기
 
 
     }
 
+    interface SignService {
+        //phoneNumberTotal,email,name,Password
+        @FormUrlEncoded
+        @POST("api/v1/register/guest")
+        fun register(
+            @Field("phoneNumber") phoneNumberTotal: String,
+            @Field("userEmail") email: String,
+            @Field("userName") name: String,
+            @Field("userPassword") Password: String
+        ): Call<LoginResponse>
+    }
 
-    fun dialog(type:String){
+
+    fun dialog(type: String) {
         val dialog = AlertDialog.Builder(this)
-        if(type.equals("blank")){
-            dialog.setTitle("회원가입 실패")
+        if (type.equals("blank")) {
+            dialog.setTitle("ekfm회원가입 실패")
             dialog.setMessage("입력란을 모두 작성해주세요")
-        }
-        else if(type.equals("not same")){
-            dialog.setTitle("회원가입 실패")
+        } else if (type.equals("not same")) {
+            dialog.setTitle("sdffs회원가입 실패")
             dialog.setMessage("비밀번호가 다릅니다")
         }
 
-        val dialog_listener = object:DialogInterface.OnClickListener{
+        val dialog_listener = object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface?, which: Int) {
-                when(which){
+                when (which) {
                     DialogInterface.BUTTON_POSITIVE ->
-                        Log.d(TAG,"다이얼로그")
+                        Log.d(TAG, "다이얼로그")
                 }
 
             }
         }
-        dialog.setPositiveButton("확인",dialog_listener)
+        dialog.setPositiveButton("확인", dialog_listener)
         dialog.show()
     }
 }

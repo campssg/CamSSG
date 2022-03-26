@@ -25,10 +25,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-      binding.register2.setOnClickListener {
-            val intent = Intent(this, RegisterActivity2::class.java)
-            startActivity(intent)
-        }
+//      binding.register2.setOnClickListener {
+//            val intent = Intent(this, RegisterActivity2::class.java)
+//            startActivity(intent)
+//        }
 
 
 
