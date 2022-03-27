@@ -3,16 +3,11 @@ package com.example.graduationproject.UserSigning
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.annotation.NonNull
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import com.example.graduationproject.RegisterActivity2
 import com.example.graduationproject.User.UserMainActivity
 import com.example.graduationproject.databinding.Activity1loginBinding
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.internal.connection.ConnectInterceptor.intercept
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,7 +16,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
-import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -87,7 +81,7 @@ class LoginActivity_User : AppCompatActivity() {
 
         //회원가입 클릭
         register.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+            val intent = Intent(this, RegisterActivity_User::class.java)
             startActivity(intent)
         }
 

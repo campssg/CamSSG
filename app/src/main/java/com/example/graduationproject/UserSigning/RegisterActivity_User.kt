@@ -1,8 +1,5 @@
 package com.example.graduationproject.UserSigning
 
-import android.app.Dialog
-import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,35 +9,33 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
-import com.example.graduationproject.RegisterActivity2
-import com.example.graduationproject.databinding.ActivityLoginBinding
-import com.example.graduationproject.databinding.ActivityMainBinding
+import com.example.graduationproject.RegisterActivity_Mart2
+import com.example.graduationproject.databinding.Activity1bookmarkCampingBinding.inflate
+import com.example.graduationproject.databinding.Activity1registeruserBinding
 import com.example.graduationproject.databinding.ActivityRegisterBinding
-import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 import java.util.concurrent.TimeUnit
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity_User : AppCompatActivity() {
 
     val TAG: String = "Register"
     var isExistBlank = false
     var isPWSame = false
 
-    private lateinit var binding: ActivityRegisterBinding
+    private lateinit var binding: Activity1registeruserBinding
     val EmailData = arrayOf("naver.com", "nate.com", "daum.net", "gmail.com")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        binding = Activity1registeruserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //타이틀 숨기기
@@ -82,7 +77,7 @@ class RegisterActivity : AppCompatActivity() {
         binding.RegisterBtn.setOnClickListener {
             Log.d(TAG, "회원가입 버튼 클릭")
             val name = binding.editTextTextPersonName.text.toString()
-            val email = binding.editTextTextEmailAddress2.text.toString()+emailAddress
+            val email = binding.editTextTextEmailAddress2.text.toString()+"@"+emailAddress
             val phoneNumber = binding.editTextNumber1.text.toString()
             val phoneNumber2 = binding.editTextNumber2.text.toString()
             val phoneNumber3 = binding.editTextNumber3.text.toString()
@@ -91,13 +86,27 @@ class RegisterActivity : AppCompatActivity() {
             val PasswordCheck = binding.editTextTextPassword2.text.toString()
 
             service.register(phoneNumberTotal, email, name, Password)
-                .enqueue(object : Callback<LoginResponse> {
-                    override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                .enqueue(object : Callback<RegisterResponse> {
+                    override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
                         val result = response.body()
                         Log.e("회원가입 성공","${result}")
                     }
 
-                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                        Log.e("회원가입 실패",t.message.toString())
+                    }
+
+                })
+
+
+    service.register_martUser(phoneNumberTotal, email, name, Password)
+                .enqueue(object : Callback<RegisterResponse> {
+                    override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+                        val result = response.body()
+                        Log.e("회원가입 성공","${result}")
+                    }
+
+                    override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
                         Log.e("회원가입 실패",t.message.toString())
                     }
 
@@ -131,7 +140,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
                 //사업자번호 입력 페이지로 이동
-                val intent = Intent(this, RegisterActivity2::class.java)
+                val intent = Intent(this, RegisterActivity_Mart2::class.java)
                 startActivity(intent)
 
             } else {
@@ -160,8 +169,22 @@ class RegisterActivity : AppCompatActivity() {
             @Field("userEmail") email: String,
             @Field("userName") name: String,
             @Field("userPassword") Password: String
-        ): Call<LoginResponse>
+        ): Call<RegisterResponse>
+
+        @FormUrlEncoded
+        @POST("/api/v1/register/manager")
+        fun register_martUser(
+            @Field("phoneNumber") phoneNumberTotal: String,
+            @Field("userEmail") email: String,
+            @Field("userName") name: String,
+            @Field("userPassword") Password: String
+
+        ): Call<RegisterResponse>
+
+
     }
+
+
 
 
     fun dialog(type: String) {

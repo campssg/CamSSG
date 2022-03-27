@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
 import com.example.graduationproject.UserSigning.LoginActivity_User
-import com.example.graduationproject.UserSigning.RegisterActivity
+import com.example.graduationproject.UserSigning.RegisterActivity_User
 import com.example.graduationproject.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.button1.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+            val intent = Intent(this, RegisterActivity_User::class.java)
             startActivity(intent)
         }
 
