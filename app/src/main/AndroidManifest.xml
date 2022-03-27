@@ -16,6 +16,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".RegisterActivity2"></activity>
         <activity android:name=".UserSigning.LoginActivity_User" />
+        <activity android:name=".User.UserMainActivity"/>
         <activity android:name=".SelectWhatToRegisterActivity" />
         <activity android:name=".SelectWhatToLoginActivity" />
         <activity android:name=".CheapestCategoryActivity" />

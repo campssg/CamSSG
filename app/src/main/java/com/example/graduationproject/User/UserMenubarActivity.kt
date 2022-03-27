@@ -1,8 +1,10 @@
 package com.example.graduationproject.User
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.graduationproject.MainActivity
 import com.example.graduationproject.R
 import com.example.graduationproject.databinding.Activity1menubarBinding
 
@@ -17,6 +19,7 @@ class UserMenubarActivity: AppCompatActivity() {
 
         //캠핑장 조회
         binding.menuCampsearch.setOnClickListener {
+            //val intent = Intent(this, )
             setContentView(R.layout.activity_1campsearch)
         }
 
@@ -46,7 +49,6 @@ class UserMenubarActivity: AppCompatActivity() {
 
         //정보수정
         binding.menuMyinfo.setOnClickListener {
-            setContentView(R.layout.activity_1mypage)
         }
 
         //탈퇴
@@ -58,7 +60,8 @@ class UserMenubarActivity: AppCompatActivity() {
 
         //로그아웃
         binding.menuLogout.setOnClickListener {
-
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             //로그아웃 코드
 
         }
