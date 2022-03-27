@@ -28,10 +28,16 @@ class UserMainActivity : AppCompatActivity() {
         binding.umainMenubar.setOnClickListener {
             binding.drawerlayout.openDrawer(Gravity.LEFT)
 
-            binding2.menuLogout.setOnClickListener {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }
+        }
+
+        binding2.menuLogout.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.umainOrdered.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
 
 

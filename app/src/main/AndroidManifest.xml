@@ -28,6 +28,7 @@
         <activity android:name=".Owner.ManageItemActivity" />
         <activity android:name=".User.bookmark_campingActivity" />
         <activity android:name=".UserSigning.RegisterActivity" />
+        <activity android:name=".User.UserMenubarActivity"/>
         <activity android:name=".UserSigning.LoginActivity_Mart" />
         <activity android:name=".MainActivity">
             <intent-filter>

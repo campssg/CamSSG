@@ -67,8 +67,8 @@ class LoginActivity_User : AppCompatActivity() {
 
 
         //변수
-        val id = binding.editTextTextEmailAddress.text.toString()
-        val password = binding.editTextTextPassword.text.toString()
+        val userEmail = binding.editTextTextEmailAddress.text.toString()
+        val userPassword = binding.editTextTextPassword.text.toString()
 
         val loginBtn = binding.LoginButton
         val register = binding.textView9
@@ -94,7 +94,7 @@ class LoginActivity_User : AppCompatActivity() {
 
         //로그인 버튼 클릭
         loginBtn.setOnClickListener {
-            service.login(id, password)
+            service.login(userEmail, userPassword)
                 .enqueue(object : Callback<UserLoginResponse> {
                     override fun onResponse(call: Call<UserLoginResponse>, response: Response<UserLoginResponse>) {
                         val result = response.body()
