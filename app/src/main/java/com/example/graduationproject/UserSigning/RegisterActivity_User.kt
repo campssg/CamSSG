@@ -12,7 +12,6 @@ import androidx.appcompat.app.AlertDialog
 import com.example.graduationproject.RegisterActivity_Mart2
 import com.example.graduationproject.databinding.Activity1bookmarkCampingBinding.inflate
 import com.example.graduationproject.databinding.Activity1registeruserBinding
-import com.example.graduationproject.databinding.ActivityRegisterBinding
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.Call

@@ -3,6 +3,7 @@ package com.example.graduationproject.UserSigning
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.graduationproject.User.UserMainActivity
@@ -13,9 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -27,15 +26,7 @@ import java.util.concurrent.TimeUnit
 }*/
 
 
-//로그인 하기 위해 서버에 아이디, 비밀번호 전달
-interface LoginService{
-    @FormUrlEncoded
-    @POST("/api/v1/login")
-    fun login(
-            @Field("userEmail") id: String,
-            @Field("userPassword") password: String
-    ): Call<UserLoginResponse>
-}
+
 
 
 
@@ -60,9 +51,6 @@ class LoginActivity_User : AppCompatActivity() {
         actionBar?.hide()
 
 
-        //변수
-        val userEmail = binding.editTextTextEmailAddress.text.toString()
-        val userPassword = binding.editTextTextPassword.text.toString()
 
         val loginBtn = binding.LoginButton
         val register = binding.textView9
@@ -88,21 +76,58 @@ class LoginActivity_User : AppCompatActivity() {
 
         //로그인 버튼 클릭
         loginBtn.setOnClickListener {
-            service.login(userEmail, userPassword)
+            // 이벤트 리스너 밖에 변수가 있어서 인식이 안되는 것 같아 변수 위치 변경했습니다.
+            //변수
+            val userEmail = binding.editTextTextEmailAddress.text.toString()
+            val userPassword = binding.editTextTextPassword.text.toString()
+
+            // 변수 가져와서 json body 생성 -> json 자체를 요청 변수로 전송
+            val data = UserLoginRequest(userEmail, userPassword)
+            service.login(data)
                 .enqueue(object : Callback<UserLoginResponse> {
                     override fun onResponse(call: Call<UserLoginResponse>, response: Response<UserLoginResponse>) {
-                        val result = response.body()
-                        Log.e("로그인 완료","${result}")
-                        val intent = Intent(this@LoginActivity_User, UserMainActivity::class.java)
-                        startActivity(intent)
+                        if (response.isSuccessful) {
+                            val result = response.body()
+                            Log.e("로그인 완료","${result}")
+
+                            // 받아온 jwt 토큰 가져와서 preference에 저장
+                            val token = result?.data?.token
+                            val sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
+                            val editor = sharedPreference.edit()
+                            editor.putString("jwt", token.toString())
+                            editor.apply()
+
+                            // preference에 token 잘 저장되었는지 확인할 용도로 출력했습니다 확인하신 후 삭제해주세요
+                            val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
+                            val jwt = sharedPreferences.getString("jwt", "")
+                            Toast.makeText(this@LoginActivity_User, jwt, Toast.LENGTH_SHORT).show()
+
+                            val intent = Intent(this@LoginActivity_User, UserMainActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            Log.d("로그인","실패")
+                            Toast.makeText(this@LoginActivity_User, "로그인 실패, 다시 시도하세요", Toast.LENGTH_SHORT).show()
+                        }
                     }
 
                     override fun onFailure(call: Call<UserLoginResponse>, t: Throwable) {
-                        Log.e("다시 로그인 필요",t.message.toString())
+                        Log.e("연결실패",t.message.toString())
                     }
 
                 })
 
         }
+    }
+
+    // 인터페이스 위치 변경했습니다 (class LoginActivity_User 내부로 위치 변경)
+    // 엔드포인트 앞에 / 삭제
+    // 전송값을 @Field 에서 @Body로 변경 => @Body는 json 자체를 전송하므로 반드시 Header에 "content-type" 명시
+    //로그인 하기 위해 서버에 아이디, 비밀번호 전달
+    interface LoginService{
+        @POST("api/v1/login")
+        @Headers("content-type: application/json", "accept: application/json")
+        fun login(
+            @Body request: UserLoginRequest
+        ): Call<UserLoginResponse>
     }
 }
