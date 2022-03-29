@@ -32,6 +32,7 @@ class RegisterActivity_User : AppCompatActivity() {
     private lateinit var binding: Activity1registeruserBinding
     val EmailData = arrayOf("naver.com", "nate.com", "daum.net", "gmail.com")
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = Activity1registeruserBinding.inflate(layoutInflater)
@@ -171,7 +172,7 @@ class RegisterActivity_User : AppCompatActivity() {
         ): Call<RegisterResponse>
 
         @FormUrlEncoded
-        @POST("/api/v1/register/manager")
+        @POST("api/v1/register/manager")
         fun register_martUser(
             @Field("phoneNumber") phoneNumberTotal: String,
             @Field("userEmail") email: String,

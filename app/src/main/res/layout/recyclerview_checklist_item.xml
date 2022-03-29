@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/hamburger" />
 
     <TextView
-        android:id="@+id/itemNAME"
+        android:id="@+id/name_checklistItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="냉동 삼겹살 1kg"

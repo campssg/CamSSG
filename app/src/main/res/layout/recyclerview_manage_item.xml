@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/hamburger" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/name_manageItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="냉동 삼겹살 1kg"
@@ -45,7 +45,7 @@
         app:layout_constraintVertical_bias="0.199" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/price_manageItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="16,000원"
