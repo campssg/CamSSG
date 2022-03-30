@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="22dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="쓱 시간을 선택해주세요!"
+        android:textSize="20sp"
+        android:textColor="@color/main_purple"
+        android:textStyle="bold"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:paddingLeft="20dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/shoppingcart"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:paddingLeft="30dp"
+                android:paddingBottom="10dp"
+                android:id="@+id/mart_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="마트 이름"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/mart_num"
+                android:paddingBottom="10dp"
+                android:text="012-345-6789"
+                android:textSize="18sp"
+                android:paddingLeft="30dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/mart_address"
+                android:text="경기도 ㅇㅇ시 ㅇㅇ면 ㅇㅇ리"
+                android:textSize="18sp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="30dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <View
+        android:paddingTop="50dp"
+        android:layout_gravity="center"
+        android:layout_width="350dp"
+        android:layout_height="1dp"
+        android:background="#000000"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:paddingLeft="10dp"
+            android:paddingTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="픽업 날짜 선택"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/main_purple"/>
+
+        <ImageView
+            android:id="@+id/calendarSet"
+            android:paddingTop="20dp"
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/calendar"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/set_date"
+        android:paddingTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:hint="2022-01-01"
+        android:textSize="18sp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <TextView
+        android:paddingLeft="10dp"
+        android:paddingTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="픽업 시간 선택"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/main_purple"/>
+
+    <Spinner
+        android:paddingTop="30dp"
+        android:paddingLeft="30dp"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:spinnerMode="dialog"
+        android:id="@+id/time_pick"/>
+
+    <TextView
+        android:paddingLeft="10dp"
+        android:paddingTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:hint=""
+        android:textSize="20sp"
+        android:textColor="#000000"/>
+
+    <Button
+        android:id="@+id/setBtn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="계속하기"
+        android:backgroundTint="@color/main_purple"
+        android:textSize="22sp"
+        android:textStyle="bold"/>
+
+</LinearLayout>

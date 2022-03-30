@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pu_time_array">
+        <item>06:00 ~ 09:00 사이</item>
+        <item>09:00 ~ 12:00 사이</item>
+        <item>12:00 ~ 15:00 사이</item>
+        <item>15:00 ~ 18:00 사이</item>
+        <item>18:00 ~ 21:00 사이</item>
+        <item>이날 아무때나</item>
+    </string-array>
+</resources>

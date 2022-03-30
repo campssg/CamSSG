@@ -52,6 +52,7 @@ class LoginActivity_User : AppCompatActivity() {
 
 
 
+
         val loginBtn = binding.LoginButton
         val register = binding.textView9
 
@@ -106,7 +107,7 @@ class LoginActivity_User : AppCompatActivity() {
                             startActivity(intent)
                         } else {
                             Log.d("로그인","실패")
-                            Toast.makeText(this@LoginActivity_User, "로그인 실패, 다시 시도하세요", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@LoginActivity_User, "아이디, 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
                         }
                     }
 
