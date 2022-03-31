@@ -30,6 +30,7 @@
         <activity android:name=".UserSigning.RegisterActivity_User" />
         <activity android:name=".User.UserMenubarActivity" />
         <activity android:name=".UserSigning.LoginActivity_Mart" />
+        <activity android:name=".User.CampSearchActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

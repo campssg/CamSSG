@@ -71,6 +71,7 @@
             android:id="@+id/umain_itemsearch"
             android:layout_width="200dp"
             android:layout_height="40dp"
+            android:hint="상품 검색"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="#000000"
             android:textColorHint="#B6B6B6"
@@ -80,7 +81,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/umain_name"
             app:layout_constraintVertical_bias="0.105"
-            android:hint="상품 검색"/>
+            tools:ignore="TouchTargetSizeCheck" />
 
         <Button
             android:id="@+id/umain_martsearch"
@@ -196,7 +197,8 @@
             app:layout_constraintHorizontal_bias="0.844"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.386" />
+            app:layout_constraintVertical_bias="0.386"
+            tools:ignore="TouchTargetSizeCheck" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

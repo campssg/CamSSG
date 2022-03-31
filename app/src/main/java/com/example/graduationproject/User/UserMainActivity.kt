@@ -3,6 +3,7 @@ package com.example.graduationproject.User
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.graduationproject.MainActivity
@@ -40,6 +41,10 @@ class UserMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
+        binding.umainCampsearch.setOnClickListener {
+            Toast.makeText(this, "캠핑장 조회로 이동", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, CampSearchActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
