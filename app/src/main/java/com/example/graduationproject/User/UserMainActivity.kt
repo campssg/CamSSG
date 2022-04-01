@@ -42,9 +42,11 @@ class UserMainActivity : AppCompatActivity() {
         }
 
         binding.umainCampsearch.setOnClickListener {
-            Toast.makeText(this, "캠핑장 조회로 이동", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, CampSearchActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, CampSearchActivity::class.java))
+        }
+
+        binding.umainUserimg.setOnClickListener {
+            startActivity(Intent(this, UserInfoActivity::class.java))
         }
     }
 }

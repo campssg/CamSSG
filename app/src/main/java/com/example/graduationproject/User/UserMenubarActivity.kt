@@ -3,6 +3,7 @@ package com.example.graduationproject.User
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.graduationproject.MainActivity
 import com.example.graduationproject.R
@@ -49,6 +50,10 @@ class UserMenubarActivity: AppCompatActivity() {
 
         //정보수정
         binding.menuMyinfo.setOnClickListener {
+            setContentView(R.layout.activity_1mypage)
+            Toast.makeText(this, "click", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, UserInfoActivity::class.java)
+            startActivity(intent)
         }
 
         //탈퇴

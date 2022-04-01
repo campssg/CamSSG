@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserSigning.LoginActivity_Mart"
+    tools:context=".User.UserInfoActivity"
     >
 
     <ImageView
@@ -105,7 +105,8 @@
         app:layout_constraintHorizontal_bias="0.235"
         app:layout_constraintStart_toEndOf="@+id/mypage_1nick"
         app:layout_constraintTop_toBottomOf="@+id/mypage_1nametxt"
-        app:layout_constraintVertical_bias="0.085" />
+        app:layout_constraintVertical_bias="0.085"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/mypage_1emailtxt"
