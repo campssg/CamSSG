@@ -1,8 +1,12 @@
 package com.example.graduationproject.User
 
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.graduationproject.databinding.Activity1mypageBinding
 import okhttp3.OkHttpClient
@@ -11,7 +15,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
+import retrofit2.http.*
 import java.util.concurrent.TimeUnit
 
 class UserInfoActivity : AppCompatActivity() {
@@ -70,10 +74,81 @@ class UserInfoActivity : AppCompatActivity() {
                     Log.e("연결실패", t.message.toString())
                 }
             })
+
+        val retrofit2 = Retrofit.Builder()
+                .baseUrl("http://13.124.13.202:8080/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client).build()
+
+        val service2 = retrofit2.create(UserNickChange::class.java)
+
+        val nickchangeBtn = binding.mypage1nickbtn
+
+        // 닉네임 수정
+        nickchangeBtn.setOnClickListener {
+
+            val userNick = binding.mypage1nickedit.text.toString()
+            val data = UserNickRequest(userNick)
+
+            service2.change_nickname(data).enqueue(object : Callback<UserNickResponse> {
+                override fun onResponse(call: Call<UserNickResponse>, response: Response<UserNickResponse>) {
+                    if (response.isSuccessful) {
+                        val result = response.body()
+                        Log.e("수정 완료","${result}")
+                        dialog("Ok")
+                    } else {
+                        Log.d("수정","실패")
+                        Log.d("수정","${userNick}")
+                        Toast.makeText(this@UserInfoActivity, "수정에 실패하였습니다", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<UserNickResponse>, t: Throwable) {
+                    Log.e("연결실패",t.message.toString())
+                }
+
+            })
+
+        }
+
+        // 비밀번호 변경
+        binding.mypage1pass.setOnClickListener {
+            val intent = Intent(this, UserPassChangeActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     interface UserInfo {
         @GET("api/v1/user/info")
         fun get_userInfo(): Call<UserInfoResponse>
+    }
+
+    interface UserNickChange{
+        @PATCH("api/v1/user/update/nickname")
+        @Headers("content-type: application/json", "accept: application/json")
+        fun change_nickname(
+                @Body request: UserNickRequest
+        ): Call<UserNickResponse>
+    }
+
+    // 알림창
+    fun dialog(type: String) {
+        val dialog = AlertDialog.Builder(this)
+        if (type.equals("Ok")){
+            dialog.setTitle("닉네임 수정")
+            dialog.setMessage("완료되었습니다")
+        }
+
+        val dialog_listener = object : DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                when (which) {
+                    DialogInterface.BUTTON_POSITIVE ->
+                        Log.d("닉네임", "다이얼로그")
+                }
+
+            }
+        }
+        dialog.setPositiveButton("확인", dialog_listener)
+        dialog.show()
     }
 }
