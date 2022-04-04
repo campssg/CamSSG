@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity_Mart2">
+    tools:context=".UserSigning.RegisterActivity_Mart2">
 
 
     <ScrollView

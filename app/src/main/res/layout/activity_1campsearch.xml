@@ -48,10 +48,12 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="#E8EAF6"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/btn_nextPage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_search" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_search"
+            tools:listitem="@layout/recyclerview_camplist" />
 
         <Button
             android:id="@+id/btn_prevPage"

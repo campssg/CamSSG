@@ -4,7 +4,7 @@ import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
 @Keep
-class UserCartInfoResponse (
+data class UserCartInfoResponse (
     @SerializedName("totalCount")
     val totalCount:Int,
     @SerializedName("totalPrice")

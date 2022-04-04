@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".SelectWhatToRegisterActivity">
+    tools:context=".UserSigning.SelectWhatToRegisterActivity">
 
 
     <TextView
-        android:id="@+id/button11"
+        android:id="@+id/RegisterInUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -18,7 +18,7 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/button12"
+        android:id="@+id/RegisterInMart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="마트 운영자로 회원가입하세요?"

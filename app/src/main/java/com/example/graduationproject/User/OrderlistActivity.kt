@@ -1,14 +1,19 @@
 package com.example.graduationproject.User
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.graduationproject.R
+import androidx.appcompat.app.AppCompatActivity
+import com.example.graduationproject.databinding.Activity1orderlistBinding
 
-//HJ 마이페이지-주문 내역
+//주문내역
 
-class orderlistActivity : AppCompatActivity() {
+class OrderlistActivity : AppCompatActivity() {
+    private lateinit var binding : Activity1orderlistBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_1orderlist)
+        binding = Activity1orderlistBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
     }
 }
+
+

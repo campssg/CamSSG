@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
-import com.example.graduationproject.RegisterActivity_Mart2
-import com.example.graduationproject.databinding.Activity1bookmarkCampingBinding.inflate
+import com.example.graduationproject.Owner.OwnerMainActivity
+import com.example.graduationproject.User.UserMainActivity
 import com.example.graduationproject.databinding.Activity1registeruserBinding
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -99,19 +99,6 @@ class RegisterActivity_User : AppCompatActivity() {
                 })
 
 
-    service.register_martUser(phoneNumberTotal, email, name, Password)
-                .enqueue(object : Callback<RegisterResponse> {
-                    override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
-                        val result = response.body()
-                        Log.e("회원가입 성공","${result}")
-                    }
-
-                    override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                        Log.e("회원가입 실패",t.message.toString())
-                    }
-
-                })
-
 
 
 
@@ -139,8 +126,7 @@ class RegisterActivity_User : AppCompatActivity() {
                 editor.apply()
 
 
-                //사업자번호 입력 페이지로 이동
-                val intent = Intent(this, RegisterActivity_Mart2::class.java)
+                val intent = Intent(this, UserMainActivity::class.java)
                 startActivity(intent)
 
             } else {
@@ -171,17 +157,6 @@ class RegisterActivity_User : AppCompatActivity() {
             @Field("userPassword") Password: String
         ): Call<RegisterResponse>
 
-        @FormUrlEncoded
-        @POST("api/v1/register/manager")
-        fun register_martUser(
-            @Field("phoneNumber") phoneNumberTotal: String,
-            @Field("userEmail") email: String,
-            @Field("userName") name: String,
-            @Field("userPassword") Password: String
-
-        ): Call<RegisterResponse>
-
-
     }
 
 
@@ -190,10 +165,10 @@ class RegisterActivity_User : AppCompatActivity() {
     fun dialog(type: String) {
         val dialog = AlertDialog.Builder(this)
         if (type.equals("blank")) {
-            dialog.setTitle("ekfm회원가입 실패")
+            dialog.setTitle("회원가입 실패")
             dialog.setMessage("입력란을 모두 작성해주세요")
         } else if (type.equals("not same")) {
-            dialog.setTitle("sdffs회원가입 실패")
+            dialog.setTitle("회원가입 실패")
             dialog.setMessage("비밀번호가 다릅니다")
         }
 

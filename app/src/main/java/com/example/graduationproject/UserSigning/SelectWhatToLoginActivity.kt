@@ -1,10 +1,9 @@
-package com.example.graduationproject
+package com.example.graduationproject.UserSigning
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
-import com.example.graduationproject.UserSigning.LoginActivity_User
 import com.example.graduationproject.databinding.ActivitySelectWhatToLoginBinding
 
 class SelectWhatToLoginActivity : AppCompatActivity() {
@@ -28,7 +27,7 @@ class SelectWhatToLoginActivity : AppCompatActivity() {
 
         //마트 로그인
         binding.LoginInMart.setOnClickListener {
-            val intent = Intent(this, LoginActivity_User::class.java)
+            val intent = Intent(this, LoginActivity_Mart::class.java)
             startActivity(intent)
         }
 

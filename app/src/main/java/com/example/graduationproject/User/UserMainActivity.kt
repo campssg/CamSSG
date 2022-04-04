@@ -36,8 +36,15 @@ class UserMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        //주문내역
         binding.umainOrdered.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, OrderlistActivity::class.java)
+            startActivity(intent)
+        }
+
+        //장바구니
+        binding.umainBasket.setOnClickListener {
+            val intent = Intent(this, UserCartActivity::class.java)
             startActivity(intent)
         }
 

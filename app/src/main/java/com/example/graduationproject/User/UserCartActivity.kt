@@ -1,11 +1,15 @@
 package com.example.graduationproject.User
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.widget.CompoundButton
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.graduationproject.CartlistAdapter
+import com.example.graduationproject.R
 import com.example.graduationproject.databinding.Activity1cartlistBinding
-import com.example.graduationproject.databinding.Activity1mypageBinding
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,6 +31,10 @@ class UserCartActivity : AppCompatActivity() {
         actionBar = supportActionBar
         actionBar?.hide()
 
+//        setRV()
+//        setData("전체")
+
+
         // 로그인 후 저장해둔 JWT 토큰 가져오기
         val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
         val jwt = sharedPreferences.getString("jwt", "")
@@ -46,25 +54,72 @@ class UserCartActivity : AppCompatActivity() {
 
         // 사용자 장바구니 API 호출
         // API 호출
-        service.get_userCart()
-            .enqueue(object : Callback<UserCartInfoResponse> {
-                override fun onResponse(call: Call<UserCartInfoResponse>, response: retrofit2.Response<UserCartInfoResponse>) {
-                    if (response.isSuccessful) {
-                        val result = response.body()
-                        Log.e("조회 완료", "${result}")
-                    } else {
-                        Log.d("사용자 카트 조회", "실패")
+        fun CallApi() {
+            service.get_userCart()
+                .enqueue(object : Callback<UserCartInfoResponse> {
+                    override fun onResponse(
+                        call: Call<UserCartInfoResponse>,
+                        response: retrofit2.Response<UserCartInfoResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            val result = response.body()
+                            Log.e("조회 완료", "${result}")
+                        } else {
+                            Log.d("사용자 카트 조회", "실패")
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<UserCartInfoResponse>, t: Throwable) {
-                    Log.e("연결실패", t.message.toString())
-                }
-            })
+                    override fun onFailure(call: Call<UserCartInfoResponse>, t: Throwable) {
+                        Log.e("연결실패", t.message.toString())
+                    }
+                })
+        }
+        val Cartlist = arrayListOf<Cart>()
+        binding.rvCartListItem.layoutManager = LinearLayoutManager(this)
+        binding.rvCartListItem.setHasFixedSize(true)
+
+        //어댑터 설정
+        binding.rvCartListItem.adapter = CartlistAdapter(Cartlist)
     }
+
+
+
+
+
+//     override fun setData(status:String) {
+//        { UserCartActivity().list->
+//            list?.let {
+//                binding.rvCartListItem.adapter as CartlistAdapter.setDatas(list)
+//            }
+//        }
+//    }
+//
+//    private fun setRV() {
+//        binding.rvCartListItem.apply{
+//            adapter = CartlistAdapter()
+//                .apply {
+//                    clickEvent = { data ->
+////                        intent.putExtra("complainId",data.cartItemId)
+//                        Log.e("cartItemId",data.cartItemId.toString())
+////                        this@UserCartActivity.startActivity(intent)
+//                    }
+//                }
+//        }
+//    }
 
     interface UserCart {
         @GET("api/v1/cart/info")
         fun get_userCart(): Call<UserCartInfoResponse>
     }
+
+    @SuppressLint("ResourceAsColor")
+    fun onCheckChanged(compoundButton: CompoundButton){
+        when(compoundButton.id){
+            R.id.cartlist_totalcheckbox->{
+                if(binding.cartlistTotalcheckbox.isChecked){
+                }
+            }
+        }
+    }
+
 }
