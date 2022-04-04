@@ -3,6 +3,7 @@ package com.example.graduationproject.User
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ListAdapter
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +24,11 @@ import java.util.concurrent.TimeUnit
 
 class CampSearchActivity : AppCompatActivity() {
 //    private lateinit var viewModel :MainViewModel
-    private val camplistAdapter by lazy { CamplistAdapter() }
+    //private val camplistAdapter by lazy { CamplistAdapter() }
+
+    // 리사이클러뷰 어댑터 설정
+    private val listItems = arrayListOf<CampList>()
+    private val camplistAdapter = CampListAdapter(listItems)
 
     private lateinit var binding: Activity1campsearchBinding
 
@@ -32,9 +37,13 @@ class CampSearchActivity : AppCompatActivity() {
         binding = Activity1campsearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //어댑터 연결
+        // 리사이클러 뷰 레이아웃 매니저 설정, 어댑터 추가
+        binding.rvList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvList.adapter = camplistAdapter
-        binding.rvList.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+
+        //어댑터 연결
+        //binding.rvList.adapter = camplistAdapter
+        //binding.rvList.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
 
 //        val repository = Repository()
 //        val viewModelFactory = MainViewModelFactory(repository)
@@ -111,11 +120,6 @@ class CampSearchActivity : AppCompatActivity() {
                         if (response.isSuccessful) {
                             val result = response.body()
                             Log.e("조회 완료", "${result}")
-                            Toast.makeText(
-                                this@CampSearchActivity,
-                                "번호 " + result?.tel + "개 조회 성공" + "첫번째 결과 :" + result?.campName,
-                                Toast.LENGTH_SHORT
-                            ).show()
 
 //                            binding.rvList.layoutManager = LinearLayoutManager(this)
 //                            binding.rvList.setHasFixedSize(true)
@@ -154,7 +158,8 @@ class CampSearchActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
 
-
+                            // 리사이클러뷰에 결과 출력 요청 함수
+                            AddItemToList(result)
                         } else {
                             Log.d("캠핑장 조회", "실패")
                         }
@@ -181,7 +186,16 @@ class CampSearchActivity : AppCompatActivity() {
         }
     }
 
+    // 검색 결과 받아와서 리사이클러뷰에 추가
+    private fun AddItemToList(searchResult:CampResult?) {
+        listItems.clear() // 리스트 초기화
+        // 결과 리스트 읽어오기
+        for (campingList in searchResult!!.campingLists) {
+            listItems.add(campingList)
+        }
 
+        camplistAdapter.notifyDataSetChanged()
+    }
 
 
 }
