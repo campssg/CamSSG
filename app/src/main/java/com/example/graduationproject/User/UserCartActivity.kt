@@ -34,7 +34,6 @@ class UserCartActivity : AppCompatActivity() {
 //        setRV()
 //        setData("전체")
 
-
         // 로그인 후 저장해둔 JWT 토큰 가져오기
         val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
         val jwt = sharedPreferences.getString("jwt", "")
@@ -54,27 +53,25 @@ class UserCartActivity : AppCompatActivity() {
 
         // 사용자 장바구니 API 호출
         // API 호출
-        fun CallApi() {
-            service.get_userCart()
-                .enqueue(object : Callback<UserCartInfoResponse> {
-                    override fun onResponse(
-                        call: Call<UserCartInfoResponse>,
-                        response: retrofit2.Response<UserCartInfoResponse>
-                    ) {
-                        if (response.isSuccessful) {
-                            val result = response.body()
-                            Log.e("조회 완료", "${result}")
-                        } else {
-                            Log.d("사용자 카트 조회", "실패")
-                        }
+        service.get_userCart()
+            .enqueue(object : Callback<UserCartInfoResponse> {
+                override fun onResponse(
+                    call: Call<UserCartInfoResponse>,
+                    response: retrofit2.Response<UserCartInfoResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val result = response.body()
+                        Log.e("조회 완료", "${result}")
+                    } else {
+                        Log.d("사용자 카트 조회", "실패")
                     }
+                }
 
-                    override fun onFailure(call: Call<UserCartInfoResponse>, t: Throwable) {
-                        Log.e("연결실패", t.message.toString())
-                    }
-                })
-        }
-        val Cartlist = arrayListOf<Cart>()
+                override fun onFailure(call: Call<UserCartInfoResponse>, t: Throwable) {
+                    Log.e("연결실패", t.message.toString())
+                }
+            })
+        val Cartlist = arrayListOf<CartItem>()
         binding.rvCartListItem.layoutManager = LinearLayoutManager(this)
         binding.rvCartListItem.setHasFixedSize(true)
 

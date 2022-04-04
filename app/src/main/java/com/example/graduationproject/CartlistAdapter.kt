@@ -4,28 +4,29 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.graduationproject.User.Cart
+import com.example.graduationproject.User.CartItem
 import com.example.graduationproject.databinding.RecyclerviewCartListItemBinding
 import java.lang.Exception
 
-class CartlistAdapter(Cartlist: ArrayList<Cart>) : RecyclerView.Adapter<CartlistAdapter.ViewHolder>() {
-    val datas: ArrayList<Cart> = ArrayList()
-    var clickEvent: (Cart) -> Unit = {}
+class CartlistAdapter(Cartlist: ArrayList<CartItem>) : RecyclerView.Adapter<CartlistAdapter.ViewHolder>() {
+    val datas: ArrayList<CartItem> = ArrayList()
+    var clickEvent: (CartItem) -> Unit = {}
 
 
-    fun setDatas(arrayList: List<Cart>) {
+    fun setDatas(arrayList: List<CartItem>) {
         datas.clear()
         datas.addAll(arrayList)
         notifyItemRangeInserted(0, datas.size)
     }
 
     // 데이터 add
-    fun addData(data: Cart) {
+    fun addData(data: CartItem) {
         datas.add(data)
 
         notifyItemInserted(datas.size - 1) // 마지막에 데이터 넣기
     }
 
-    fun removeData(data: Cart) {
+    fun removeData(data: CartItem) {
         var position = -1
         for ((i, d) in datas.withIndex()) {
             if (d.cartItemId == data.cartItemId) {
@@ -63,7 +64,7 @@ class CartlistAdapter(Cartlist: ArrayList<Cart>) : RecyclerView.Adapter<Cartlist
 
     inner class ViewHolder(val binding: RecyclerviewCartListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Cart) {
+        fun bind(data: CartItem) {
             binding.root.setOnClickListener {
                 clickEvent(data)
             }
@@ -78,10 +79,5 @@ class CartlistAdapter(Cartlist: ArrayList<Cart>) : RecyclerView.Adapter<Cartlist
 
 
         }
-
-
-
     }
-
-
 }
