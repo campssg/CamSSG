@@ -33,7 +33,6 @@
         <activity android:name=".User.bookmark_campingActivity" />
         <activity android:name=".UserSigning.RegisterActivity_User" />
         <activity android:name=".User.UserPassChangeActivity"/>
-        <activity android:name=".User.UserMenubarActivity" />
         <activity android:name=".UserSigning.LoginActivity_Mart" />
         <activity android:name=".User.CampSearchActivity"/>
         <activity android:name=".User.UserInfoActivity"/>
