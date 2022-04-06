@@ -4,15 +4,17 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.widget.CompoundButton
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.graduationproject.CartlistAdapter
 import com.example.graduationproject.R
 import com.example.graduationproject.databinding.Activity1cartlistBinding
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.http.GET
+
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -21,18 +23,27 @@ import java.util.concurrent.TimeUnit
 class UserCartActivity : AppCompatActivity() {
     private lateinit var binding: Activity1cartlistBinding
 
+    private val listItems_Cart = arrayListOf<CartItem>()
+    private val cartlistAdapter = ListAdapter_mart(listItems_Cart)
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = Activity1cartlistBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.rvCartListItem.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+        binding.rvCartListItem.adapter = cartlistAdapter
+
         //타이틀 숨기기
+
+        var cartName = "1"
+        var cartPrice = "1"
         var actionBar: ActionBar?
         actionBar = supportActionBar
         actionBar?.hide()
 
-//        setRV()
-//        setData("전체")
+
 
         // 로그인 후 저장해둔 JWT 토큰 가져오기
         val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
@@ -62,6 +73,15 @@ class UserCartActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val result = response.body()
                         Log.e("조회 완료", "${result}")
+                        Toast.makeText(
+                            this@UserCartActivity,
+                            "총 결과"+result?.data,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        if (result != null) {
+                            AddItemToList_cart(result)
+                        }
+
                     } else {
                         Log.d("사용자 카트 조회", "실패")
                     }
@@ -71,42 +91,29 @@ class UserCartActivity : AppCompatActivity() {
                     Log.e("연결실패", t.message.toString())
                 }
             })
-        val Cartlist = arrayListOf<CartItem>()
-        binding.rvCartListItem.layoutManager = LinearLayoutManager(this)
-        binding.rvCartListItem.setHasFixedSize(true)
+//        val Cartlist = arrayListOf<Cart>()
+//        binding.rvCartListItem.layoutManager = LinearLayoutManager(this)
+////        binding.rvCartListItem.setHasFixedSize(true)
+//
+//        //어댑터 설정
+//        binding.rvCartListItem.adapter = CartlistAdapter
+    }
 
-        //어댑터 설정
-        binding.rvCartListItem.adapter = CartlistAdapter(Cartlist)
+    private fun AddItemToList_cart(cartlistResult: UserCartInfoResponse?) {
+        for(cartlist in cartlistResult!!.Cart){
+            listItems_Cart.add(cartlist)
+        }
+
+        cartlistAdapter.notifyDataSetChanged()
+
     }
 
 
 
-
-
-//     override fun setData(status:String) {
-//        { UserCartActivity().list->
-//            list?.let {
-//                binding.rvCartListItem.adapter as CartlistAdapter.setDatas(list)
-//            }
-//        }
-//    }
-//
-//    private fun setRV() {
-//        binding.rvCartListItem.apply{
-//            adapter = CartlistAdapter()
-//                .apply {
-//                    clickEvent = { data ->
-////                        intent.putExtra("complainId",data.cartItemId)
-//                        Log.e("cartItemId",data.cartItemId.toString())
-////                        this@UserCartActivity.startActivity(intent)
-//                    }
-//                }
-//        }
-//    }
-
     interface UserCart {
         @GET("api/v1/cart/info")
         fun get_userCart(): Call<UserCartInfoResponse>
+
     }
 
     @SuppressLint("ResourceAsColor")
@@ -120,3 +127,10 @@ class UserCartActivity : AppCompatActivity() {
     }
 
 }
+
+private fun <T> Call<T>.enqueue(callback: Callback<Cart>) {
+}
+
+
+
+

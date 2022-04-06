@@ -12,7 +12,6 @@ data class UserCartInfoResponse (
     @SerializedName("data")
     val data:Cart,
 )
-
 data class Cart (
     @SerializedName("totalCount")
     val totalCount:Int,
