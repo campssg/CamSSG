@@ -146,17 +146,17 @@ class CampSearchActivity : AppCompatActivity() {
                         if (response.isSuccessful) {
                             val result = response.body()
                             Log.e("조회 완료", "${result}")
-                            Toast.makeText(
-                                this@CampSearchActivity,
-                                "총 결과 " + result?.totalCount + "개 조회 성공",
-                                Toast.LENGTH_SHORT
-                            ).show()
+//                            Toast.makeText(
+//                                this@CampSearchActivity,
+//                                "총 결과 " + result?.totalCount + "개 조회 성공",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
 
-                            Toast.makeText(
-                                this@CampSearchActivity,
-                                "총 결과 " + result?.totalCount + "개 조회 성공" + "첫번째 결과 :" + result?.campingLists,
-                                Toast.LENGTH_SHORT
-                            ).show()
+//                            Toast.makeText(
+//                                this@CampSearchActivity,
+//                                "총 결과 " + result?.totalCount + "개 조회 성공" + "첫번째 결과 :" + result?.campingLists,
+//                                Toast.LENGTH_SHORT
+//                            ).show()
 
                             // 리사이클러뷰에 결과 출력 요청 함수
                             AddItemToList(result)

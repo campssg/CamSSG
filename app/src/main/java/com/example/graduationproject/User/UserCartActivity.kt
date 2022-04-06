@@ -73,11 +73,11 @@ class UserCartActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val result = response.body()
                         Log.e("조회 완료", "${result}")
-                        Toast.makeText(
-                            this@UserCartActivity,
-                            "총 결과"+result?.data,
-                            Toast.LENGTH_SHORT
-                        ).show()
+//                        Toast.makeText(
+//                            this@UserCartActivity,
+//                            "총 결과"+result?.data,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
                         if (result != null) {
                             AddItemToList_cart(result)
                         }
@@ -100,7 +100,7 @@ class UserCartActivity : AppCompatActivity() {
     }
 
     private fun AddItemToList_cart(cartlistResult: UserCartInfoResponse?) {
-        for(cartlist in cartlistResult!!.Cart){
+        for(cartlist in cartlistResult!!.data.cartItemList){
             listItems_Cart.add(cartlist)
         }
 

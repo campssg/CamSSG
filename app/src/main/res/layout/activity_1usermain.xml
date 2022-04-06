@@ -179,10 +179,10 @@
             android:layout_height="34dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.172"
+            app:layout_constraintHorizontal_bias="0.119"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.383"
+            app:layout_constraintVertical_bias="0.391"
             app:srcCompat="@drawable/searchicon" />
 
         <Button
@@ -190,12 +190,12 @@
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:backgroundTint="@color/main_purple"
-            android:text="OK"
+            android:text="검색"
             android:textSize="8sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.844"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/umain_itemsearch"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.386"
             tools:ignore="TouchTargetSizeCheck" />
