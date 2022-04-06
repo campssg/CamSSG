@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.graduationproject.MainActivity
 import com.example.graduationproject.R
+import com.example.graduationproject.UserSigning.SelectWhatToLoginActivity
 import com.example.graduationproject.databinding.Activity1bookmarkCampingBinding
 import com.example.graduationproject.databinding.Activity1usermainBinding
 import com.example.graduationproject.databinding.ActivityLoginBinding
@@ -29,6 +30,11 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         var actionBar: ActionBar?
         actionBar = supportActionBar
         actionBar?.hide()
+
+        val sharedPreferences = getSharedPreferences("userInfo", MODE_PRIVATE)
+        val userName = sharedPreferences.getString("userName", "")
+
+        binding.umainUsername.setText(userName)
 
         // 햄버거 클릭시 좌측 메뉴
         binding.umainMenubar.setOnClickListener {
@@ -71,7 +77,7 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             R.id.user_mypage2->startActivity(Intent(this, OrderlistActivity::class.java))
             R.id.user_mypage3->startActivity(Intent(this, UserInfoActivity::class.java))
             //R.id.user_mypage4->startActivity(Intent(this, CampSearchActivity::class.java))
-            R.id.user_mypage5->startActivity(Intent(this, MainActivity::class.java))
+            R.id.user_mypage5->startActivity(Intent(this, SelectWhatToLoginActivity::class.java))
         }
         return false
     }

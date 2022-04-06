@@ -98,11 +98,7 @@ class LoginActivity_User : AppCompatActivity() {
                             editor.putString("jwt", token.toString())
                             editor.apply()
 
-                            // preference에 token 잘 저장되었는지 확인할 용도로 출력했습니다 확인하신 후 삭제해주세요
-                            val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
-                            val jwt = sharedPreferences.getString("jwt", "")
-                            Toast.makeText(this@LoginActivity_User, jwt, Toast.LENGTH_SHORT).show()
-
+                            Toast.makeText(this@LoginActivity_User, "서비스 이용자 로그인 성공", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@LoginActivity_User, UserMainActivity::class.java)
                             startActivity(intent)
                         } else {

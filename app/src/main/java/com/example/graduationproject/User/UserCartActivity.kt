@@ -62,6 +62,11 @@ class UserCartActivity : AppCompatActivity() {
 
         val service = retrofit.create(UserCart::class.java)
 
+        val sharedPreferences2 = getSharedPreferences("userInfo", MODE_PRIVATE)
+        val userName = sharedPreferences2.getString("userName","")
+
+        binding.textView38.setText(userName)
+
         // 사용자 장바구니 API 호출
         // API 호출
         service.get_userCart()

@@ -14,14 +14,14 @@
         android:src="@drawable/user"/>
 
     <TextView
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
         android:id="@+id/account"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="aaa@bbb.com"
-        android:textSize="22sp"
-        android:textColor="@color/black"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:text="campssg@example.com"
+        android:textColor="@color/black"
+        android:textSize="22sp" />
 
 
 </LinearLayout>

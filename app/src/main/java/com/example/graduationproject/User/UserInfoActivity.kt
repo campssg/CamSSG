@@ -59,6 +59,9 @@ class UserInfoActivity : AppCompatActivity() {
                         val result = response.body()
                         Log.e("조회완료", "${result}")
 
+                        val sharedPreferences = getSharedPreferences("userInfo", MODE_PRIVATE)
+                        sharedPreferences.edit().putString("userName", result?.userName).apply()
+
                         // 조회한 결과로 텍스트 설정
                         binding.mypage1nametxt.setText(result?.userName)
                         binding.mypage1emailtxt.setText(result?.userEmail)
