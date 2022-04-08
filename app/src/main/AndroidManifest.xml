@@ -3,6 +3,9 @@
     package="com.example.graduationproject">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -24,9 +27,12 @@
         <activity android:name=".CheapestCategoryActivity" />
         <activity android:name=".SelectCategoryActivity" />
         <activity android:name=".User.OrderlistActivity" />
+        <activity android:name=".Owner.AddItemOneActivity"/>
+        <activity android:name=".Owner.OwnerInfoActivity"/>
+        <activity android:name=".Owner.SetMartActivity"/>
+        <activity android:name=".Owner.ManageItemModifyActivity"/>
         <activity android:name=".User.UserCartActivity" />
         <activity android:name=".User.bookmark_martActivity" />
-        <activity android:name=".Owner.ManageItemModifyActivity" />
         <activity android:name=".Owner.OwnerMainActivity" />
         <activity android:name=".Owner.ManagerItemListActivity" />
         <activity android:name=".Owner.ManageItemActivity" />

@@ -1,4 +1,4 @@
-package com.example.graduationproject.User
+package com.example.graduationproject.Owner
 
 import android.Manifest
 import android.content.DialogInterface
@@ -12,9 +12,10 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.graduationproject.databinding.Activity1mypageBinding
+import com.example.graduationproject.User.*
+import com.example.graduationproject.databinding.ActivityMypageBinding
 import kotlinx.android.synthetic.main.activity_1mypage.*
-import kotlinx.android.synthetic.main.activity_martinfo.*
+import kotlinx.android.synthetic.main.activity_mypage.*
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,10 +25,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import java.util.concurrent.TimeUnit
 
+//마트 운영자 마이페이지
 
-//서비스 이용자 마이페이지
-class UserInfoActivity : AppCompatActivity() {
-    private lateinit var binding: Activity1mypageBinding
+class OwnerInfoActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMypageBinding
     private var photoUri: Uri? = null
 
 
@@ -38,16 +39,13 @@ class UserInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = Activity1mypageBinding.inflate(layoutInflater)
+        binding = ActivityMypageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //타이틀 숨기기
         var actionBar: ActionBar?
         actionBar = supportActionBar
         actionBar?.hide()
-
-        binding.mypage1img.clipToOutline=true
-
 
         // 로그인 후 저장해둔 JWT 토큰 가져오기
         val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
@@ -97,9 +95,9 @@ class UserInfoActivity : AppCompatActivity() {
             })
 
         val retrofit2 = Retrofit.Builder()
-                .baseUrl("http://13.124.13.202:8080/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client).build()
+            .baseUrl("http://13.124.13.202:8080/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client).build()
 
         val service2 = retrofit2.create(UserNickChange::class.java)
 
@@ -120,7 +118,7 @@ class UserInfoActivity : AppCompatActivity() {
                     } else {
                         Log.d("수정","실패")
                         Log.d("수정","${userNick}")
-                        Toast.makeText(this@UserInfoActivity, "수정에 실패하였습니다", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@OwnerInfoActivity, "수정에 실패하였습니다", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -175,7 +173,7 @@ class UserInfoActivity : AppCompatActivity() {
         @PATCH("api/v1/user/update/nickname")
         @Headers("content-type: application/json", "accept: application/json")
         fun change_nickname(
-                @Body request: UserNickRequest
+            @Body request: UserNickRequest
         ): Call<UserNickResponse>
     }
 

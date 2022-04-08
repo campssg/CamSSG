@@ -5,19 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserSigning.LoginActivity_Mart"
+    tools:context=".User.UserInfoActivity"
     >
+
+
 
     <ImageView
         android:id="@+id/mypage_1img"
         android:layout_width="170dp"
         android:layout_height="170dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/mypage_1nametxt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.12"
+
+        android:scaleType="centerCrop"
+        android:background="@drawable/shape"
         app:srcCompat="@drawable/user" />
 
     <TextView
@@ -36,7 +39,7 @@
         app:layout_constraintVertical_bias="0.071" />
 
     <Button
-        android:id="@+id/img_1submitbtn"
+        android:id="@+id/img_1selectbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="선택"

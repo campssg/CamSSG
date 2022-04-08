@@ -26,13 +26,22 @@
             android:layout_height="wrap_content"
             android:gravity="center">
 
+
             <ImageView
                 android:id="@+id/mart_img"
                 android:layout_width="170dp"
                 android:layout_height="170dp"
-                app:srcCompat="@drawable/user"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"/>
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/shape"
+
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toTopOf="@+id/mypage_1nametxt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/ic_menu_gallery" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

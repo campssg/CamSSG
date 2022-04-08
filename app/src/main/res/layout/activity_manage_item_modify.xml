@@ -17,7 +17,7 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/manage_img"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
@@ -25,7 +25,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="15dp"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@android:drawable/ic_menu_gallery" />
 
             <View
                 android:id="@+id/view5"
@@ -53,7 +53,7 @@
                     android:textSize="20sp" />
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/manage_selectBtn"
                     android:layout_width="62dp"
                     android:layout_height="40dp"
                     android:backgroundTint="@color/main_purple"
@@ -164,7 +164,7 @@
                 android:textColor="@android:color/holo_red_dark" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/manage_modifySubmitBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"

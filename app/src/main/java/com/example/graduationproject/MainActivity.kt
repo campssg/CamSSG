@@ -4,6 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
+import com.example.graduationproject.Owner.AddItemOneActivity
+import com.example.graduationproject.Owner.ManageItemModifyActivity
+import com.example.graduationproject.Owner.SetMartActivity
 import com.example.graduationproject.User.CampSearchActivity
 import com.example.graduationproject.User.UserCartActivity
 import com.example.graduationproject.User.UserMainActivity
@@ -62,12 +65,17 @@ class MainActivity : AppCompatActivity() {
 //            val intent = Intent(this, OrderlistActivity::class.java)
 //            startActivity(intent)
 //        }
-        binding.button11.setOnClickListener {
-            val intent = Intent(this, UserCartActivity::class.java)
+        binding.button15.setOnClickListener {
+            val intent = Intent(this, ManageItemModifyActivity::class.java)
             startActivity(intent)
         }
-        binding.button11.setOnClickListener {
-            val intent = Intent(this, CartListActivity::class.java)
+        binding.button16.setOnClickListener {
+            val intent = Intent(this, SetMartActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.button17.setOnClickListener {
+            val intent = Intent(this, AddItemOneActivity::class.java)
             startActivity(intent)
         }
 

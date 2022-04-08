@@ -7,4 +7,6 @@ import com.google.gson.annotations.SerializedName
 data class UserNickResponse(
     @SerializedName("userNickname")
     val userNickname: String
+
 )
+
