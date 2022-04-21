@@ -116,7 +116,7 @@ class UserCartActivity : AppCompatActivity() {
 
 
     interface UserCart {
-        @GET("api/v1/cart/info")
+        @GET("cart/info")
         fun get_userCart(): Call<UserCartInfoResponse>
 
     }

@@ -149,7 +149,7 @@ class RegisterActivity_User : AppCompatActivity() {
     interface SignService {
         //phoneNumberTotal,email,name,Password
         @FormUrlEncoded
-        @POST("api/v1/register/guest")
+        @POST("user/register/guest")
         fun register(
             @Field("phoneNumber") phoneNumberTotal: String,
             @Field("userEmail") email: String,

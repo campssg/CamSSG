@@ -167,12 +167,12 @@ class UserInfoActivity : AppCompatActivity() {
 
     }
     interface UserInfo {
-        @GET("api/v1/user/info")
+        @GET("user/info")
         fun get_userInfo(): Call<UserInfoResponse>
     }
 
     interface UserNickChange{
-        @PATCH("api/v1/user/update/nickname")
+        @PATCH("user/update/nickname")
         @Headers("content-type: application/json", "accept: application/json")
         fun change_nickname(
                 @Body request: UserNickRequest

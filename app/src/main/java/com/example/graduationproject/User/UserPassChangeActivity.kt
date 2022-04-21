@@ -83,7 +83,7 @@ class UserPassChangeActivity : AppCompatActivity() {
     }
 
     interface UserPassChange {
-        @PATCH("api/v1/user/update/password")
+        @PATCH("user/update/password")
         @Headers("content-type: application/json", "accept: application/json")
         fun change_pass(
                 @Body request: UserPassRequest

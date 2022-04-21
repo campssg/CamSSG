@@ -121,7 +121,7 @@ class LoginActivity_User : AppCompatActivity() {
     // 전송값을 @Field 에서 @Body로 변경 => @Body는 json 자체를 전송하므로 반드시 Header에 "content-type" 명시
     //로그인 하기 위해 서버에 아이디, 비밀번호 전달
     interface LoginService{
-        @POST("api/v1/login")
+        @POST("user/login")
         @Headers("content-type: application/json", "accept: application/json")
         fun login(
             @Body request: UserLoginRequest

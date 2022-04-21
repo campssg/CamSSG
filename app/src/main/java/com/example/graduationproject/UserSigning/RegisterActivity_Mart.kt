@@ -151,7 +151,7 @@ class RegisterActivity_Mart : AppCompatActivity() {
         //phoneNumberTotal,email,name,Password
 
         @FormUrlEncoded
-        @POST("api/v1/register/manager")
+        @POST("user/register/manager")
         fun register_martUser(
             @Field("phoneNumber") phoneNumberTotal: String,
             @Field("userEmail") email: String,
