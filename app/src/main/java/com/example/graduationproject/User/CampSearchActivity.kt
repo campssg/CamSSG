@@ -2,14 +2,19 @@ package com.example.graduationproject.User
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.ListAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.CamplistAdapter
 import com.example.graduationproject.databinding.Activity1campsearchBinding
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraPosition
+import com.naver.maps.map.MapView
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.OnMapReadyCallback
 import kotlinx.android.synthetic.main.recyclerview_camplist.view.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -21,10 +26,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
+import android.util.Log
 
-class CampSearchActivity : AppCompatActivity() {
+class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
 //    private lateinit var viewModel :MainViewModel
     //private val camplistAdapter by lazy { CamplistAdapter() }
+
+
+    companion object {
+        lateinit var naverMap: NaverMap
+    }
+
+    private lateinit var mapView: MapView
 
     // 리사이클러뷰 어댑터 설정
     private val listItems = arrayListOf<CampList>()
@@ -34,11 +47,18 @@ class CampSearchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        mapView = binding.
+//        mapView.onCreate(savedInstanceState)
+//        mapView.getMapAsync(this)
         binding = Activity1campsearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        val TAG:String = "CampSearchActivity"
+        Log.e(TAG,"Log---Start:       ")
         // 리사이클러 뷰 레이아웃 매니저 설정, 어댑터 추가
-        binding.rvList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvList.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvList.adapter = camplistAdapter
 
         //어댑터 연결
@@ -54,6 +74,7 @@ class CampSearchActivity : AppCompatActivity() {
         var actionBar: ActionBar?
         actionBar = supportActionBar
         actionBar?.hide()
+
 
 //        val Camplist = arrayListOf<CampList>(
 //            CampList("오리로","","010-8734-7954","","","","010-8734-7954","")
@@ -76,7 +97,6 @@ class CampSearchActivity : AppCompatActivity() {
 
         val service = retrofit.create(CampSearchService::class.java)
         val service2 = retrofit.create(CampListService::class.java)
-
 
 
         // 검색 버튼 클릭 시
@@ -116,14 +136,16 @@ class CampSearchActivity : AppCompatActivity() {
 //                             API 호출(캠핑장 결과)
             service2.search_result(campName, tel, address)
                 .enqueue(object : Callback<CampList> {
-                    override fun onResponse(call: Call<CampList>, response: retrofit2.Response<CampList>) {
+                    override fun onResponse(
+                        call: Call<CampList>,
+                        response: retrofit2.Response<CampList>
+                    ) {
                         if (response.isSuccessful) {
                             val result = response.body()
                             Log.e("조회 완료", "${result}")
 
 //                            binding.rvList.layoutManager = LinearLayoutManager(this)
 //                            binding.rvList.setHasFixedSize(true)
-
 
 
                         } else {
@@ -187,7 +209,7 @@ class CampSearchActivity : AppCompatActivity() {
     }
 
     // 검색 결과 받아와서 리사이클러뷰에 추가
-    private fun AddItemToList(searchResult:CampResult?) {
+    private fun AddItemToList(searchResult: CampResult?) {
         listItems.clear() // 리스트 초기화
         // 결과 리스트 읽어오기
         for (campingList in searchResult!!.campingLists) {
@@ -197,14 +219,22 @@ class CampSearchActivity : AppCompatActivity() {
         camplistAdapter.notifyDataSetChanged()
     }
 
+    override fun onMapReady(p0: NaverMap) {
+        CampSearchActivity.naverMap = naverMap
+
+        var camPos = CameraPosition(
+            LatLng(34.38, 128.55),
+            9.0
+        )
+        naverMap.cameraPosition = camPos
+    }
+
 
 }
 
 private fun <T> Call<T>.enqueue(callback: Callback<CampList>) {
 
 }
-
-
 
 
 // 캠핑장 조회(키워드) API 호출

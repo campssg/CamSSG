@@ -7,6 +7,21 @@
     tools:context=".User.CampSearchActivity">
 
 
+<!--    <fragment-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="300dp"-->
+<!--        android:name = "com.naver.maps.map.MapFragment"-->
+<!--        tools:ignore="MissingConstraints" />-->
+
+    <fragment
+        android:id="@+id/mapmap"
+        android:name="com.naver.maps.map.MapFragment"
+        android:layout_width="409dp"
+        android:layout_height="380dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
