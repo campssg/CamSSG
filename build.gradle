@@ -13,13 +13,19 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+
 allprojects {
     repositories {
         google()
-        jcenter()
+        jcenter() // Warning: this repository is going to shut down soon
         maven {
             url 'https://naver.jfrog.io/artifactory/maven/'
         }
+        /*  추가 시 .java 오류
+        maven{
+            url 'https://jitpack.io'
+        }
+         */
     }
 }
 

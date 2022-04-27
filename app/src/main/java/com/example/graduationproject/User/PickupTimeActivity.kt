@@ -44,16 +44,19 @@ class PickupTimeActivity : AppCompatActivity() {
 
         val text = spinner1.selectedItem.toString()
 
+        val sharedPreferences = getSharedPreferences("putime", MODE_PRIVATE)
+        sharedPreferences.edit().putString("putime", text).apply()
+
         settingDate.setOnClickListener {
             val today = GregorianCalendar()
             val year: Int = today.get(Calendar.YEAR)
             val month: Int = today.get(Calendar.MONTH)
             val date: Int = today.get(Calendar.DATE)
 
-
             val dlg = DatePickerDialog(this, object : DatePickerDialog.OnDateSetListener {
                 override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
                     binding.setDate.setText("${year} - ${month+1} - ${dayOfMonth}")
+
                 }
             }, year, month, date)
 
