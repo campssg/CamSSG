@@ -19,10 +19,10 @@ import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 import android.util.Log
 import android.view.View
-import com.example.graduationproject.Adapter.CartListAdapter
+import androidx.fragment.R
+import androidx.lifecycle.Transformations.map
 import com.naver.maps.map.*
 import com.naver.maps.map.util.FusedLocationSource
-import kotlinx.android.synthetic.main.activity_1cartlist.*
 
 class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: Activity1campsearchBinding
@@ -32,8 +32,6 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         lateinit var naverMap: NaverMap
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
-
-    private lateinit var mapView: MapView
 
     // 리사이클러뷰 어댑터 설정
      val listItems = arrayListOf<CampList>()
@@ -48,9 +46,13 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
 
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
-        mapView = findViewById(R.id.navermap_map_view)
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        val fm = supportFragmentManager
+        val mapFragment = fm.findFragmentById(com.example.graduationproject.R.id.mapmap) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                fm.beginTransaction().add(com.example.graduationproject.R.id.mapmap, it).commit()
+            }
+
+        mapFragment.getMapAsync(this)
 
         val TAG:String = "CampSearchActivity"
         Log.e(TAG,"Log---Start:       ")
