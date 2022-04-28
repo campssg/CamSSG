@@ -7,10 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.databinding.Activity1campsearchBinding
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.CameraPosition
-import com.naver.maps.map.MapView
-import com.naver.maps.map.NaverMap
-import com.naver.maps.map.OnMapReadyCallback
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -24,13 +20,17 @@ import java.util.concurrent.TimeUnit
 import android.util.Log
 import android.view.View
 import com.example.graduationproject.Adapter.CartListAdapter
+import com.naver.maps.map.*
+import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.android.synthetic.main.activity_1cartlist.*
 
 class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: Activity1campsearchBinding
 
+    private lateinit var locationSource: FusedLocationSource
     companion object {
         lateinit var naverMap: NaverMap
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
 
     private lateinit var mapView: MapView
@@ -46,6 +46,11 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = Activity1campsearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+
+        mapView = findViewById(R.id.navermap_map_view)
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync(this)
 
         val TAG:String = "CampSearchActivity"
         Log.e(TAG,"Log---Start:       ")
@@ -170,6 +175,19 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         camplistAdapter.notifyDataSetChanged()
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>,
+                                            grantResults: IntArray) {
+        if (locationSource.onRequestPermissionsResult(requestCode, permissions,
+                grantResults)) {
+            if (!locationSource.isActivated) { // 권한 거부됨
+                naverMap.locationTrackingMode = LocationTrackingMode.None
+            }
+            return
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
     override fun onMapReady(p0: NaverMap) {
         CampSearchActivity.naverMap = naverMap
 
@@ -177,7 +195,9 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
             LatLng(34.38, 128.55),
             9.0
         )
-        naverMap.cameraPosition = camPos
+        //naverMap.cameraPosition = camPos
+        naverMap.locationSource = locationSource
+        naverMap.locationTrackingMode = LocationTrackingMode.Follow
     }
 
 
