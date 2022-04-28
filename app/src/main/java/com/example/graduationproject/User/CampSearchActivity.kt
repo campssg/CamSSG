@@ -1,5 +1,8 @@
 package com.example.graduationproject.User
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
@@ -19,15 +22,16 @@ import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 import android.util.Log
 import android.view.View
-import android.widget.CheckedTextView
-import androidx.fragment.R
-import androidx.lifecycle.Transformations.map
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.naver.maps.map.*
 import com.naver.maps.map.util.FusedLocationSource
 
 class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: Activity1campsearchBinding
 
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
     companion object {
@@ -52,6 +56,7 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         val TAG:String = "CampSearchActivity"
         Log.e(TAG,"Log---Start:       ")
@@ -95,6 +100,28 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val service = retrofit.create(CampSearchService::class.java)
         val service2 = retrofit.create(CampListService::class.java)
+
+        binding.serachAround.setOnClickListener {
+            var currentLocation: Location?
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return@setOnClickListener
+            }
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                currentLocation = location
+                naverMap.locationOverlay.run {
+                    isVisible = true
+                    position = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
+                    Toast.makeText(this@CampSearchActivity, "위도:${position.latitude}, 경도:${position.longitude}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
 
 
         // 검색 버튼 클릭 시
