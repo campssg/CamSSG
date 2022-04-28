@@ -21,11 +21,11 @@ allprojects {
         maven {
             url 'https://naver.jfrog.io/artifactory/maven/'
         }
-        /*  추가 시 .java 오류
+        // 추가 시 .java 오류
         maven{
             url 'https://jitpack.io'
         }
-         */
+
     }
 }
 

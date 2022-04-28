@@ -17,7 +17,10 @@ class CampListAdapter(val itemList: ArrayList<CampList>): RecyclerView.Adapter<C
         return itemList.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder:CampListAdapter.ViewHolder, position: Int) {
+        holder.itemView.setOnClickListener {
+            itemClickListener.onClick(it,position)
+        }
         holder.name.text = itemList[position].campName
         holder.tel.text = itemList[position].tel
         holder.address.text = itemList[position].address

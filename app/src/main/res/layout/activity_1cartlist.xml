@@ -33,23 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="30dp"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/cartlist_totalcheckbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="200dp"
-            android:text="전체" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="선택 삭제" />
-
-    </LinearLayout>
+        android:orientation="horizontal"/>
 
     <View
         android:id="@+id/view"

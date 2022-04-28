@@ -1,15 +1,15 @@
 package com.example.graduationproject.User
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.widget.CompoundButton
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.graduationproject.R
+import com.example.graduationproject.Adapter.CartListAdapter
 import com.example.graduationproject.databinding.Activity1cartlistBinding
+import kotlinx.android.synthetic.main.activity_1cartlist.*
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,14 +17,13 @@ import retrofit2.http.GET
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.*
 import java.util.concurrent.TimeUnit
 
 class UserCartActivity : AppCompatActivity() {
     private lateinit var binding: Activity1cartlistBinding
 
-    private val listItems_Cart = arrayListOf<CartItem>()
-    private val cartlistAdapter = ListAdapter_mart(listItems_Cart)
+     val listItems_Cart = arrayListOf<CartItem>()
+     val cartlistAdapter = CartListAdapter(listItems_Cart)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +41,22 @@ class UserCartActivity : AppCompatActivity() {
         var actionBar: ActionBar?
         actionBar = supportActionBar
         actionBar?.hide()
+
+
+
+
+        cartlistAdapter.setItemClickListener(object: CartListAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                Toast.makeText(view.context,
+                "${listItems_Cart[position].cartItemName}\n" +
+                        "${listItems_Cart[position].cartItemPrice}",
+                Toast.LENGTH_SHORT).show()
+
+            }
+        })
+
+
+
 
 
 
@@ -104,6 +119,8 @@ class UserCartActivity : AppCompatActivity() {
 //        binding.rvCartListItem.adapter = CartlistAdapter
     }
 
+
+
     private fun AddItemToList_cart(cartlistResult: UserCartInfoResponse?) {
         for(cartlist in cartlistResult!!.data.cartItemList){
             listItems_Cart.add(cartlist)
@@ -115,21 +132,15 @@ class UserCartActivity : AppCompatActivity() {
 
 
 
+
+
     interface UserCart {
         @GET("cart/info")
         fun get_userCart(): Call<UserCartInfoResponse>
 
     }
 
-    @SuppressLint("ResourceAsColor")
-    fun onCheckChanged(compoundButton: CompoundButton){
-        when(compoundButton.id){
-            R.id.cartlist_totalcheckbox->{
-                if(binding.cartlistTotalcheckbox.isChecked){
-                }
-            }
-        }
-    }
+
 
 }
 

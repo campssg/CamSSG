@@ -1,19 +1,13 @@
 package com.example.graduationproject.UserSigning
 
 import android.content.Intent
-import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
-import androidx.fragment.app.Fragment
+import com.example.graduationproject.Api.Request.UserLoginRequest
 import com.example.graduationproject.Owner.OwnerMainActivity
-import com.example.graduationproject.User.UserMainActivity
-import com.example.graduationproject.databinding.Activity1loginBinding
 import com.example.graduationproject.databinding.ActivityLoginBinding
 import okhttp3.OkHttpClient
 import retrofit2.Call

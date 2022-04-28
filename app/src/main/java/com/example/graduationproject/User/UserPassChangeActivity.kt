@@ -1,13 +1,12 @@
 package com.example.graduationproject.User
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import com.example.graduationproject.UserSigning.UserLoginRequest
-import com.example.graduationproject.UserSigning.UserLoginResponse
+import com.example.graduationproject.Api.Request.UserPassRequest
+import com.example.graduationproject.Api.Response.UserPassResponse
 import com.example.graduationproject.databinding.Activity1passchangeBinding
 import okhttp3.OkHttpClient
 import retrofit2.Call

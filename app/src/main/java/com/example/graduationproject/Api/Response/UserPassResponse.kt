@@ -1,4 +1,4 @@
-package com.example.graduationproject.User
+package com.example.graduationproject.Api.Response
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName

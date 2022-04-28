@@ -30,18 +30,16 @@
         android:theme="@style/Theme.GraduationProject"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".CompareCartListActivity"></activity>
 
 
-        <activity android:name=".Compare_priceActivity" />
-        <activity android:name=".CartListActivity" />
+        <activity android:name=".User.Compare_priceActivity" />
         <activity android:name=".UserSigning.RegisterActivity_Mart2" />
         <activity android:name=".UserSigning.RegisterActivity_Mart" />
         <activity android:name=".UserSigning.LoginActivity_User" />
         <activity android:name=".User.UserMainActivity" />
         <activity android:name=".UserSigning.SelectWhatToRegisterActivity" />
         <activity android:name=".UserSigning.SelectWhatToLoginActivity" />
-        <activity android:name=".CheapestCategoryActivity" />
+        <activity android:name=".User.CheapestCategoryActivity" />
         <activity android:name=".SelectCategoryActivity" />
 
 

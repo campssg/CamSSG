@@ -12,6 +12,8 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.graduationproject.Api.Request.UserNickRequest
+import com.example.graduationproject.Api.Response.UserInfoResponse
 import com.example.graduationproject.User.*
 import com.example.graduationproject.databinding.ActivityMypageBinding
 import kotlinx.android.synthetic.main.activity_1mypage.*
@@ -109,8 +111,8 @@ class OwnerInfoActivity : AppCompatActivity() {
             val userNick = binding.mypage1nickedit.text.toString()
             val data = UserNickRequest(userNick)
 
-            service2.change_nickname(data).enqueue(object : Callback<UserNickResponse> {
-                override fun onResponse(call: Call<UserNickResponse>, response: Response<UserNickResponse>) {
+            service2.change_nickname(data).enqueue(object : Callback<UserInfoResponse> {
+                override fun onResponse(call: Call<UserInfoResponse>, response: Response<UserInfoResponse>) {
                     if (response.isSuccessful) {
                         val result = response.body()
                         Log.e("수정 완료","${result}")
@@ -122,7 +124,7 @@ class OwnerInfoActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<UserNickResponse>, t: Throwable) {
+                override fun onFailure(call: Call<UserInfoResponse>, t: Throwable) {
                     Log.e("연결실패",t.message.toString())
                 }
 
@@ -174,7 +176,7 @@ class OwnerInfoActivity : AppCompatActivity() {
         @Headers("content-type: application/json", "accept: application/json")
         fun change_nickname(
             @Body request: UserNickRequest
-        ): Call<UserNickResponse>
+        ): Call<UserInfoResponse>
     }
 
     // 알림창

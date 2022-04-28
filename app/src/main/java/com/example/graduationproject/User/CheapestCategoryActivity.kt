@@ -1,4 +1,4 @@
-package com.example.graduationproject
+package com.example.graduationproject.User
 
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar

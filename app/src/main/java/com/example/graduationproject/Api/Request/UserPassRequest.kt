@@ -1,4 +1,4 @@
-package com.example.graduationproject.User
+package com.example.graduationproject.Api.Request
 
 data class UserPassRequest(
         val newPassword:String,

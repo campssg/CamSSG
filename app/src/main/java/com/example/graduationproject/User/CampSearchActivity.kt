@@ -1,21 +1,16 @@
 package com.example.graduationproject.User
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.ListAdapter
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.graduationproject.CamplistAdapter
 import com.example.graduationproject.databinding.Activity1campsearchBinding
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
-import kotlinx.android.synthetic.main.recyclerview_camplist.view.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -27,11 +22,12 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 import android.util.Log
+import android.view.View
+import com.example.graduationproject.Adapter.CartListAdapter
+import kotlinx.android.synthetic.main.activity_1cartlist.*
 
 class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
-//    private lateinit var viewModel :MainViewModel
-    //private val camplistAdapter by lazy { CamplistAdapter() }
-
+    private lateinit var binding: Activity1campsearchBinding
 
     companion object {
         lateinit var naverMap: NaverMap
@@ -40,16 +36,13 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mapView: MapView
 
     // 리사이클러뷰 어댑터 설정
-    private val listItems = arrayListOf<CampList>()
-    private val camplistAdapter = CampListAdapter(listItems)
+     val listItems = arrayListOf<CampList>()
+     val camplistAdapter = CampListAdapter(listItems)
 
-    private lateinit var binding: Activity1campsearchBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        mapView = binding.
-//        mapView.onCreate(savedInstanceState)
-//        mapView.getMapAsync(this)
+
         binding = Activity1campsearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -61,13 +54,6 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvList.adapter = camplistAdapter
 
-        //어댑터 연결
-        //binding.rvList.adapter = camplistAdapter
-        //binding.rvList.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
-
-//        val repository = Repository()
-//        val viewModelFactory = MainViewModelFactory(repository)
-//        viewModel = ViewModelProvider(this,viewModelFactory).get(MainViewModel::class.java)
 
 
         //타이틀 숨기기
@@ -76,9 +62,15 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         actionBar?.hide()
 
 
-//        val Camplist = arrayListOf<CampList>(
-//            CampList("오리로","","010-8734-7954","","","","010-8734-7954","")
-//        )
+        camplistAdapter.setItemClickListener(object: CampListAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                Toast.makeText(this@CampSearchActivity,
+                    "${listItems[position].campName}\n" + "${listItems[position].tel}\n"+"${listItems[position].address}",
+                    Toast.LENGTH_SHORT).show()
+
+            }
+        })
+
 
         // 로그인 후 저장해둔 JWT 토큰 가져오기
         val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
@@ -111,26 +103,7 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
             val tel = "1"
             val address = "1"
 
-//             fun setData(status:String) {
-//                service(status){ b, s, list ->
-//                    list?.let{
-//                        //리스트가 널이 아니면 실행
-//
-//                        (binding.rvList.adapter as CamplistAdapter).setDatas(list) //우리가 만든 얻댑터로 캐스팅
-//                    }
-//                }
-//            }
-//
-//             fun setRV() {
-//                binding.rvList.apply {
-//                    adapter= CamplistAdapter() //데이터 넣어주어야함
-//                        .apply {
-//
-//                        }
-//
-//
-//                }
-//            }
+
             // API 호출
 
 //                             API 호출(캠핑장 결과)
@@ -168,17 +141,7 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
                         if (response.isSuccessful) {
                             val result = response.body()
                             Log.e("조회 완료", "${result}")
-//                            Toast.makeText(
-//                                this@CampSearchActivity,
-//                                "총 결과 " + result?.totalCount + "개 조회 성공",
-//                                Toast.LENGTH_SHORT
-//                            ).show()
 
-//                            Toast.makeText(
-//                                this@CampSearchActivity,
-//                                "총 결과 " + result?.totalCount + "개 조회 성공" + "첫번째 결과 :" + result?.campingLists,
-//                                Toast.LENGTH_SHORT
-//                            ).show()
 
                             // 리사이클러뷰에 결과 출력 요청 함수
                             AddItemToList(result)
@@ -192,18 +155,6 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                 })
 
-
-//
-            // 받아온 값을 리싸이클러뷰에 보여줌
-//                viewModel.getCustomPosts2(Integer.parseInt(binding.editTextView.text.toString()),"id","asc")
-//                viewModel.myCustomPosts2.observe(this, Observer {
-//                    if(it.isSuccessful){
-//                        camplistAdapter.setData(it.body()!!)
-//                    }
-//                    else{
-//                        Toast.makeText(this,it.code(), Toast.LENGTH_SHORT).show()
-//                    }
-//                })
 
         }
     }
@@ -269,5 +220,3 @@ class AddHeaderJWT constructor(val jwt: String) : Interceptor {
         return chain.proceed(newRequest)
     }
 }
-
-
