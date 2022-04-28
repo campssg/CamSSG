@@ -7,6 +7,7 @@ import com.example.graduationproject.User.CampList
 import com.example.graduationproject.User.CampSearchActivity
 import com.example.graduationproject.databinding.RecyclerviewCamplistBinding
 import retrofit2.http.GET
+import java.util.Collections.emptyList
 
 class CamplistAdapter : RecyclerView.Adapter<CamplistAdapter.ViewHolder>() {
 
