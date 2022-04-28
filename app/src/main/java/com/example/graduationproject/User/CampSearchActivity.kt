@@ -19,6 +19,7 @@ import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 import android.util.Log
 import android.view.View
+import android.widget.CheckedTextView
 import androidx.fragment.R
 import androidx.lifecycle.Transformations.map
 import com.naver.maps.map.*
@@ -28,11 +29,10 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: Activity1campsearchBinding
 
     private lateinit var locationSource: FusedLocationSource
+    private lateinit var naverMap: NaverMap
     companion object {
-        lateinit var naverMap: NaverMap
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
-
     // 리사이클러뷰 어댑터 설정
      val listItems = arrayListOf<CampList>()
      val camplistAdapter = CampListAdapter(listItems)
@@ -44,15 +44,14 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = Activity1campsearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
-
         val fm = supportFragmentManager
         val mapFragment = fm.findFragmentById(com.example.graduationproject.R.id.mapmap) as MapFragment?
-            ?: MapFragment.newInstance().also {
+            ?: MapFragment.newInstance(NaverMapOptions().locationButtonEnabled(true)).also {
                 fm.beginTransaction().add(com.example.graduationproject.R.id.mapmap, it).commit()
             }
-
         mapFragment.getMapAsync(this)
+
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
         val TAG:String = "CampSearchActivity"
         Log.e(TAG,"Log---Start:       ")
@@ -190,14 +189,9 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    override fun onMapReady(p0: NaverMap) {
-        CampSearchActivity.naverMap = naverMap
+    override fun onMapReady(naverMap: NaverMap) {
+        this.naverMap = naverMap
 
-        var camPos = CameraPosition(
-            LatLng(34.38, 128.55),
-            9.0
-        )
-        //naverMap.cameraPosition = camPos
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
     }
