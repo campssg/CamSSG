@@ -1,6 +1,7 @@
 package com.example.graduationproject.User
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -23,6 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -82,15 +84,28 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         // 리사이클러뷰 클릭 이벤트 - 데이터 가져오기
         camplistAdapter.setItemClickListener(object: CampListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
-                Toast.makeText(this@CampSearchActivity,
-                    "${listItems[position].mapY}\n" + "${listItems[position].mapX}\n",
-                    Toast.LENGTH_SHORT).show()
+
                 val latitude = listItems[position].mapY
                 val longitude = listItems[position].mapX
-                val intent = Intent(this@CampSearchActivity, MartSearchActivity::class.java)
-                intent.putExtra("lat", latitude)
-                intent.putExtra("long", longitude)
-                startActivity(intent)
+
+                // 알림창 띄우기
+                AlertDialog.Builder(this@CampSearchActivity)
+                    .setTitle("마트 검색")
+                    .setMessage("${listItems[position].campName} 근방의 마트를 검색하시겠습니까?")
+                    .setPositiveButton("예", object :DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            val intent = Intent(this@CampSearchActivity, MartSearchActivity::class.java)
+                            intent.putExtra("lat", latitude)
+                            intent.putExtra("long", longitude)
+                            startActivity(intent)
+                        }
+                    })
+                    .setNegativeButton("아니오", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                        }
+                    })
+                    .create()
+                    .show()
             }
         })
 

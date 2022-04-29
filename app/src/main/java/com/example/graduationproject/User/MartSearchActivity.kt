@@ -110,11 +110,10 @@ class MartSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         // 인탠트 해왔을 경우
         val latitude = intent.getStringExtra("lat")
         val longitude = intent.getStringExtra("long")
-        val xx = longitude?.toDouble()
-        val yy = latitude?.toDouble()
-        Toast.makeText(this,"${xx}/${yy}" , Toast.LENGTH_SHORT).show()
-        if (yy != null && xx != null) {
-            service.search_place(yy, xx)
+        val long = longitude?.toDouble()
+        val lat = latitude?.toDouble()
+        if (lat != null && long != null) {
+            service.search_place(lat, long)
                 .enqueue(object : Callback<List<MartListResponse>> {
                     override fun onResponse(
                         call: Call<List<MartListResponse>>,
@@ -138,18 +137,6 @@ class MartSearchActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                 })
         }
-        /*
-        if (intent.hasExtra("latitude") && intent.hasExtra("longitude")) {
-            val lat = intent.getDoubleExtra("lat", 0.0)
-            val long = intent.getDoubleExtra("long", 0.0)
-            val name = intent.getStringExtra("name")
-            Toast.makeText(this, "${name}\n" + "${long}\n",Toast.LENGTH_SHORT).show()
-
-
-
-        }
-
-         */
 
         binding.searchAround.setOnClickListener {
             var currentLocation: Location?
@@ -179,7 +166,6 @@ class MartSearchActivity : AppCompatActivity(), OnMapReadyCallback {
                 naverMap.locationOverlay.run {
                     isVisible = true
                     position = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
-                    Toast.makeText(this@MartSearchActivity, "위도:${position.latitude}, 경도:${position.longitude}", Toast.LENGTH_SHORT).show()
                 }
                 val position = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
                 service.search_place(position.latitude, position.longitude)
@@ -208,10 +194,6 @@ class MartSearchActivity : AppCompatActivity(), OnMapReadyCallback {
             }
 
         }
-    }
-
-    private fun setXY(latitude: Double, longitude: Double): LatLng {
-        return LatLng(latitude, longitude)
     }
 
     // 검색 결과 받아와서 리사이클러뷰에 추가
