@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit
 import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.naver.maps.map.*
@@ -84,7 +85,12 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
                 Toast.makeText(this@CampSearchActivity,
                     "${listItems[position].mapY}\n" + "${listItems[position].mapX}\n",
                     Toast.LENGTH_SHORT).show()
-
+                val latitude = listItems[position].mapY
+                val longitude = listItems[position].mapX
+                val intent = Intent(this@CampSearchActivity, MartSearchActivity::class.java)
+                intent.putExtra("lat", latitude)
+                intent.putExtra("long", longitude)
+                startActivity(intent)
             }
         })
 

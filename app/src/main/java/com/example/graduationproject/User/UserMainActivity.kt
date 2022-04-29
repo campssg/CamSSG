@@ -58,6 +58,11 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             startActivity(Intent(this, CampSearchActivity::class.java))
         }
 
+        // 마트 조회
+        binding.umainMartsearch.setOnClickListener {
+            startActivity(Intent(this, MartSearchActivity::class.java))
+        }
+
         //내정보수정
         binding.umainUserimg.setOnClickListener {
             startActivity(Intent(this, UserInfoActivity::class.java))
@@ -71,7 +76,7 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         when(item.itemId){
             R.id.user_camping1->startActivity(Intent(this, CampSearchActivity::class.java))
             //R.id.user_camping2->startActivity(Intent(this, CampSearchActivity::class.java))
-            //R.id.user_mart1->startActivity(Intent(this, CampSearchActivity::class.java))
+            R.id.user_mart1->startActivity(Intent(this, MartSearchActivity::class.java))
             //R.id.user_mart2->startActivity(Intent(this, CampSearchActivity::class.java))
             R.id.user_mypage1->startActivity(Intent(this, UserCartActivity::class.java))
             R.id.user_mypage2->startActivity(Intent(this, OrderlistActivity::class.java))
