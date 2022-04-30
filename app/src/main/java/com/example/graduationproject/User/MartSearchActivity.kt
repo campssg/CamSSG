@@ -1,18 +1,18 @@
 package com.example.graduationproject.User
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +24,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
+import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -35,6 +36,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
+// 마트 검색 액티비티
 class MartSearchActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: Activity1martsearchBinding
 
@@ -85,8 +87,22 @@ class MartSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         // 리사이클러뷰 클릭 이벤트 - 데이터 가져오기
         martListAdapter.setItemClickListener(object: MartListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
-                Toast.makeText(this@MartSearchActivity,
-                "${listItems[position].martId}", Toast.LENGTH_SHORT).show()
+                AlertDialog.Builder(this@MartSearchActivity)
+                    .setTitle("상품 검색")
+                    .setMessage("${listItems[position].martName}의 상품을 검색하시겠습니까?")
+                    .setPositiveButton("예", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            val intent = Intent(this@MartSearchActivity, SearchMartItemActivity::class.java)
+                            intent.putExtra("martId", listItems[position].martId)
+                            startActivity(intent)
+                        }
+                    })
+                    .setNegativeButton("아니오", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                        }
+                    })
+                    .create()
+                    .show()
             }
         })
 
@@ -166,6 +182,8 @@ class MartSearchActivity : AppCompatActivity(), OnMapReadyCallback {
                 naverMap.locationOverlay.run {
                     isVisible = true
                     position = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
+                    val cameraUpdate = CameraUpdate.scrollTo(position)
+                    naverMap.moveCamera(cameraUpdate)
                 }
                 val position = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
                 service.search_place(position.latitude, position.longitude)
@@ -202,6 +220,12 @@ class MartSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         if (searchResult != null) {
             for (martList in searchResult) {
                 listItems.add(martList)
+
+                // 검색해 온 위치들 마커 추가
+                Marker().apply {
+                    position = LatLng(martList.latitude, martList.longitude)
+                    map = naverMap
+                }
             }
         }
         martListAdapter.notifyDataSetChanged()
@@ -224,7 +248,17 @@ class MartSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         this.naverMap = naverMap
 
         naverMap.locationSource = locationSource
-        naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        naverMap.locationTrackingMode = LocationTrackingMode.NoFollow
+
+        // 인탠트 해왔을 경우 가져온 좌표로 카메라 이동
+        val latitude = intent.getStringExtra("lat")
+        val longitude = intent.getStringExtra("long")
+        val long = longitude?.toDouble()
+        val lat = latitude?.toDouble()
+        if (lat != null && long != null) {
+            val camperUpdate = CameraUpdate.scrollTo(LatLng(lat, long))
+            naverMap.moveCamera(camperUpdate)
+        }
     }
 }
 
