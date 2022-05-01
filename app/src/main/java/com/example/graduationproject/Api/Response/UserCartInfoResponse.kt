@@ -29,5 +29,6 @@ data class CartItem (
     @SerializedName("cartItemPrice")
     val cartItemPrice:Int,
     @SerializedName("cartItemCount")
-    val cartItemCount:Int
+    val cartItemCount:Int,
+    val cartItemImgUrl: String
 )
