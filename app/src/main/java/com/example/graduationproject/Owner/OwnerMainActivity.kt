@@ -60,13 +60,15 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             startActivity(intent)
         }
 
+        navigationView = binding.navView
+        navigationView.setNavigationItemSelectedListener(this)
     }
 
     // 메뉴 선택
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.set_mart->startActivity(Intent(this, SetMartActivity::class.java))
-            R.id.item_add->startActivity(Intent(this, AddItemOneActivity::class.java))
+            R.id.item_add->startActivity(Intent(this, MartListActivity::class.java))
             R.id.item_manage->startActivity(Intent(this, ManageItemActivity::class.java))
             // 가격 흥정  R.id.price_deal->startActivity(Intent(this, SetMartActivity::class.java))
             R.id.owner_mypage1->startActivity(Intent(this, OwnerInfoActivity::class.java))
