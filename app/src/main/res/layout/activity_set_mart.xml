@@ -102,7 +102,14 @@
                 android:id="@+id/mart_address_edit"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:hint="ㅇㅇ도 ㅇㅇ시 ㅇㅇ동"/>
+                android:focusable="false"
+                android:hint="우편번호 찾기"/>
+
+            <EditText
+                android:id="@+id/mart_address_edit_detail"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:hint="상세주소"/>
 
             <TextView
                 android:layout_width="match_parent"

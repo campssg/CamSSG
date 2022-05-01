@@ -7,17 +7,21 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.graduationproject.R
-import com.example.graduationproject.databinding.ActivityOwnermainBinding
 import com.example.graduationproject.databinding.ActivitySetMartBinding
+import com.example.graduationproject.Owner.AddressActivity.Companion.ADDRESS_REQUEST_CODE
 
 class SetMartActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySetMartBinding
     private var photoUri: Uri? = null
 
+    private val address: EditText by lazy {
+        findViewById(R.id.mart_address_edit)
+    }
 
     val permission_list = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -48,6 +52,14 @@ class SetMartActivity : AppCompatActivity() {
             startActivityForResult(albumInternet, 0)
         }
 
+        binding.martAddressEdit.setOnClickListener {
+            // 버튼을 누르면 AddressActivity를 띄워주는 부분
+            Intent(this, AddressActivity::class.java).apply {
+                startActivityForResult(this, ADDRESS_REQUEST_CODE)
+            }
+        }
+
+
         //등록하기 누르면 메인화면으로
         binding.martInfoSubmit.setOnClickListener {
             Toast.makeText(this, "마트가 등록되었습니다.", Toast.LENGTH_SHORT).show()
@@ -62,6 +74,11 @@ class SetMartActivity : AppCompatActivity() {
         @Suppress("DEPRECATION")
         super.onActivityResult(requestCode, resultCode, data)
 
+        val addressData = data?.extras?.getString("address")
+        if (addressData != null) {
+            address.setText(addressData)
+        }
+
         if (resultCode == AppCompatActivity.RESULT_OK) {
             // 선택한 이미지의 경로 데이터를 관리하는 Uri 객체를 추출한다.
             photoUri = data?.data
@@ -72,6 +89,5 @@ class SetMartActivity : AppCompatActivity() {
 
             }
         }
-
     }
 }
