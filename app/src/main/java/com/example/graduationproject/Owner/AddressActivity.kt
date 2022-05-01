@@ -1,7 +1,6 @@
 package com.example.graduationproject.Owner
 
 import android.annotation.SuppressLint
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.webkit.JavascriptInterface
@@ -31,7 +30,6 @@ class AddressActivity : AppCompatActivity() {
             }
         }
 
-        // Kakao에서 https를 허용하지 않아서 https -> http로 바꿔야 동작함 (중요!!)
         webView.loadUrl("http://13.124.13.202:8080/index.html")
     }
 

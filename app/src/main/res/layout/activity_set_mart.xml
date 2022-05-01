@@ -74,6 +74,49 @@
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:gravity="left"
+                android:text="사업자 번호"
+                android:textSize="20sp"
+                android:textColor="#676767"
+                android:id="@+id/mart_bno"/>
+
+            <EditText
+                android:id="@+id/mart_bno_edit"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="숫자로 이루어진 10자리 값만 가능"/>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="사업 개업 일자"
+                android:textSize="20sp"
+                android:textColor="#676767"
+                android:id="@+id/mart_opendt"/>
+            <EditText
+                android:id="@+id/mart_opendt_edit"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="YYYYMMDD"/>
+
+            <Button
+                android:id="@+id/mart_auth_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="인증하기"
+                android:backgroundTint="@color/main_purple"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="30dp"/>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
                 android:text="마트 이름"
                 android:textSize="20sp"
                 android:textColor="#676767"
@@ -83,11 +126,7 @@
                 android:id="@+id/mart_name_edit"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:hint="ㅇㅇㅇ마트"/>
-
-            <TextView
-                android:layout_width="350dp"
-                android:layout_height="30dp"/>
+                android:hint="마트 이름"/>
 
             <TextView
                 android:layout_width="350dp"
@@ -177,7 +216,7 @@
                 android:gravity="left">
 
                 <RadioGroup
-                    android:id="@+id/Radiogroup"
+                    android:id="@+id/request_yn_group"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
