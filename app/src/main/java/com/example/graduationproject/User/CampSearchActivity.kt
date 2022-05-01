@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.naver.maps.map.*
+import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import retrofit2.http.*
 
@@ -155,7 +156,8 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
                 naverMap.locationOverlay.run {
                     isVisible = true
                     position = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
-
+                    val cameraUpdate = CameraUpdate.scrollTo(position)
+                    naverMap.moveCamera(cameraUpdate)
                 }
                 val position = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
                 Toast.makeText(this@CampSearchActivity, "위도:${position.latitude}, 경도:${position.longitude}", Toast.LENGTH_SHORT).show()
@@ -235,6 +237,11 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
                             val result = response.body()
                             Log.e("조회 완료", "${result}")
 
+                            val lat = result!!.campingLists[0].mapY.toDouble()
+                            val long = result.campingLists[0].mapX.toDouble()
+
+                            val cameraUpdate = CameraUpdate.scrollTo(LatLng(lat, long))
+                            naverMap.moveCamera(cameraUpdate)
 
                             // 리사이클러뷰에 결과 출력 요청 함수
                             AddItemToList(result)
@@ -258,8 +265,16 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         // 결과 리스트 읽어오기
         for (campingList in searchResult!!.campingLists) {
             listItems.add(campingList)
-        }
 
+            val lat = campingList.mapY.toDouble()
+            val long = campingList.mapX.toDouble()
+
+            // 검색해 온 위치들 마커 추가
+            Marker().apply {
+                position = LatLng(lat, long)
+                map = naverMap
+            }
+        }
         camplistAdapter.notifyDataSetChanged()
     }
 
@@ -280,7 +295,7 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         this.naverMap = naverMap
 
         naverMap.locationSource = locationSource
-        naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        naverMap.locationTrackingMode = LocationTrackingMode.NoFollow
     }
 }
 
