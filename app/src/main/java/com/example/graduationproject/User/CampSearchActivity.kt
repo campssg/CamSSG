@@ -8,6 +8,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,9 +24,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.naver.maps.map.*
@@ -45,8 +46,8 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     // 리사이클러뷰 어댑터 설정
-    val listItems =arrayListOf<CampList>()
-    val camplistAdapter = CampListAdapter(listItems)
+     val listItems = arrayListOf<CampList>()
+     val camplistAdapter = CampListAdapter(listItems)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,13 +57,11 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         // 네이버 지도 프래그먼트 불러오기
-        val fm =supportFragmentManager
-        val mapFragment =
-            fm.findFragmentById(com.example.graduationproject.R.id.mapmap) as MapFragment?
-                ?: MapFragment.newInstance(NaverMapOptions().locationButtonEnabled(true)).also{
-                    fm.beginTransaction().add(com.example.graduationproject.R.id.mapmap,it)
-                        .commit()
-                }
+        val fm = supportFragmentManager
+        val mapFragment = fm.findFragmentById(com.example.graduationproject.R.id.mapmap) as MapFragment?
+            ?: MapFragment.newInstance(NaverMapOptions().locationButtonEnabled(true)).also {
+                fm.beginTransaction().add(com.example.graduationproject.R.id.mapmap, it).commit()
+            }
         mapFragment.getMapAsync(this)
 
         val locationManager = this.getSystemService(LOCATION_SERVICE) as LocationManager
@@ -70,21 +69,21 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        val TAG: String = "CampSearchActivity"
-        Log.e(TAG, "Log---Start:       ")
+        val TAG:String = "CampSearchActivity"
+        Log.e(TAG,"Log---Start:       ")
         // 리사이클러 뷰 레이아웃 매니저 설정, 어댑터 추가
-        binding.rvList.layoutManager=
+        binding.rvList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvList.adapter= camplistAdapter
+        binding.rvList.adapter = camplistAdapter
 
         //타이틀 숨기기
         var actionBar: ActionBar?
-        actionBar =supportActionBar
+        actionBar = supportActionBar
         actionBar?.hide()
 
 
         // 리사이클러뷰 클릭 이벤트 - 데이터 가져오기
-        camplistAdapter.setItemClickListener(object : CampListAdapter.OnItemClickListener {
+        camplistAdapter.setItemClickListener(object: CampListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
 
                 val latitude = listItems[position].mapY
@@ -94,10 +93,9 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
                 AlertDialog.Builder(this@CampSearchActivity)
                     .setTitle("마트 검색")
                     .setMessage("${listItems[position].campName} 근방의 마트를 검색하시겠습니까?")
-                    .setPositiveButton("예", object : DialogInterface.OnClickListener {
+                    .setPositiveButton("예", object :DialogInterface.OnClickListener {
                         override fun onClick(p0: DialogInterface?, p1: Int) {
-                            val intent =
-                                Intent(this@CampSearchActivity, MartSearchActivity::class.java)
+                            val intent = Intent(this@CampSearchActivity, MartSearchActivity::class.java)
                             intent.putExtra("lat", latitude)
                             intent.putExtra("long", longitude)
                             startActivity(intent)
@@ -114,7 +112,7 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
         // 로그인 후 저장해둔 JWT 토큰 가져오기
-        val sharedPreferences = getSharedPreferences("token",MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
         val jwt = sharedPreferences.getString("jwt", "")
 
         val client = OkHttpClient.Builder()
@@ -132,52 +130,38 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         val service2 = retrofit.create(CampListService::class.java)
 
         // 위치 검색 버튼 클릭 시 현재 위치 좌표 반환
-        binding.searchAround.setOnClickListener{
+        binding.searchAround.setOnClickListener {
             var currentLocation: Location?
             if (ActivityCompat.checkSelfPermission(
                     this,
                     Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED&& ActivityCompat.checkSelfPermission(
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                     this,
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 return@setOnClickListener
             } else { // 권한이 없으면 권한 요구
-                val permissions =arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-                ActivityCompat.requestPermissions(
-                    this,
-                    permissions,
-                    LOCATION_PERMISSION_REQUEST_CODE
-                )
+                val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE)
             }
-            fusedLocationClient.lastLocation.addOnSuccessListener{location: Location?->
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                // 위치 설정이 켜져있지 않을 경우 위치 설정 화면으로 이동
                 if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                 }
                 currentLocation = location
 
-                naverMap.locationOverlay.run{
-                    isVisible= true
-                    position= LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
-
+                // 현재 위치 좌표 출력
+                naverMap.locationOverlay.run {
+                    isVisible = true
+                    position = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
                     val cameraUpdate = CameraUpdate.scrollTo(position)
                     naverMap.moveCamera(cameraUpdate)
                 }
                 val position = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
-                Toast.makeText(
-                    this@CampSearchActivity,
-                    "위도:${position.latitude}, 경도:${position.longitude}",
-                    Toast.LENGTH_SHORT
-                ).show()
-                service.search_place(
-                    page = "1",
-                    position.latitude.toString(),
-                    position.longitude.toString()
-                )
+                Toast.makeText(this@CampSearchActivity, "위도:${position.latitude}, 경도:${position.longitude}", Toast.LENGTH_SHORT).show()
+                service.search_place(page="1", position.latitude.toString(), position.longitude.toString())
                     .enqueue(object : Callback<CampResult> {
                         override fun onResponse(
                             call: Call<CampResult>,
@@ -202,102 +186,76 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
 
-        binding.btnSearch.setOnClickListener{
-            var currentLocation: Location?
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED&& ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return@setOnClickListener
-            } else { // 권한이 없으면 권한 요구
-                val permissions =arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-                ActivityCompat.requestPermissions(
-                    this, permissions,
-                    CampSearchActivity.LOCATION_PERMISSION_REQUEST_CODE
-                )
-            }
-            fusedLocationClient.lastLocation.addOnSuccessListener{location: Location?->
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-                }
-                currentLocation = location
-
-                naverMap.locationOverlay.run{
-                    isVisible= true
-                    position= LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
-                    val cameraUpdate = CameraUpdate.scrollTo(position)
-                    naverMap.moveCamera(cameraUpdate)
-                }
-
-// 검색 키워드 가져오기
-                val keyword = binding.etSearchField.text.toString()
-                val page = "1"
-
-                val campName = "1"
-                val tel = "1"
-                val address = "1"
+        // 검색 버튼 클릭 시
+        binding.btnSearch.setOnClickListener {
 
 
-                // API 호출
+            // 검색 키워드 가져오기
+            val keyword = binding.etSearchField.text.toString()
+            val page = "1"
+
+            val campName = "1"
+            val tel = "1"
+            val address = "1"
+
+
+            // API 호출
 
 //                             API 호출(캠핑장 결과)
-                service2.search_result(campName, tel, address)
-                    .enqueue(object : Callback<CampList> {
-                        override fun onResponse(
-                            call: Call<CampList>,
-                            response: retrofit2.Response<CampList>
-                        ) {
-                            if (response.isSuccessful) {
-                                val result = response.body()
-                                Log.e("조회 완료", "${result}")
+            service2.search_result(campName, tel, address)
+                .enqueue(object : Callback<CampList> {
+                    override fun onResponse(
+                        call: Call<CampList>,
+                        response: retrofit2.Response<CampList>
+                    ) {
+                        if (response.isSuccessful) {
+                            val result = response.body()
+                            Log.e("조회 완료", "${result}")
 
 //                            binding.rvList.layoutManager = LinearLayoutManager(this)
 //                            binding.rvList.setHasFixedSize(true)
 
 
-                            } else {
-                                Log.d("캠핑장 조회", "실패")
+                        } else {
+                            Log.d("캠핑장 조회", "실패")
 
-                            }
                         }
+                    }
 
-                        override fun onFailure(call: Call<CampList>, t: Throwable) {
-                            Log.e("연결실패", t.message.toString())
+                    override fun onFailure(call: Call<CampList>, t: Throwable) {
+                        Log.e("연결실패", t.message.toString())
+                    }
+                })
+
+            service.search_keyword(keyword, page)
+                .enqueue(object : Callback<CampResult> {
+                    override fun onResponse(
+                        call: Call<CampResult>,
+                        response: retrofit2.Response<CampResult>
+                    ) {
+                        if (response.isSuccessful) {
+                            val result = response.body()
+                            Log.e("조회 완료", "${result}")
+
+                            val lat = result!!.campingLists[0].mapY.toDouble()
+                            val long = result.campingLists[0].mapX.toDouble()
+
+                            val cameraUpdate = CameraUpdate.scrollTo(LatLng(lat, long))
+                            naverMap.moveCamera(cameraUpdate)
+
+                            // 리사이클러뷰에 결과 출력 요청 함수
+                            AddItemToList(result)
+                        } else {
+                            Log.d("캠핑장 조회", "실패")
                         }
-                    })
+                    }
 
-                service.search_keyword(keyword, page)
-                    .enqueue(object : Callback<CampResult> {
-                        override fun onResponse(
-                            call: Call<CampResult>,
-                            response: retrofit2.Response<CampResult>
-                        ) {
-                            if (response.isSuccessful) {
-                                val result = response.body()
-                                Log.e("조회 완료", "${result}")
+                    override fun onFailure(call: Call<CampResult>, t: Throwable) {
+                        Log.e("연결실패", t.message.toString())
+                    }
+                })
 
 
-                                // 리사이클러뷰에 결과 출력 요청 함수
-                                AddItemToList(result)
-                            } else {
-                                Log.d("캠핑장 조회", "실패")
-                            }
-                        }
-
-                        override fun onFailure(call: Call<CampResult>, t: Throwable) {
-                            Log.e("연결실패", t.message.toString())
-                        }
-                    })
-
-
-            }
         }
     }
 
@@ -308,17 +266,17 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         for (campingList in searchResult!!.campingLists) {
             listItems.add(campingList)
 
+            val lat = campingList.mapY.toDouble()
+            val long = campingList.mapX.toDouble()
 
-            Marker().apply{
-                position = LatLng(37.5666102, 126.9783881)
-                map= naverMap
+            // 검색해 온 위치들 마커 추가
+            Marker().apply {
+                position = LatLng(lat, long)
+                map = naverMap
             }
         }
-
         camplistAdapter.notifyDataSetChanged()
     }
-
-
 
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>,
@@ -326,7 +284,7 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         if (locationSource.onRequestPermissionsResult(requestCode, permissions,
                 grantResults)) {
             if (!locationSource.isActivated) { // 권한 거부됨
-                naverMap.locationTrackingMode= LocationTrackingMode.None
+                naverMap.locationTrackingMode = LocationTrackingMode.None
             }
             return
         }
@@ -336,18 +294,8 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
 
-        naverMap.locationSource= locationSource
-        naverMap.locationTrackingMode= LocationTrackingMode.Follow
-
-        val latitude =intent.getStringExtra("lat")
-        val longitude =intent.getStringExtra("long")
-        val long = longitude?.toDouble()
-        val lat = latitude?.toDouble()
-        if (lat != null && long != null) {
-            val camperUpdate = CameraUpdate.scrollTo(LatLng(lat, long))
-            naverMap.moveCamera(camperUpdate)
-        }
-
+        naverMap.locationSource = locationSource
+        naverMap.locationTrackingMode = LocationTrackingMode.NoFollow
     }
 }
 
@@ -387,7 +335,7 @@ class AddHeaderJWT constructor(val jwt: String) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val token = "Bearer $jwt"
-        val newRequest = chain.request().newBuilder().apply{
+        val newRequest = chain.request().newBuilder().apply {
             addHeader("Authorization", token)
         }.build()
         Log.d("토큰 설정", token)
