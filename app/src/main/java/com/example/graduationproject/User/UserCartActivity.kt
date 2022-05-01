@@ -86,7 +86,7 @@ class UserCartActivity : AppCompatActivity() {
                             "${listItems_Cart[position].cartItemPrice}",
                     Toast.LENGTH_SHORT).show()
 
-
+                // 리사이클러뷰 클릭 -> 바로 삭제
                 service2.delete_item(listItems_Cart[position].cartItemId)
                     .enqueue(object : Callback<DeleteCartItemResponse> {
                         override fun onResponse(
