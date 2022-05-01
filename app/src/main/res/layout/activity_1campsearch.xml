@@ -13,15 +13,32 @@
 <!--        android:name = "com.naver.maps.map.MapFragment"-->
 <!--        tools:ignore="MissingConstraints" />-->
 
-    <fragment
-        android:id="@+id/mapmap"
-        android:name="com.naver.maps.map.MapFragment"
-        android:layout_width="409dp"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="380dp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:ignore="MissingConstraints">
+
+        <fragment
+            android:id="@+id/mapmap"
+            android:name="com.naver.maps.map.MapFragment"
+            android:layout_width="409dp"
+            android:layout_height="380dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/search_around"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_marginEnd="8dp"
+            android:text="위치검색" />
+
+    </FrameLayout>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -106,16 +123,6 @@
             app:layout_constraintTop_toTopOf="@+id/btn_nextPage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/serach_around"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="위치검색"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.487" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

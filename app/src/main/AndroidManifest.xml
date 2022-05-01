@@ -63,6 +63,8 @@
         <activity android:name=".UserSigning.LoginActivity_Mart" />
         <activity android:name=".User.UserInfoActivity"/>
 
+        <activity android:name=".User.SearchMartItemActivity"/>
+        <activity android:name=".User.MartSearchActivity"/>
         <activity android:name=".User.CampSearchActivity"/>
         <activity android:name=".MainActivity">
         <intent-filter>

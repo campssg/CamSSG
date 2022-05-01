@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category_array">
+        <item>모두</item>
+        <item>축산</item>
+        <item>김치/반찬</item>
+        <item>생수/음료</item>
+        <item>간편식품</item>
+        <item>과일/견과</item>
+        <item>채소</item>
+        <item>가공식품</item>
+        <item>생활용품</item>
+        <item>캠핑용품</item>
+    </string-array>
+</resources>

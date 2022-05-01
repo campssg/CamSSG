@@ -8,15 +8,20 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Adapter.CartListAdapter
+import com.example.graduationproject.Api.Request.AddCartRequest
+import com.example.graduationproject.Api.Response.AddCartResponse
+import com.example.graduationproject.Api.Response.DeleteCartItemResponse
 import com.example.graduationproject.databinding.Activity1cartlistBinding
 import kotlinx.android.synthetic.main.activity_1cartlist.*
+import kotlinx.android.synthetic.main.recyclerview_cart_list_item.view.*
 import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
+import retrofit2.*
 import retrofit2.http.GET
 
-import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
+import retrofit2.http.POST
+import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
 class UserCartActivity : AppCompatActivity() {
@@ -43,20 +48,8 @@ class UserCartActivity : AppCompatActivity() {
         actionBar?.hide()
 
 
-
-
-        cartlistAdapter.setItemClickListener(object: CartListAdapter.OnItemClickListener{
-            override fun onClick(v: View, position: Int) {
-                Toast.makeText(view.context,
-                "${listItems_Cart[position].cartItemName}\n" +
-                        "${listItems_Cart[position].cartItemPrice}",
-                Toast.LENGTH_SHORT).show()
-
-            }
-        })
-
-
-
+        val itemNum = binding.itemNum
+        val totalprice = binding.cartlistTotalPrice
 
 
 
@@ -76,11 +69,51 @@ class UserCartActivity : AppCompatActivity() {
             .client(client).build()
 
         val service = retrofit.create(UserCart::class.java)
+        val service2 = retrofit.create(DeleteCartItem::class.java)
 
         val sharedPreferences2 = getSharedPreferences("userInfo", MODE_PRIVATE)
         val userName = sharedPreferences2.getString("userName","")
 
         binding.textView38.setText(userName)
+
+
+        // 리사이클러뷰 선택
+        cartlistAdapter.setItemClickListener(object: CartListAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                Toast.makeText(view.context,
+                    "${listItems_Cart[position].cartItemName}\n" +
+                            "${listItems_Cart[position].cartItemPrice}",
+                    Toast.LENGTH_SHORT).show()
+
+
+                // x 누를시
+                binding.rvCartListItem.cartlistitem_closeBtn.setOnClickListener {
+                    service2.delete_item(listItems_Cart[position].cartItemId)
+                        .enqueue(object : Callback<DeleteCartItemResponse> {
+                            override fun onResponse(
+                                call: Call<DeleteCartItemResponse>,
+                                response: Response<DeleteCartItemResponse>
+                            ) {
+                                if (response.isSuccessful) {
+                                    val result = response.body()
+                                    Log.e("성공", "${result}")
+                                } else {
+                                    Log.d("장바구니 삭제", "실패")
+                                }
+                            }
+                            override fun onFailure(
+                                call: Call<DeleteCartItemResponse>,
+                                t: Throwable
+                            ) {
+                                Log.e("연결실패", t.message.toString())
+                            }
+                        })
+                }
+
+            }
+        })
+
+
 
         // 사용자 장바구니 API 호출
         // API 호출
@@ -88,7 +121,7 @@ class UserCartActivity : AppCompatActivity() {
             .enqueue(object : Callback<UserCartInfoResponse> {
                 override fun onResponse(
                     call: Call<UserCartInfoResponse>,
-                    response: retrofit2.Response<UserCartInfoResponse>
+                    response: Response<UserCartInfoResponse>
                 ) {
                     if (response.isSuccessful) {
                         val result = response.body()
@@ -98,6 +131,8 @@ class UserCartActivity : AppCompatActivity() {
 //                            "총 결과"+result?.data,
 //                            Toast.LENGTH_SHORT
 //                        ).show()
+                        itemNum.setText(result?.data?.totalCount.toString())
+                        totalprice.setText(result?.data?.totalPrice.toString())
                         if (result != null) {
                             AddItemToList_cart(result)
                         }
@@ -117,6 +152,8 @@ class UserCartActivity : AppCompatActivity() {
 //
 //        //어댑터 설정
 //        binding.rvCartListItem.adapter = CartlistAdapter
+
+
     }
 
 
@@ -140,6 +177,12 @@ class UserCartActivity : AppCompatActivity() {
 
     }
 
+    interface DeleteCartItem {
+        @POST("cart/delete/{cartItemId}")
+        fun delete_item(
+            @Path("cartItemId") cartItemId: Int,
+        ): Call<DeleteCartItemResponse>
+    }
 
 
 }
