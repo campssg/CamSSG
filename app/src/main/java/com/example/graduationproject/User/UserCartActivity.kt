@@ -88,7 +88,7 @@ class UserCartActivity : AppCompatActivity() {
 
                 // x 누를시
                 binding.rvCartListItem.cartlistitem_closeBtn.setOnClickListener {
-                    service2.add_item(listItems_Cart[position].cartItemId)
+                    service2.delete_item(listItems_Cart[position].cartItemId)
                         .enqueue(object : Callback<DeleteCartItemResponse> {
                             override fun onResponse(
                                 call: Call<DeleteCartItemResponse>,
@@ -180,7 +180,7 @@ class UserCartActivity : AppCompatActivity() {
     interface DeleteCartItem {
         @POST("cart/delete/{cartItemId}")
         fun delete_item(
-            @Path("cartItemId") cartItemId: Long,
+            @Path("cartItemId") cartItemId: Int,
         ): Call<DeleteCartItemResponse>
     }
 

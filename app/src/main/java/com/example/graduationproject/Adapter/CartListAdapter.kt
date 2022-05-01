@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.graduationproject.R
 import com.example.graduationproject.User.CartItem
+import java.util.*
 
 
 //장바구니 어댑터
@@ -27,11 +28,13 @@ class CartListAdapter(val itemList: ArrayList<CartItem>): RecyclerView.Adapter<C
         }
         holder.cartlistItem_name.text = itemList[position].cartItemName
         holder.cartlistItem_price.text = itemList[position].cartItemPrice.toString()
+        holder.cartlistItem_Num.text = itemList[position].cartItemCount.toString()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val cartlistItem_name: TextView = itemView.findViewById(R.id.cartlistItem_name)
         val cartlistItem_price: TextView = itemView.findViewById(R.id.cartlistItem_price)
+        val cartlistItem_Num: TextView = itemView.findViewById(R.id.cartlistitem_amount)
     }
 
     interface OnItemClickListener {
