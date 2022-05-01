@@ -24,12 +24,16 @@ class SearchMartItemListAdapter(val itemList: ArrayList<ProductList>): RecyclerV
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.name.text = itemList[position].productName
+        holder.price.text = itemList[position].productPrice.toString()
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
         }
-        // 반환값에 이미지 url 추가 후 Glide.with(holder.itemView.context).load(itemList[position].productImgUrl).into(holder.image)
-        holder.name.text = itemList[position].productName
-        holder.price.text = itemList[position].productPrice.toString()
+        if (!itemList[position].productImgUrl.isNullOrEmpty()) {
+            Glide.with(holder.itemView.context).load(itemList[position].productImgUrl).into(holder.image)
+        } else {
+            holder.image.setImageResource(R.drawable.hamburger)
+        }
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

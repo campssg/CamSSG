@@ -1,5 +1,6 @@
 package com.example.graduationproject.User
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -97,6 +98,7 @@ class UserCartActivity : AppCompatActivity() {
                                 if (response.isSuccessful) {
                                     val result = response.body()
                                     Log.e("성공", "${result}")
+                                    startActivity(Intent(this@UserCartActivity, UserCartActivity::class.java))
                                 } else {
                                     Log.d("장바구니 삭제", "실패")
                                 }

@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Adapter.SearchMartItemListAdapter
 import com.example.graduationproject.Api.Request.AddCartRequest
 import com.example.graduationproject.Api.Response.AddCartResponse
-import com.example.graduationproject.Api.Response.Data
 import com.example.graduationproject.Api.Response.ProductList
+import com.example.graduationproject.Api.Response.SearchMartCategoryResponse
 import com.example.graduationproject.Api.Response.SearchMartItemResponse
 import com.example.graduationproject.R
 import com.example.graduationproject.databinding.Activity1searchMartItemListBinding
@@ -88,21 +88,46 @@ class SearchMartItemActivity : AppCompatActivity() {
         // 스피너 설정
         val spinner = binding.itemCategory
         spinner.adapter = ArrayAdapter.createFromResource(this, R.array.category_array, android.R.layout.simple_spinner_item)
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                when (position) {
-                    1 -> {
-                        // TODO: 카테고리별로 상품 호출
-                    }
-                }
-            }
-        }
 
         // 마트 클릭해서 인텐트로 넘어오면
         val martId = intent.getLongExtra("martId", 0)
         if (martId != null) {
+            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                    when (position) {
+                        1 -> {
+                            searchCategory(1, martId)
+                        }
+                        2 -> {
+                            searchCategory(2, martId)
+                        }
+                        3 -> {
+                            searchCategory(3, martId)
+                        }
+                        4 -> {
+                            searchCategory(4, martId)
+                        }
+                        5 -> {
+                            searchCategory(5, martId)
+                        }
+                        6 -> {
+                            searchCategory(6, martId)
+                        }
+                        7 -> {
+                            searchCategory(7, martId)
+                        }
+                        8 -> {
+                            searchCategory(8, martId)
+                        }
+                        9 -> {
+                            searchCategory(9, martId)
+                        }
+                    }
+                }
+            }
+
             service.search_item(martId)
                 .enqueue(object : Callback<SearchMartItemResponse> {
                     override fun onResponse(
@@ -115,6 +140,8 @@ class SearchMartItemActivity : AppCompatActivity() {
 
                             // 리사이클러뷰에 결과 출력 요청 함수
                             AddItemToList(result!!.data)
+                        } else {
+                            Log.d("마트 상품 조회", "실패")
                         }
                     }
                     override fun onFailure(call: Call<SearchMartItemResponse>, t: Throwable) {
@@ -174,8 +201,50 @@ class SearchMartItemActivity : AppCompatActivity() {
 
     }
 
-   // 검색 결과 받아와서 리사이클러뷰에 추가
-   private fun AddItemToList(searchResult: Data?) {
+    private fun searchCategory(categoryId: Long, martId: Long) {
+
+        // 로그인 후 저장해둔 JWT 토큰 가져오기
+        val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
+        val jwt = sharedPreferences.getString("jwt", "")
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(AddHeaderJWT(jwt.toString())) // JWT header 달아주는 interceptor 추가
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS).build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://13.124.13.202:8080/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client).build()
+
+        val service = retrofit.create(SearchMartItemService::class.java)
+
+        service.search_category(categoryId, martId)
+            .enqueue(object : Callback<SearchMartCategoryResponse> {
+                override fun onResponse(
+                    call: Call<SearchMartCategoryResponse>,
+                    response: Response<SearchMartCategoryResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val result = response.body()
+                        Log.e("조회 완료", "${result}")
+
+                        // 리사이클러뷰에 결과 출력 요청 함수
+                        AddItemToList(result)
+                    } else {
+                        Log.d("카테고리 조회", "실패")
+                    }
+                }
+
+                override fun onFailure(call: Call<SearchMartCategoryResponse>, t: Throwable) {
+                    Log.e("연결실패", t.message.toString())
+                }
+            })
+    }
+
+    // 검색 결과 받아와서 리사이클러뷰에 추가
+   private fun AddItemToList(searchResult: SearchMartCategoryResponse?) {
        listItems.clear() // 리스트 초기화
        //결과 리스트 읽어오기
        for (productList in searchResult!!.productList) {
@@ -190,6 +259,12 @@ interface SearchMartItemService {
     fun search_item(
         @Path("martId") martId: Long
     ): Call<SearchMartItemResponse>
+
+    @GET("search/mart/category/{categoryId}/{martId}")
+    fun search_category(
+        @Path("categoryId") categoryId: Long,
+        @Path("martId") martId: Long
+    ): Call<SearchMartCategoryResponse>
 }
 
 interface AddCartItemService {
