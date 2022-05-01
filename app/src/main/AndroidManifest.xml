@@ -12,7 +12,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
-
+    <!-- 인터넷 권한 설정   -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 인터넷 연결 확인-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
 
 
@@ -47,6 +50,7 @@
         <activity android:name=".Owner.AddItemOneActivity"/>
         <activity android:name=".Owner.OwnerInfoActivity"/>
         <activity android:name=".Owner.SetMartActivity"/>
+        <activity android:name=".Owner.AddressActivity"/>
         <activity android:name=".Owner.ManageItemModifyActivity"/>
         <activity android:name=".User.UserCartActivity" />
         <activity android:name=".User.bookmark_martActivity" />
