@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".Owner.SelectAddOneOrManyActivity">
+
+    <Button
+        android:id="@+id/SelectAddMany"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="물품 체크리스트로 일괄 등록하시겠어요?" />
+
+    <Button
+        android:id="@+id/SelectAddOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="하나씩 직접 등록하시겠어요?" />
+
+</LinearLayout>

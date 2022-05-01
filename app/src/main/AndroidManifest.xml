@@ -43,8 +43,6 @@
         <activity android:name=".UserSigning.SelectWhatToRegisterActivity" />
         <activity android:name=".UserSigning.SelectWhatToLoginActivity" />
         <activity android:name=".User.CheapestCategoryActivity" />
-        <activity android:name=".SelectCategoryActivity" />
-
 
         <activity android:name=".User.OrderlistActivity" />
         <activity android:name=".Owner.AddItemOneActivity"/>
@@ -63,6 +61,7 @@
         <activity android:name=".UserSigning.LoginActivity_Mart" />
         <activity android:name=".User.UserInfoActivity"/>
 
+        <activity android:name=".Owner.SelectAddOneOrManyActivity"/>
         <activity android:name=".Owner.MartListActivity"/>
         <activity android:name=".User.SearchMartItemActivity"/>
         <activity android:name=".User.MartSearchActivity"/>
