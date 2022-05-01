@@ -198,10 +198,7 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
             val tel = "1"
             val address = "1"
 
-
-            // API 호출
-
-//                             API 호출(캠핑장 결과)
+            // API 호출(캠핑장 결과)
             service2.search_result(campName, tel, address)
                 .enqueue(object : Callback<CampList> {
                     override fun onResponse(
@@ -211,10 +208,6 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
                         if (response.isSuccessful) {
                             val result = response.body()
                             Log.e("조회 완료", "${result}")
-
-//                            binding.rvList.layoutManager = LinearLayoutManager(this)
-//                            binding.rvList.setHasFixedSize(true)
-
 
                         } else {
                             Log.d("캠핑장 조회", "실패")
