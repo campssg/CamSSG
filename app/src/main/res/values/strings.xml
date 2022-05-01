@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">GraduationProject</string>
+
+    <string name="name_marker">Marker</string>
+    <string name="description_marker">마커</string>
+    <string name="marker_caption_1">☀캡션이 있는 마커🎉</string>
+    <string name="marker_caption_2">서브 캡션이 있는 마커</string>
+    <string name="marker_sub_caption_2">🇰🇷서브 캡션👩🏿‍🍳</string>
 </resources>
