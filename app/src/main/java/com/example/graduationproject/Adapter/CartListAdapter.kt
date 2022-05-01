@@ -11,6 +11,8 @@ import com.example.graduationproject.User.CartItem
 
 //장바구니 어댑터
 class CartListAdapter(val itemList: ArrayList<CartItem>): RecyclerView.Adapter<CartListAdapter.ViewHolder>() {
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.recyclerview_cart_list_item, parent, false)
@@ -28,12 +30,14 @@ class CartListAdapter(val itemList: ArrayList<CartItem>): RecyclerView.Adapter<C
         holder.cartlistItem_name.text = itemList[position].cartItemName
         holder.cartlistItem_price.text = itemList[position].cartItemPrice.toString()
         holder.cartlistItem_Num.text = itemList[position].cartItemCount.toString()
+
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val cartlistItem_name: TextView = itemView.findViewById(R.id.cartlistItem_name)
         val cartlistItem_price: TextView = itemView.findViewById(R.id.cartlistItem_price)
         val cartlistItem_Num: TextView = itemView.findViewById(R.id.cartlistitem_amount)
+
     }
 
     interface OnItemClickListener {

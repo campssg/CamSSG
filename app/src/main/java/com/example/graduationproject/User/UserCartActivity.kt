@@ -87,30 +87,28 @@ class UserCartActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT).show()
 
 
-                // x 누를시
-                binding.rvCartListItem.cartlistitem_closeBtn.setOnClickListener {
-                    service2.delete_item(listItems_Cart[position].cartItemId)
-                        .enqueue(object : Callback<DeleteCartItemResponse> {
-                            override fun onResponse(
-                                call: Call<DeleteCartItemResponse>,
-                                response: Response<DeleteCartItemResponse>
-                            ) {
-                                if (response.isSuccessful) {
-                                    val result = response.body()
-                                    Log.e("성공", "${result}")
-                                    startActivity(Intent(this@UserCartActivity, UserCartActivity::class.java))
-                                } else {
-                                    Log.d("장바구니 삭제", "실패")
-                                }
+                service2.delete_item(listItems_Cart[position].cartItemId)
+                    .enqueue(object : Callback<DeleteCartItemResponse> {
+                        override fun onResponse(
+                            call: Call<DeleteCartItemResponse>,
+                            response: Response<DeleteCartItemResponse>
+                        ) {
+                            if (response.isSuccessful) {
+                                val result = response.body()
+                                Log.e("성공", "${result}")
+
+                                startActivity(Intent(this@UserCartActivity, UserCartActivity::class.java))
+                            } else {
+                                Log.d("장바구니 삭제", "실패")
                             }
-                            override fun onFailure(
-                                call: Call<DeleteCartItemResponse>,
-                                t: Throwable
-                            ) {
-                                Log.e("연결실패", t.message.toString())
-                            }
-                        })
-                }
+                        }
+                        override fun onFailure(
+                            call: Call<DeleteCartItemResponse>,
+                            t: Throwable
+                        ) {
+                            Log.e("연결실패", t.message.toString())
+                        }
+                    })
 
             }
         })
