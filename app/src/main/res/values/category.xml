@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="category_array">
-        <item>모두</item>
+        <item>선택안함</item>
         <item>축산</item>
         <item>김치/반찬</item>
         <item>생수/음료</item>
