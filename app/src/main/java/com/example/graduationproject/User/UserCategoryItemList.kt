@@ -152,6 +152,7 @@ class UserCategoryItemList : AppCompatActivity() {
         }
 
 
+
         // 리사이클러뷰 클릭시 상세보기 이동
         CompareCartAdapter.setItemClickListener(object : CompareCartAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {

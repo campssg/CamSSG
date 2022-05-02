@@ -63,7 +63,7 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             startActivity(Intent(this, MartSearchActivity::class.java))
         }
 
-        //내 정보 수정
+        //내정보 수정
         binding.umainUserimg.setOnClickListener {
             startActivity(Intent(this, UserInfoActivity::class.java))
         }

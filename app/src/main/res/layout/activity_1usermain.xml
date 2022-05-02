@@ -147,7 +147,7 @@
             android:id="@+id/umain_order"
             android:layout_width="280dp"
             android:layout_height="70dp"
-            android:text="가격 비교"
+            android:text="장바구니 가격 비교"
             android:textSize="22sp"
             android:textStyle="bold"
             app:backgroundTint="@color/main_purple"

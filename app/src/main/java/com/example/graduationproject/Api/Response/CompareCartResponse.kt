@@ -11,6 +11,7 @@ data class CompareCartResponse(
     val message: String,
     @SerializedName("data")
     val data: Data,
+
 )
 
 data class Data(
