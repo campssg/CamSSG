@@ -81,25 +81,25 @@
         app:layout_constraintVertical_bias="0.084" />
 
     <TextView
-        android:id="@+id/numberofmart_orderItem"
+        android:id="@+id/order_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="062-323-058"
+        android:text="202205021840123"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.951"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/paydate_orderItem"
-        app:layout_constraintVertical_bias="0.056" />
+        app:layout_constraintVertical_bias="0.037" />
 
     <TextView
-        android:id="@+id/name_orderItem"
+        android:id="@+id/order_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="갈비 외 상품 3개"
+        android:text="주문상태"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/numberofmart_orderItem"
+        app:layout_constraintEnd_toStartOf="@+id/order_number"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/martname_orderItem"
         app:layout_constraintTop_toTopOf="parent"

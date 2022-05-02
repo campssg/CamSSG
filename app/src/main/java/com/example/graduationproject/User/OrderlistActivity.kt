@@ -13,6 +13,7 @@ class OrderlistActivity : AppCompatActivity() {
         binding = Activity1orderlistBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
     }
 }
 

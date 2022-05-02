@@ -20,6 +20,8 @@ import com.example.graduationproject.R
 import com.example.graduationproject.User.AddHeaderJWT
 import com.example.graduationproject.databinding.ActivityAddItemOneBinding
 import kotlinx.android.synthetic.main.activity_add_item_one.*
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -128,13 +130,11 @@ class AddItemOneActivity: AppCompatActivity() {
             val productPrice = binding.itemPriceEdit.text.toString()
             val categoryId = category
 
-            val uploadImg = if (photoUri != null) {
-                val file = File(absolutePath(photoUri!!))
-                val body : RequestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
-                MultipartBody.Part.createFormData("images", file.name, body)
-            } else {
-                null
-            }
+            // 이미지 파일 생성
+            val file = File(absolutePath(photoUri!!))
+            val requestBody : RequestBody = file.asRequestBody("image/*".toMediaType())
+            val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("images", file.name, requestBody)
+            Toast.makeText(this, file.name.toString(), Toast.LENGTH_SHORT).show()
             // API 호출
             service.add_item(categoryId, categoryId, productName = productName,
                 productPrice = productPrice.toInt(), productStock = productStock.toInt(), uploadImg)
@@ -198,13 +198,14 @@ class AddItemOneActivity: AppCompatActivity() {
 
 // 마트 상품 하나씩 직접 등록 API 호출
 interface AddItemOneService {
+    @Multipart
     @POST("mart/{martId}")
     fun add_item(
         @Path("martId") martId: Long,
-        @Query("categoryId") categoryId: Long,
-        @Query("productName") productName: String,
-        @Query("productPrice") productPrice: Int,
-        @Query("productStock") productStock: Int,
+        @Part("categoryId") categoryId: Long,
+        @Part("productName") productName: String,
+        @Part("productPrice") productPrice: Int,
+        @Part("productStock") productStock: Int,
         @Part img: MultipartBody.Part?
     ): Call<AddItemOneResponse>
 }

@@ -10,5 +10,6 @@ data class UserInfoResponse(
     @SerializedName("userName")
     val userName:String,
     @SerializedName("userNickname")
-    val userNickname: String
-)
+    val userNickname: String,
+    val userImgUrl: String
+    )
