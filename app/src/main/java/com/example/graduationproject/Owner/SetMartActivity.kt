@@ -127,16 +127,18 @@ class SetMartActivity : AppCompatActivity() {
             val startDt = binding.martOpendtEdit.text.toString()
 
             val data = MartAuthRequest(bno, startDt)
-            println(data)
             service.authMart(data).enqueue(object : Callback<MartAuthResponse> {
                 override fun onResponse(
                     call: Call<MartAuthResponse>,
                     response: Response<MartAuthResponse>
                 ) {
-                    println(response)
-                    if (response.isSuccessful) {
+                    if (response.body()?.data.equals("true")) {
                         binding.martAuthBtn.setText("인증 완료")
+                        Toast.makeText(this@SetMartActivity, "인증이 완료되었습니다.", Toast.LENGTH_SHORT).show()
                         canNextStep = true
+                    } else {
+                        // binding.martAuthBtn.setText("인증 완료")
+                        Toast.makeText(this@SetMartActivity, "존재하지 않는 사업자 입니다.", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -149,38 +151,38 @@ class SetMartActivity : AppCompatActivity() {
 
         //등록하기 누르면 메인화면으로
         binding.martInfoSubmit.setOnClickListener {
-            if (!canNextStep) {
+            if (canNextStep) {
+                var martName = binding.martNameEdit.text.toString()
+                var startDt = binding.martOpendtEdit.text.toString()
+                var openTime = binding.martTimeStart.selectedItem.toString()
+                var closeTime = binding.martTimeStart.selectedItem.toString()
+
+                martAddress += " " + binding.martAddressEditDetail.text.toString()
+
+                val service = retrofit.create(AddMart::class.java)
+
+                val data = MartAddRequest(martName, lon.toString(), lat.toString(), startDt, martAddress.toString()
+                    , openTime, closeTime, requestYn.toString())
+
+                service.addMart(data)
+                    .enqueue(object : Callback<AddMartResponse> {
+                        override fun onResponse(call: Call<AddMartResponse>, response: Response<AddMartResponse>) {
+                            if (response.isSuccessful) {
+                                Toast.makeText(this@SetMartActivity, "마트를 정상적으로 등록하였습니다.", Toast.LENGTH_SHORT).show()
+
+                                var outintent = Intent(applicationContext, OwnerMainActivity::class.java)
+                                setResult(Activity.RESULT_OK, outintent)
+                                finish()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<AddMartResponse>, t: Throwable) {
+                            Log.e("연결실패",t.message.toString())
+                        }
+                    })
+            } else {
                 Toast.makeText(this@SetMartActivity, "사업자 인증 후 진행해주세요.", Toast.LENGTH_SHORT).show()
             }
-
-            var martName = binding.martNameEdit.text.toString()
-            var startDt = binding.martOpendtEdit.text.toString()
-            var openTime = binding.martTimeStart.selectedItem.toString()
-            var closeTime = binding.martTimeStart.selectedItem.toString()
-
-            martAddress += " " + binding.martAddressEditDetail.text.toString()
-
-            val service = retrofit.create(AddMart::class.java)
-
-            val data = MartAddRequest(martName, lon.toString(), lat.toString(), startDt, martAddress.toString()
-                , openTime, closeTime, requestYn.toString())
-
-            service.addMart(data)
-                .enqueue(object : Callback<AddMartResponse> {
-                    override fun onResponse(call: Call<AddMartResponse>, response: Response<AddMartResponse>) {
-                        if (response.isSuccessful) {
-                            Toast.makeText(this@SetMartActivity, "마트를 정상적으로 등록하였습니다.", Toast.LENGTH_SHORT).show()
-
-                            var outintent = Intent(applicationContext, OwnerMainActivity::class.java)
-                            setResult(Activity.RESULT_OK, outintent)
-                            finish()
-                        }
-                    }
-
-                    override fun onFailure(call: Call<AddMartResponse>, t: Throwable) {
-                        Log.e("연결실패",t.message.toString())
-                    }
-                })
         }
     }
 

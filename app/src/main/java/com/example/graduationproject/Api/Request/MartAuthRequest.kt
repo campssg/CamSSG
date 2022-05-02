@@ -1,6 +1,6 @@
 package com.example.graduationproject.Api.Request
 
 data class MartAuthRequest (
-    val bNo:String,
+    val bno:String,
     val startDt:String
 )
