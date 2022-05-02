@@ -19,7 +19,9 @@ import com.example.graduationproject.Api.Response.UserInfoResponse
 import com.example.graduationproject.databinding.Activity1mypageBinding
 import kotlinx.android.synthetic.main.activity_1mypage.*
 import kotlinx.android.synthetic.main.activity_martinfo.*
+import okhttp3.MediaType.Companion.parse
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -156,8 +158,8 @@ class UserInfoActivity : AppCompatActivity() {
         // 임시로 롱클릭으로 설정해둠
         img_1selectbtn.setOnLongClickListener {
             val file = File(absolutePath(photoUri!!))
-            val requestBody : RequestBody = file.asRequestBody("image/jpeg".toMediaType())
-            val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("images", file.name, requestBody)
+            val requestBody : RequestBody = file.asRequestBody("multipart/form-data".toMediaType())
+            val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("upload_file", file.name, requestBody)
             Toast.makeText(this,"${uploadImg.body}, ${uploadImg.headers}", Toast.LENGTH_SHORT).show()
             service.update_img(uploadImg)
                 .enqueue(object : Callback<UserImgUpdatedResponse> {

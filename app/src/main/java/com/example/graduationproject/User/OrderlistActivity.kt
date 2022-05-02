@@ -76,7 +76,24 @@ class OrderlistActivity : AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 when (position) {
                     1 -> {
-
+                        service.prepared_order()
+                            .enqueue(object : Callback<List<UserOrderListResponse>> {
+                                override fun onResponse(
+                                    call: Call<List<UserOrderListResponse>>,
+                                    response: Response<List<UserOrderListResponse>>
+                                ) {
+                                    if (response.isSuccessful) {
+                                        val result = response.body()
+                                        Log.e("성공", "${result}")
+                                        AddItemToList(result)
+                                    } else {
+                                        Log.d("주문 내역 조회", "실패")
+                                    }
+                                }
+                                override fun onFailure(call: Call<List<UserOrderListResponse>>, t: Throwable) {
+                                    Log.e("연결실패", t.message.toString())
+                                }
+                            })
                     }
                 }
             }
@@ -92,7 +109,7 @@ class OrderlistActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val result = response.body()
                         Log.e("성공", "${result}")
-                        // AddItemToList(result)
+                        AddItemToList(result)
                     } else {
                         Log.d("주문 내역 조회", "실패")
                     }
@@ -117,6 +134,9 @@ class OrderlistActivity : AppCompatActivity() {
 interface UserOrderListService {
     @GET("order/user")
     fun total_order():Call<List<UserOrderListResponse>>
+
+    @GET("order/prepared")
+    fun prepared_order():Call<List<UserOrderListResponse>>
 }
 
 
