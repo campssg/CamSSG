@@ -68,6 +68,12 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             startActivity(Intent(this, UserInfoActivity::class.java))
         }
 
+        // 가격 비교
+        binding.umainOrder.setOnClickListener {
+            startActivity(Intent(this, UserCategoryItemList::class.java))
+        }
+
+
         navigationView = binding.navView
         navigationView.setNavigationItemSelectedListener(this)
     }
