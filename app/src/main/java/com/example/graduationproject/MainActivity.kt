@@ -8,6 +8,7 @@ import com.example.graduationproject.Owner.AddItemOneActivity
 import com.example.graduationproject.Owner.ManageItemModifyActivity
 import com.example.graduationproject.Owner.SetMartActivity
 import com.example.graduationproject.User.CampSearchActivity
+import com.example.graduationproject.User.ChecklistCategoryActivity
 import com.example.graduationproject.User.UserCartActivity
 import com.example.graduationproject.User.UserMainActivity
 import com.example.graduationproject.UserSigning.LoginActivity_User
@@ -76,6 +77,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.button17.setOnClickListener {
             val intent = Intent(this, AddItemOneActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.button18.setOnClickListener {
+            val intent = Intent(this, ChecklistCategoryActivity::class.java)
             startActivity(intent)
         }
 

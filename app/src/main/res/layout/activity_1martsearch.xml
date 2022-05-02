@@ -22,15 +22,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/search_around"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom"
-            android:layout_marginEnd="8dp"
-            android:text="위치검색" />
-
     </FrameLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -113,6 +104,19 @@
             app:layout_constraintEnd_toStartOf="@+id/btn_nextPage"
             app:layout_constraintStart_toEndOf="@+id/btn_prevPage"
             app:layout_constraintTop_toTopOf="@+id/btn_nextPage" />
+
+        <Button
+            android:id="@+id/search_around"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_marginStart="248dp"
+            android:text="위치검색"
+            app:layout_constraintBottom_toBottomOf="@+id/et_search_field"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
