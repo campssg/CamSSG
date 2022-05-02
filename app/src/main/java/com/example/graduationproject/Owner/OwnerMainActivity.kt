@@ -73,10 +73,9 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             // 가격 흥정  R.id.price_deal->startActivity(Intent(this, SetMartActivity::class.java))
             R.id.owner_mypage1->startActivity(Intent(this, OwnerInfoActivity::class.java))
             R.id.owner_mypage2->startActivity(Intent(this, EditMartActivity::class.java))
-            // 주문 현황  R.id.owner_mypage3->startActivity(Intent(this, OrderlistActivity::class.java))
+            R.id.owner_mypage3->startActivity(Intent(this, Order_MartListActivity::class.java))
             // 회원 탈퇴  R.id.owner_mypage4->startActivity(Intent(this, ::class.java))
             R.id.owner_mypage5->startActivity(Intent(this, SelectWhatToLoginActivity::class.java))
-
         }
         return false
     }

@@ -4,37 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".User.OrderlistActivity" >
+    tools:context=".Owner.Order_MartListActivity">
 
-    <Spinner
-        android:id="@+id/orderlist_spinner"
-        android:layout_width="200dp"
+    <TextView
+        android:id="@+id/mart_list"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/main_purple"
-        android:spinnerMode="dropdown"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="주문 현황을 조회할 마트 선택"
         android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.033"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/noticeRV"
+        android:id="@+id/rv_list_mart"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="683dp"
+        android:background="#E8EAF6"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orderlist_spinner"
-        tools:listitem="@layout/recyclerview_order_item_user">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:listitem="@layout/recyclerview_martlist" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

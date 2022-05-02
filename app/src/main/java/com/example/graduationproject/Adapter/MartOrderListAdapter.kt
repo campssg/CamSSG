@@ -5,15 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.graduationproject.Api.Response.UserOrderListResponse
+import com.example.graduationproject.Api.Response.MartOrderListResponse
 import com.example.graduationproject.R
 
-class UserOrderListAdapter(val itemList: ArrayList<UserOrderListResponse>):RecyclerView.Adapter<UserOrderListAdapter.ViewHolder>() {
+class MartOrderListAdapter(val itemList: ArrayList<MartOrderListResponse>):RecyclerView.Adapter<MartOrderListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): UserOrderListAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_order_item_user, parent, false)
+    ): MartOrderListAdapter.ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_order_item_mart, parent, false)
         return ViewHolder(view)
     }
 
@@ -21,25 +21,27 @@ class UserOrderListAdapter(val itemList: ArrayList<UserOrderListResponse>):Recyc
         return itemList.size
     }
 
-    override fun onBindViewHolder(holder: UserOrderListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MartOrderListAdapter.ViewHolder, position: Int) {
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
         }
-        holder.martName.text = itemList[position].martName
+        holder.userName.text = itemList[position].userName
         holder.orderId.text = itemList[position].orderId.toString()
         holder.orderState.text = itemList[position].orderState
-        holder.totalPrice.text = itemList[position].totalPrice.toString()
+        holder.order_phoneNumber.text = itemList[position].order_phoneNumber
         holder.pickup_day.text = itemList[position].pickup_day
         holder.pickup_time.text = itemList[position].pickup_time
+        holder.totalPrice.text = itemList[position].totalPrice.toString()
     }
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val martName: TextView = itemView.findViewById(R.id.martname_orderItem)
+    class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+        val userName : TextView = itemView.findViewById(R.id.user_name)
         val orderId : TextView = itemView.findViewById(R.id.order_number)
         val orderState : TextView = itemView.findViewById(R.id.order_state)
         val pickup_day : TextView = itemView.findViewById(R.id.textView30)
         val pickup_time : TextView = itemView.findViewById(R.id.pickuptime_orderItem)
         val totalPrice : TextView = itemView.findViewById(R.id.price_orderItem)
+        val order_phoneNumber : TextView = itemView.findViewById(R.id.order_phoneNumber)
     }
 
     interface OnItemClickListener {
