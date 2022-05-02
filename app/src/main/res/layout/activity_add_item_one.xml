@@ -107,11 +107,12 @@
                     android:layout_height="50dp"
                     android:backgroundTint="@color/main_purple"
                     android:text="-" />
-                <TextView
+                <EditText
                     android:id="@+id/item_num_edit"
                     android:layout_width="150dp"
                     android:layout_height="50dp"
-                    android:text="1"
+                    android:inputType="number"
+                    android:hint="재고 입력"
                     android:gravity="center"/>
                 <Button
                     android:id="@+id/plusBtn"
@@ -136,9 +137,13 @@
                 android:id="@+id/itemType"/>
 
             <Spinner
-                android:id="@+id/item_type"
+                android:id="@+id/item_category"
                 android:layout_width="350dp"
-                android:layout_height="50dp"/>
+                android:layout_height="50dp"
+                android:textSize="20sp"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="350dp"
@@ -157,6 +162,7 @@
                 android:id="@+id/item_price_edit"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:text="2000"/>
 
             <TextView
