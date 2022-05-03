@@ -75,23 +75,48 @@
                 android:text="상품명"
                 android:textSize="20sp" />
 
-            <EditText
-                android:id="@+id/editTextTextPersonName3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/modify_name"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:text="삼겹살"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:text="현재 재고 수량"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/now_stock"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:text="10"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textStyle="bold" />
+
+
 
             <TextView
                 android:id="@+id/textView19"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
-                android:text="상품 재고"
+                android:text="추가할 수량"
                 android:textSize="20sp" />
 
             <LinearLayout
@@ -109,12 +134,13 @@
                     android:backgroundTint="@color/main_purple"
                     android:text="-" />
 
-                <TextView
-                    android:id="@+id/textView20"
+                <EditText
+                    android:id="@+id/modify_stock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:inputType="number"
                     android:text="0" />
 
                 <Button
@@ -133,13 +159,18 @@
                 android:text="상품 카테고리"
                 android:textSize="20sp" />
 
-            <Spinner
-                android:id="@+id/spinner2"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/modify_category"
+                android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="40dp"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="10dp"
+                android:text="육류"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/textView22"
@@ -150,15 +181,17 @@
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/modify_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="10dp"
                 android:ems="10"
-                android:hint="냉동 삼겹살 1kg"
-                android:inputType="textPersonName"
+                android:hint="가격"
+                android:inputType="number"
+                android:clickable="false"
+                android:editable="false"
                 android:text="Name" />
 
             <TextView
