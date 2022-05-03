@@ -68,12 +68,28 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.set_mart->startActivity(Intent(this, SetMartActivity::class.java))
-            R.id.item_add->startActivity(Intent(this, SelectAddOneOrManyActivity::class.java))
-            R.id.item_manage->startActivity(Intent(this, ManageItemActivity::class.java))
-            // 가격 흥정  R.id.price_deal->startActivity(Intent(this, SetMartActivity::class.java))
+            R.id.item_add->{
+                val intent = Intent(this, MartListActivity::class.java)
+                intent.putExtra("menu", 1)
+                startActivity(intent)
+            }
+            R.id.item_manage->{
+                val intent = Intent(this, MartListActivity::class.java)
+                intent.putExtra("menu", 2)
+                startActivity(intent)
+            }
+            // 가격 흥정  R.id.price_deal->{startActivity(Intent(this, SetMartActivity::class.java))}
             R.id.owner_mypage1->startActivity(Intent(this, OwnerInfoActivity::class.java))
-            R.id.owner_mypage2->startActivity(Intent(this, EditMartActivity::class.java))
-            R.id.owner_mypage3->startActivity(Intent(this, Order_MartListActivity::class.java))
+            R.id.owner_mypage2->{
+                val intent = Intent(this, MartListActivity::class.java)
+                intent.putExtra("menu", 4)
+                startActivity(intent)
+            }
+            R.id.owner_mypage3-> {
+                val intent = Intent(this, MartListActivity::class.java)
+                intent.putExtra("menu", 5)
+                startActivity(intent)
+            }
             // 회원 탈퇴  R.id.owner_mypage4->startActivity(Intent(this, ::class.java))
             R.id.owner_mypage5->startActivity(Intent(this, SelectWhatToLoginActivity::class.java))
         }

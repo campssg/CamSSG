@@ -44,7 +44,6 @@
         <activity android:name=".UserSigning.SelectWhatToLoginActivity" />
         <activity android:name=".User.ChecklistCategoryActivity" />
         <activity android:name=".Owner.OrderListActivity"/>
-        <activity android:name=".Owner.Order_MartListActivity" />
 
         <activity android:name=".User.OrderlistActivity" />
         <activity android:name=".Owner.AddItemOneActivity"/>

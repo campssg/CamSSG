@@ -1,6 +1,7 @@
 package com.example.graduationproject.Owner
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.graduationproject.Api.Response.AddItemOneResponse
@@ -134,7 +136,7 @@ class AddItemOneActivity: AppCompatActivity() {
             val file = File(absolutePath(photoUri!!))
             val requestBody : RequestBody = file.asRequestBody("image/*".toMediaType())
             val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("img", file.name, requestBody)
-            Toast.makeText(this, file.name.toString(), Toast.LENGTH_SHORT).show()
+
             // API 호출
             service.add_item(categoryId, categoryId, productName = productName,
                 productPrice = productPrice.toInt(), productStock = productStock.toInt(), uploadImg)
@@ -143,10 +145,26 @@ class AddItemOneActivity: AppCompatActivity() {
                         call: Call<AddItemOneResponse>,
                         response: Response<AddItemOneResponse>
                     ) {
+                        println(response)
                         if (response.isSuccessful) {
-                            println(response)
                             val result = response.body()
                             Log.e("등록 완료", "${result}")
+
+                            AlertDialog.Builder(this@AddItemOneActivity)
+                                .setTitle("상품 등록 완료")
+                                .setMessage("${productName} ${productStock}개를 마트에 등록했습니다.\n추가로 등록하시겠습니까?")
+                                .setPositiveButton("예", object : DialogInterface.OnClickListener {
+                                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                                    }
+                                })
+                                .setNegativeButton("아니오", object : DialogInterface.OnClickListener {
+                                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                                        startActivity(Intent(this@AddItemOneActivity, OwnerMainActivity::class.java))
+                                        finish()
+                                    }
+                                })
+                                .create()
+                                .show()
                         } else {
                             Log.d("마트 상품 등록", "실패")
                         }
@@ -202,10 +220,10 @@ interface AddItemOneService {
     @POST("mart/{martId}")
     fun add_item(
         @Path("martId") martId: Long,
-        @Part("categoryId") categoryId: Long,
-        @Part("productName") productName: String,
-        @Part("productPrice") productPrice: Int,
-        @Part("productStock") productStock: Int,
+        @Query("categoryId") categoryId: Long,
+        @Query("productName") productName: String,
+        @Query("productPrice") productPrice: Int,
+        @Query("productStock") productStock: Int,
         @Part img: MultipartBody.Part?
     ): Call<AddItemOneResponse>
 }
