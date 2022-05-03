@@ -8,15 +8,6 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="물품 체크리스트"
-        android:background="@color/purple_500"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:textStyle="bold"/>
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -44,7 +35,7 @@
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/checklist_meat_recyceler_view"
+                android:id="@+id/checklist_recyceler_view"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/recyclerview_checklist_item" />

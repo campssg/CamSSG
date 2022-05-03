@@ -25,10 +25,14 @@ import java.util.concurrent.TimeUnit
 //HJ 물품 체크리스트 카테고리 선택
 class ChecklistCategoryActivity: AppCompatActivity() {
     private lateinit var binding: ActivityChecklistcategoryBinding
+
+    val listItems = arrayListOf<CategoryCheckListResponse>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChecklistcategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
 
 
@@ -62,223 +66,80 @@ class ChecklistCategoryActivity: AppCompatActivity() {
         binding.imgKimchi.setOnClickListener{
 
 
-            service.Checklist(categoryId=2)
-                .enqueue(object: Callback<List<CategoryCheckListResponse>>{
-                    override fun onResponse(
-                        call: Call<List<CategoryCheckListResponse>>,
-                        response: Response<List<CategoryCheckListResponse>>
-                    ) {
-                        val result = response.body()
-                        Log.e("결과값","${result}")
-                        if(response.isSuccessful){
-                            val result = response.body()
-                            Log.e("조회 완료","${result}")
-                        }
-                        else{
-                            Log.e("카테고리 조회","실패")
-                        }
-                    }
+            //김치
 
-                    override fun onFailure(call: Call<List<CategoryCheckListResponse>>, t: Throwable) {
-                        Log.e("연결실패",t.message.toString())
-                    }
-                })
+            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            intent.putExtra("categoryId","2")
+            startActivity(intent)
+
         }
 
         //축산
         binding.imgMeat.setOnClickListener{
 
+            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            intent.putExtra("categoryId","1")
+            startActivity(intent)
 
-            val categoryId :Long = 1
-            service.Checklist(categoryId)
-                .enqueue(object: Callback<List<CategoryCheckListResponse>>{
-                    override fun onResponse(
-                        call: Call<List<CategoryCheckListResponse>>,
-                        response: Response<List<CategoryCheckListResponse>>
-                    ) {
-                        val result = response.body()
-                        Log.e("결과값","${result}")
-                        if(response.isSuccessful){
-                            val result = response.body()
-                            Log.e("조회 완료","${result}")
-                        }
-                        else{
-                            Log.e("카테고리 조회","실패")
-                        }
-                    }
 
-                    override fun onFailure(call: Call<List<CategoryCheckListResponse>>, t: Throwable) {
-                        Log.e("연결실패",t.message.toString())
-                    }
-                })
         }
 
         binding.imgDrinks.setOnClickListener{
 
 
             //생수
-            val categoryId :Long = 3
-            service.Checklist(categoryId)
-                .enqueue(object: Callback<List<CategoryCheckListResponse>>{
-                    override fun onResponse(
-                        call: Call<List<CategoryCheckListResponse>>,
-                        response: Response<List<CategoryCheckListResponse>>
-                    ) {
-                        val result = response.body()
-                        Log.e("결과값","${result}")
-                        if(response.isSuccessful){
-                            val result = response.body()
-                            Log.e("조회 완료","${result}")
-                        }
-                        else{
-                            Log.e("카테고리 조회","실패")
-                        }
-                    }
 
-                    override fun onFailure(call: Call<List<CategoryCheckListResponse>>, t: Throwable) {
-                        Log.e("연결실패",t.message.toString())
-                    }
-                })
+            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            intent.putExtra("categoryId","3")
+            startActivity(intent)
+
         }
 
         binding.imgSimple.setOnClickListener{
 
             //간편식품
 
-            val categoryId :Long = 4
-            service.Checklist(categoryId)
-                .enqueue(object: Callback<List<CategoryCheckListResponse>>{
-                    override fun onResponse(
-                        call: Call<List<CategoryCheckListResponse>>,
-                        response: Response<List<CategoryCheckListResponse>>
-                    ) {
-                        val result = response.body()
-                        Log.e("결과값","${result}")
-                        if(response.isSuccessful){
-                            val result = response.body()
-                            Log.e("조회 완료","${result}")
-                        }
-                        else{
-                            Log.e("카테고리 조회","실패")
-                        }
-                    }
+            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            intent.putExtra("categoryId","4")
+            startActivity(intent)
 
-                    override fun onFailure(call: Call<List<CategoryCheckListResponse>>, t: Throwable) {
-                        Log.e("연결실패",t.message.toString())
-                    }
-                })
         }
 
         binding.imgFruits.setOnClickListener{
-
-
             //과일/견과
-            val categoryId :Long = 5
-            service.Checklist(categoryId)
-                .enqueue(object: Callback<List<CategoryCheckListResponse>>{
-                    override fun onResponse(
-                        call: Call<List<CategoryCheckListResponse>>,
-                        response: Response<List<CategoryCheckListResponse>>
-                    ) {
-                        val result = response.body()
-                        Log.e("결과값","${result}")
-                        if(response.isSuccessful){
-                            val result = response.body()
-                            Log.e("조회 완료","${result}")
-                        }
-                        else{
-                            Log.e("카테고리 조회","실패")
-                        }
-                    }
 
-                    override fun onFailure(call: Call<List<CategoryCheckListResponse>>, t: Throwable) {
-                        Log.e("연결실패",t.message.toString())
-                    }
-                })
+            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            intent.putExtra("categoryId","5")
+            startActivity(intent)
+
         }
 
         binding.imgFresh.setOnClickListener{
 
             //채소
+            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            intent.putExtra("categoryId","6")
+            startActivity(intent)
 
-            val categoryId :Long = 6
-            service.Checklist(categoryId)
-                .enqueue(object: Callback<List<CategoryCheckListResponse>>{
-                    override fun onResponse(
-                        call: Call<List<CategoryCheckListResponse>>,
-                        response: Response<List<CategoryCheckListResponse>>
-                    ) {
-                        val result = response.body()
-                        Log.e("결과값","${result}")
-                        if(response.isSuccessful){
-                            val result = response.body()
-                            Log.e("조회 완료","${result}")
-                        }
-                        else{
-                            Log.e("카테고리 조회","실패")
-                        }
-                    }
-
-                    override fun onFailure(call: Call<List<CategoryCheckListResponse>>, t: Throwable) {
-                        Log.e("연결실패",t.message.toString())
-                    }
-                })
         }
 
         binding.imgProcessed.setOnClickListener{
 
 
             //가공식품
-            val categoryId :Long = 7
-            service.Checklist(categoryId)
-                .enqueue(object: Callback<List<CategoryCheckListResponse>>{
-                    override fun onResponse(
-                        call: Call<List<CategoryCheckListResponse>>,
-                        response: Response<List<CategoryCheckListResponse>>
-                    ) {
-                        val result = response.body()
-                        Log.e("결과값","${result}")
-                        if(response.isSuccessful){
-                            val result = response.body()
-                            Log.e("조회 완료","${result}")
-                        }
-                        else{
-                            Log.e("카테고리 조회","실패")
-                        }
-                    }
+            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            intent.putExtra("categoryId","7")
+            startActivity(intent)
 
-                    override fun onFailure(call: Call<List<CategoryCheckListResponse>>, t: Throwable) {
-                        Log.e("연결실패",t.message.toString())
-                    }
-                })
         }
 
         binding.imgLiving.setOnClickListener{
 
             //생활용품
+            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            intent.putExtra("categoryId","8")
+            startActivity(intent)
 
-            val categoryId :Long = 8
-            service.Checklist(categoryId)
-                .enqueue(object: Callback<List<CategoryCheckListResponse>>{
-                    override fun onResponse(
-                        call: Call<List<CategoryCheckListResponse>>,
-                        response: Response<List<CategoryCheckListResponse>>
-                    ) {
-                        val result = response.body()
-                        Log.e("결과값","${result}")
-                        if(response.isSuccessful){
-                            val result = response.body()
-                            Log.e("조회 완료","${result}")
-                        }
-                        else{
-                            Log.e("카테고리 조회","실패")
-                        }
-                    }
-
-                    override fun onFailure(call: Call<List<CategoryCheckListResponse>>, t: Throwable) {
-                        Log.e("연결실패",t.message.toString())
-                    }
-                })
         }
 
 
@@ -286,32 +147,11 @@ class ChecklistCategoryActivity: AppCompatActivity() {
 
             //가공식품
 
-            val categoryId :Long = 9
-            service.Checklist(categoryId)
-                .enqueue(object: Callback<List<CategoryCheckListResponse>>{
-                    override fun onResponse(
-                        call: Call<List<CategoryCheckListResponse>>,
-                        response: Response<List<CategoryCheckListResponse>>
-                    ) {
-                        val result = response.body()
-                        Log.e("결과값","${result}")
-                        if(response.isSuccessful){
-                            val result = response.body()
-                            Log.e("조회 완료","${result}")
-                        }
-                        else{
-                            Log.e("카테고리 조회","실패")
-                        }
-                    }
+            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            intent.putExtra("categoryId","9")
+            startActivity(intent)
 
-                    override fun onFailure(call: Call<List<CategoryCheckListResponse>>, t: Throwable) {
-                        Log.e("연결실패",t.message.toString())
-                    }
-                })
         }
-
-
-
 
     }
 }

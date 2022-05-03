@@ -12,6 +12,6 @@ data class CategoryCheckListResponse (
     @SerializedName("productName")
     val productName:String,
     @SerializedName("productPrice")
-    val productPrice:Int
+    val productPrice:Long
 
         )
