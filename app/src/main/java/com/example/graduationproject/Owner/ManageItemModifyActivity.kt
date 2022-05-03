@@ -39,7 +39,7 @@ class ManageItemModifyActivity : AppCompatActivity() {
         val TAG:String = "ManagerItemModifyActivity"
         Log.e(TAG, "Log---Start:       ")
 
-        val productImgUrl = intent.getStringExtra("productImgUrl")
+        /*val productImgUrl = intent.getStringExtra("productImgUrl")
         val productName = intent.getStringExtra("productName")
         val productPrice = intent.getIntExtra("productPrice", 0)
         val productStock = intent.getIntExtra("productStock", 0)
@@ -66,7 +66,7 @@ class ManageItemModifyActivity : AppCompatActivity() {
             val stock = binding.modifyStock.text.toString()
             val stock_num = stock.toInt()
             binding.modifyStock.setText((stock_num+1).toString())
-        }
+        }*/
 
 
 

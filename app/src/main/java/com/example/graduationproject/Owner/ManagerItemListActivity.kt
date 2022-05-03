@@ -185,6 +185,7 @@ class ManagerItemListActivity : AppCompatActivity() {
 
                                                         // 리사이클러뷰 갱신
                                                         ManagerItemListAdapter.notifyDataSetChanged()
+
                                                     } else {
                                                         Log.d("재고 추가", "${Count}실패")
                                                     }
@@ -328,9 +329,9 @@ interface MartItemService {
 }
 
 interface deleteProduct{
-    @POST("cart/delete/{productId}")
+    @POST("mart/delete/{productId}")
     fun delete_item(
-            @Path("productId") productId: Long,
+            @Path("productId") productId: Long
     ): Call<DeleteProductResponse>
 }
 
