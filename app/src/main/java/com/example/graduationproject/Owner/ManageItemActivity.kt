@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.ActionBar
-import com.example.graduationproject.Api.Response.MartInfoResponse
 import com.example.graduationproject.Api.Response.UserInfoResponse
 import com.example.graduationproject.R
 import com.example.graduationproject.User.AddHeaderJWT

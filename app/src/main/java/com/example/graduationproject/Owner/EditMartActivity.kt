@@ -31,13 +31,6 @@ class EditMartActivity :AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityMartinfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val spinner1 = binding.martTimeStart
-        val spinner2 = binding.martTimeEnd
-
-        spinner1.adapter = ArrayAdapter.createFromResource(this, R.array.time_array, android.R.layout.simple_spinner_item)
-        spinner2.adapter = ArrayAdapter.createFromResource(this, R.array.time_array, android.R.layout.simple_spinner_item)
-
         
         binding.martimgSelect.setOnClickListener {
             val albumInternet =
