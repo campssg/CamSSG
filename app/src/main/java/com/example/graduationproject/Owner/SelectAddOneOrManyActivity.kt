@@ -14,12 +14,18 @@ class SelectAddOneOrManyActivity : AppCompatActivity () {
         setContentView(binding.root)
         actionBar?.hide()
 
+        val martId = intent.getLongExtra("martId", 0)
+
+        // 체크리스트로 일괄 등록하기
         binding.SelectAddMany.setOnClickListener {
 
         }
 
+        // 하나만 등록하기
         binding.SelectAddOne.setOnClickListener {
-            startActivity(Intent(this, MartListActivity::class.java))
+            val intent = Intent(this, AddItemOneActivity::class.java)
+            intent.putExtra("martId", martId)
+            startActivity(intent)
         }
     }
 

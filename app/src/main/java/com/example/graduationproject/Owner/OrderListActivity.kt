@@ -73,7 +73,7 @@ class OrderListActivity : AppCompatActivity() {
 
                         AddItemToList(result)
                     } else {
-                        Log.d("마트 조회", "실패")
+                        Log.d("마트 주문현황 조회", "실패")
                     }
                 }
 
