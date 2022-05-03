@@ -97,6 +97,9 @@ class UserInfoActivity : AppCompatActivity() {
                         if (result?.userNickname!=null) {
                             binding.mypage1nickedit.setText(result.userNickname)
                         }
+                        if (result?.userImgUrl != null) {
+                            Glide.with(this@UserInfoActivity).load(result.userImgUrl).into(binding.mypage1img)
+                        }
                     } else {
                         Log.d("사용자 정보 조회", "실패")
                     }
@@ -159,7 +162,7 @@ class UserInfoActivity : AppCompatActivity() {
         img_1selectbtn.setOnLongClickListener {
             val file = File(absolutePath(photoUri!!))
             val requestBody : RequestBody = file.asRequestBody("multipart/form-data".toMediaType())
-            val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("upload_file", file.name, requestBody)
+            val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("file", file.name, requestBody)
             Toast.makeText(this,"${uploadImg.body}, ${uploadImg.headers}", Toast.LENGTH_SHORT).show()
             service.update_img(uploadImg)
                 .enqueue(object : Callback<UserImgUpdatedResponse> {
@@ -201,10 +204,10 @@ class UserInfoActivity : AppCompatActivity() {
             //사진 업로드
             if (photoUri != null) {
                 Glide.with(this).load(photoUri).into(binding.mypage1img)
-
             }
         }
 
+        Toast.makeText(this, "이미지 선택 버튼을 길게 누르면 변경한 이미지가 저장됩니다.", Toast.LENGTH_SHORT).show()
     }
 
     private fun absolutePath(uri: Uri) : String {
