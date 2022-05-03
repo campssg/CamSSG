@@ -133,7 +133,7 @@ class AddItemOneActivity: AppCompatActivity() {
             // 이미지 파일 생성
             val file = File(absolutePath(photoUri!!))
             val requestBody : RequestBody = file.asRequestBody("image/*".toMediaType())
-            val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("images", file.name, requestBody)
+            val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("img", file.name, requestBody)
             Toast.makeText(this, file.name.toString(), Toast.LENGTH_SHORT).show()
             // API 호출
             service.add_item(categoryId, categoryId, productName = productName,
