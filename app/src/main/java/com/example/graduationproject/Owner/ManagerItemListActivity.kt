@@ -235,7 +235,6 @@ class ManagerItemListActivity : AppCompatActivity() {
                                                 })
                                                 .create()
                                                 .show()
-
                                         // 리사이클러뷰 갱신
                                         listItems.removeAt(position) // 리사이클러뷰에서도 삭제
                                         ManagerItemListAdapter.notifyDataSetChanged() // 리사이클러뷰 갱신
