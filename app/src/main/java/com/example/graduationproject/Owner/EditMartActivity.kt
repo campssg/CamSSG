@@ -89,6 +89,8 @@ class EditMartActivity :AppCompatActivity(){
             closeTime = binding.martTimeEnd.text.toString()
             if (binding.martRequestYes.isChecked) {
                 requestYn = 1
+            } else {
+                requestYn = 0
             }
             val data = MartEditRequest(martId, martName.toString(), openTime.toString(), closeTime.toString(), requestYn.toLong())
             println(data)
