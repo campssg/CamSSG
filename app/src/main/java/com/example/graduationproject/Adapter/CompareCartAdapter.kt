@@ -29,7 +29,7 @@ class CompareCartAdapter(val itemList: ArrayList<CartComparisonItem>): RecyclerV
             holder.notexist.text = "모든 장바구니 재고 있음"
         }
         else{
-            holder.notexist.text = "물품 " + itemList[position].notExistCnt.toString() + "개 재고 없음"
+            holder.notexist.text = "물품 품목 ${itemList[position].notExistCnt}개, 총 ${itemList[position].notExistTotalCnt}개 재고 없음"
         }
         holder.totalprice.text = itemList[position].totalPrice.toString() + "원"
 
