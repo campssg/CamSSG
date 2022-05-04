@@ -10,31 +10,22 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 인터넷 권한 설정 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 인터넷 연결 확인 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!-- 인터넷 권한 설정   -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 인터넷 연결 확인-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
-
-
-        tools:replace="android:appComponentFactory"
-        android:appComponentFactory="whateverString"
-
-
         android:allowBackup="true"
+        android:appComponentFactory="whateverString"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:requestLegacyExternalStorage="true"
-
         android:theme="@style/Theme.GraduationProject"
-        android:usesCleartextTraffic="true">
-
-
-
+        android:usesCleartextTraffic="true"
+        tools:replace="android:appComponentFactory">
+        <activity android:name=".ItemRequestActivity"></activity>
         <activity android:name=".User.Compare_priceActivity" />
         <activity android:name=".UserSigning.RegisterActivity_Mart2" />
         <activity android:name=".UserSigning.RegisterActivity_Mart" />
@@ -43,17 +34,16 @@
         <activity android:name=".UserSigning.SelectWhatToRegisterActivity" />
         <activity android:name=".UserSigning.SelectWhatToLoginActivity" />
         <activity android:name=".User.ChecklistCategoryActivity" />
-        <activity android:name=".Owner.OrderListActivity"/>
-        <activity android:name=".User.UserCategoryItemList"/>
-        <activity android:name=".User.UserCompareCartDetail"/>
-        <activity android:name=".Owner.EditMartActivity"/>
-
+        <activity android:name=".Owner.OrderListActivity" />
+        <activity android:name=".User.UserCategoryItemList" />
+        <activity android:name=".User.UserCompareCartDetail" />
+        <activity android:name=".Owner.EditMartActivity" />
         <activity android:name=".User.OrderlistActivity" />
-        <activity android:name=".Owner.AddItemOneActivity"/>
-        <activity android:name=".Owner.OwnerInfoActivity"/>
-        <activity android:name=".Owner.SetMartActivity"/>
-        <activity android:name=".Owner.AddressActivity"/>
-        <activity android:name=".Owner.ManageItemModifyActivity"/>
+        <activity android:name=".Owner.AddItemOneActivity" />
+        <activity android:name=".Owner.OwnerInfoActivity" />
+        <activity android:name=".Owner.SetMartActivity" />
+        <activity android:name=".Owner.AddressActivity" />
+        <activity android:name=".Owner.ManageItemModifyActivity" />
         <activity android:name=".User.UserCartActivity" />
         <activity android:name=".User.bookmark_martActivity" />
         <activity android:name=".Owner.OwnerMainActivity" />
@@ -61,24 +51,24 @@
         <activity android:name=".Owner.ManageItemActivity" />
         <activity android:name=".User.bookmark_campingActivity" />
         <activity android:name=".UserSigning.RegisterActivity_User" />
-        <activity android:name=".User.UserPassChangeActivity"/>
+        <activity android:name=".User.UserPassChangeActivity" />
         <activity android:name=".UserSigning.LoginActivity_Mart" />
-        <activity android:name=".User.UserInfoActivity"/>
-        <activity android:name=".SelectCategoryActivity"/>
-        <activity android:name=".Owner.ChecklistActivity"/>
-
-        <activity android:name=".Owner.SelectAddOneOrManyActivity"/>
-        <activity android:name=".Owner.MartListActivity"/>
-        <activity android:name=".User.SearchMartItemActivity"/>
-        <activity android:name=".User.MartSearchActivity"/>
-        <activity android:name=".User.CampSearchActivity"/>
+        <activity android:name=".User.UserInfoActivity" />
+        <activity android:name=".SelectCategoryActivity" />
+        <activity android:name=".Owner.ChecklistActivity" />
+        <activity android:name=".Owner.SelectAddOneOrManyActivity" />
+        <activity android:name=".Owner.MartListActivity" />
+        <activity android:name=".User.SearchMartItemActivity" />
+        <activity android:name=".User.MartSearchActivity" />
+        <activity android:name=".User.CampSearchActivity" />
         <activity android:name=".MainActivity">
-        <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="thdpx3h194" />

@@ -85,6 +85,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        //요청상품 마트 버전
+
+        binding.button19.setOnClickListener {
+            val intent = Intent(this, ItemRequestActivity::class.java)
+            startActivity(intent)
+        }
+
 
 
 
