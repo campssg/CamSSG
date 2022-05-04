@@ -66,7 +66,9 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                    if(response.isSuccessful) {
                        val result = response.body()
                        Log.e("조회 완료", "${result}")
-                       if (result?.data != null) {
+                       if (result?.data.isNullOrEmpty()) {
+                           binding.setmartBtn.visibility = View.VISIBLE
+                       } else {
                            binding.setmartBtn.visibility = View.INVISIBLE
                        }
                    } else {
@@ -94,13 +96,15 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         //상품 등록
         binding.omainSetP.setOnClickListener {
-            val intent = Intent(this, AddItemOneActivity::class.java)
+            val intent = Intent(this, MartListActivity::class.java)
+            intent.putExtra("menu", 1)
             startActivity(intent)
         }
 
         //상품 관리
         binding.omainManageP.setOnClickListener {
-            val intent = Intent(this, ManageItemActivity::class.java)
+            val intent = Intent(this, MartListActivity::class.java)
+            intent.putExtra("menu", 2)
             startActivity(intent)
         }
 

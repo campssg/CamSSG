@@ -46,6 +46,7 @@
         <activity android:name=".Owner.OrderListActivity"/>
         <activity android:name=".User.UserCategoryItemList"/>
         <activity android:name=".User.UserCompareCartDetail"/>
+        <activity android:name=".Owner.EditMartActivity"/>
 
         <activity android:name=".User.OrderlistActivity" />
         <activity android:name=".Owner.AddItemOneActivity"/>

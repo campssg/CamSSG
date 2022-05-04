@@ -58,7 +58,6 @@ class AddItemOneActivity: AppCompatActivity() {
         actionBar = supportActionBar
         actionBar?.hide()
 
-        val pref = getSharedPreferences("addItemOne", MODE_PRIVATE)
         var category : Long = 0
 
         // 스피너 설정
@@ -138,7 +137,7 @@ class AddItemOneActivity: AppCompatActivity() {
             val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("img", file.name, requestBody)
 
             // API 호출
-            service.add_item(categoryId, categoryId, productName = productName,
+            service.add_item(martId, categoryId, productName = productName,
                 productPrice = productPrice.toInt(), productStock = productStock.toInt(), uploadImg)
                 .enqueue(object : Callback<AddItemOneResponse> {
                     override fun onResponse(

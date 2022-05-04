@@ -109,6 +109,11 @@ class MartListActivity : AppCompatActivity() {
                 } else if (menu == 4) {
                     val intent = Intent(this@MartListActivity, EditMartActivity::class.java)
                     intent.putExtra("martId", listItems[position].martId)
+                    intent.putExtra("martName", listItems[position].martName)
+                    intent.putExtra("martAddress", listItems[position].martAddress)
+                    intent.putExtra("openTime", listItems[position].openTime)
+                    intent.putExtra("closeTime", listItems[position].closeTime)
+                    intent.putExtra("requestYn", listItems[position].requestYn)
                     startActivity(intent)
                 } else if (menu == 5) {
                     val intent = Intent(this@MartListActivity, OrderListActivity::class.java)
