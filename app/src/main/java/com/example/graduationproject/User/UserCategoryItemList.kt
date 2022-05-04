@@ -97,6 +97,10 @@ class UserCategoryItemList : AppCompatActivity() {
 
         val service = retrofit.create(CompareCartService::class.java)
 
+        // 나중에 캠핑장 즐겨찾기에서 캠핑장 기준 가격비교 추가
+        val latitude = intent.getDoubleExtra("latitude", 0.0)
+        val longitude = intent.getDoubleExtra("longitude", 0.0)
+
 
         // 이하 현재 위치 탐색
         val locationManager = this.getSystemService(LOCATION_SERVICE) as LocationManager
@@ -128,8 +132,7 @@ class UserCategoryItemList : AppCompatActivity() {
 
             val position = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
 
-
-            service.compare_result(position.latitude.toString(), position.longitude)
+            service.compare_result(position.latitude, position.longitude)
                     .enqueue(object : Callback<CompareCartResponse> {
                         override fun onResponse(
                                 call: Call<CompareCartResponse>,
@@ -140,7 +143,7 @@ class UserCategoryItemList : AppCompatActivity() {
                                 Log.e("조회 완료", "${result}")
                                 AddItemToList(result)
                             } else {
-                                Log.d("캠핑장 조회", "실패")
+                                Log.d("가격 비교 조회", "실패")
                             }
                         }
 
@@ -156,10 +159,11 @@ class UserCategoryItemList : AppCompatActivity() {
         // 리사이클러뷰 클릭시 상세보기 이동
         CompareCartAdapter.setItemClickListener(object : CompareCartAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
-                val martName = comparelistItems[position].martName
-
                 val intent = Intent(this@UserCategoryItemList, UserCompareCartDetail::class.java)
-                intent.putExtra("martname", martName)
+                intent.putExtra("martName", comparelistItems[position].martName)
+                intent.putExtra("martAddress", comparelistItems[position].martAddress)
+                intent.putExtra("closeTime", comparelistItems[position].closeTime)
+                intent.putExtra("martId", comparelistItems[position].martId)
                 startActivity(intent)
             }
         })
@@ -179,7 +183,7 @@ class UserCategoryItemList : AppCompatActivity() {
     interface CompareCartService {
         @GET("cart/{latitude}/{longitude}")
         fun compare_result(
-            @Path("latitude") latitude: String,
+            @Path("latitude") latitude: Double,
             @Path("longitude") longitude: Double
         ): Call<CompareCartResponse>
     }

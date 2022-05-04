@@ -17,10 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Adapter.SearchMartItemListAdapter
 import com.example.graduationproject.Api.Request.AddCartRequest
-import com.example.graduationproject.Api.Response.AddCartResponse
-import com.example.graduationproject.Api.Response.ProductList
-import com.example.graduationproject.Api.Response.SearchMartCategoryResponse
-import com.example.graduationproject.Api.Response.SearchMartItemResponse
+import com.example.graduationproject.Api.Response.*
 import com.example.graduationproject.R
 import com.example.graduationproject.databinding.Activity1searchMartItemListBinding
 import okhttp3.OkHttpClient
@@ -38,6 +35,7 @@ import java.util.concurrent.TimeUnit
 // 검색한 마트 클릭 시 -> 해당 마트 상품 조회 페이지
 class SearchMartItemActivity : AppCompatActivity() {
     private lateinit var binding: Activity1searchMartItemListBinding
+    private var canAdd = 1
 
     // 리사이클러뷰 어댑터 설정
     val listItems = arrayListOf<ProductList>()
@@ -91,6 +89,28 @@ class SearchMartItemActivity : AppCompatActivity() {
 
         // 마트 클릭해서 인텐트로 넘어오면
         val martId = intent.getLongExtra("martId", 0)
+
+        service2.can_add(martId)
+            .enqueue(object : Callback<CanAddResponse> {
+                override fun onResponse(
+                    call: Call<CanAddResponse>,
+                    response: Response<CanAddResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val result = response.body()
+                        Log.e("조회 완료", "${result}")
+
+                        canAdd = result?.canAdd!!.toInt()
+                    } else {
+                        Log.d("조회", "실패")
+                    }
+                }
+
+                override fun onFailure(call: Call<CanAddResponse>, t: Throwable) {
+                    Log.e("연결실패", t.message.toString())
+                }
+            })
+
         if (martId != null) {
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -167,26 +187,63 @@ class SearchMartItemActivity : AppCompatActivity() {
                             override fun onClick(p0: DialogInterface?, p1: Int) {
                                 val count = editText.text.toString()
                                 val data = AddCartRequest(count.toInt())
-                                service2.add_item(martId, listItems[position].productId, data)
-                                    .enqueue(object : Callback<AddCartResponse> {
-                                        override fun onResponse(
-                                            call: Call<AddCartResponse>,
-                                            response: Response<AddCartResponse>
-                                        ) {
-                                            if (response.isSuccessful) {
-                                                val result = response.body()
-                                                Log.e("성공", "${result}")
-                                            } else {
-                                                Log.d("장바구니 추가", "실패")
+                                if (canAdd == 0) {
+                                    AlertDialog.Builder(this@SearchMartItemActivity)
+                                        .setTitle("다른 마트의 상품을 한 장바구니에 추가할 수 없습니다")
+                                        .setMessage("기존 장바구니에 담겨있던 상품은 모두 삭제됩니다. 추가하시겠습니까?")
+                                        .setPositiveButton("담기", object :DialogInterface.OnClickListener {
+                                            override fun onClick(p0: DialogInterface?, p1: Int) {
+                                                service2.add_new_item(listItems[position].productId, data)
+                                                    .enqueue(object : Callback<AddCartResponse> {
+                                                        override fun onResponse(
+                                                            call: Call<AddCartResponse>,
+                                                            response: Response<AddCartResponse>
+                                                        ) {
+                                                            if (response.isSuccessful) {
+                                                                val result = response.body()
+                                                                Log.e("성공", "${result}")
+                                                                canAdd = 1
+                                                            } else {
+                                                                Log.d("장바구니 추가", "실패")
+                                                            }
+                                                        }
+                                                        override fun onFailure(
+                                                            call: Call<AddCartResponse>,
+                                                            t: Throwable
+                                                        ) {
+                                                            Log.e("연결실패", t.message.toString())
+                                                        }
+                                                    })
                                             }
-                                        }
-                                        override fun onFailure(
-                                            call: Call<AddCartResponse>,
-                                            t: Throwable
-                                        ) {
-                                            Log.e("연결실패", t.message.toString())
-                                        }
-                                    })
+                                        })
+                                        .setNegativeButton("취소", object : DialogInterface.OnClickListener {
+                                            override fun onClick(p0: DialogInterface?, p1: Int) {
+                                            }
+                                        })
+                                        .create()
+                                        .show()
+                                } else {
+                                    service2.add_item(martId, listItems[position].productId, data)
+                                        .enqueue(object : Callback<AddCartResponse> {
+                                            override fun onResponse(
+                                                call: Call<AddCartResponse>,
+                                                response: Response<AddCartResponse>
+                                            ) {
+                                                if (response.isSuccessful) {
+                                                    val result = response.body()
+                                                    Log.e("성공", "${result}")
+                                                } else {
+                                                    Log.d("장바구니 추가", "실패")
+                                                }
+                                            }
+                                            override fun onFailure(
+                                                call: Call<AddCartResponse>,
+                                                t: Throwable
+                                            ) {
+                                                Log.e("연결실패", t.message.toString())
+                                            }
+                                        })
+                                }
                             }
                         })
                         .setNegativeButton("취소", object : DialogInterface.OnClickListener {
@@ -274,4 +331,15 @@ interface AddCartItemService {
         @Path("productId") productId: Long,
         @Body request: AddCartRequest
     ): Call<AddCartResponse>
+
+    @POST("search/mart/new/{productId}")
+    fun add_new_item(
+        @Path("productId") productId: Long,
+        @Body request: AddCartRequest
+    ): Call<AddCartResponse>
+
+    @GET("search/mart/canAdd/{martId}")
+    fun can_add(
+        @Path("martId") martId: Long
+    ): Call<CanAddResponse>
 }
