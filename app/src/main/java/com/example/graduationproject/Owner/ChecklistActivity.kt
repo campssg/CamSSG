@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Adapter.ChecklistAdapter
 import com.example.graduationproject.Api.Request.ChecklistRequest
 import com.example.graduationproject.Api.Response.CategoryCheckListResponse
+import com.example.graduationproject.Api.Response.ProductList2
 import com.example.graduationproject.User.AddHeaderJWT
 import com.example.graduationproject.databinding.ActivityChecklistBinding
 import okhttp3.OkHttpClient
@@ -24,6 +25,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import java.util.ArrayList
 import java.util.concurrent.TimeUnit
@@ -41,6 +43,9 @@ class ChecklistActivity:AppCompatActivity() {
         setContentView(binding.root)
         val TAG:String = "ChecklistActivity"
         Log.e(TAG,"Log Start :         ")
+
+
+
 
 
         binding.checklistRecycelerView.layoutManager =
@@ -70,9 +75,13 @@ class ChecklistActivity:AppCompatActivity() {
 
 
         val service = retrofit.create(ChecklistCategory::class.java)
+        val service2= retrofit.create(martChecklist::class.java)
         //카테고리 아이디 intent로 넘겨오기
         val categoryId = intent.getStringExtra("categoryId")
         Toast.makeText(this,categoryId,Toast.LENGTH_SHORT).show()
+
+
+
 
 
 
@@ -109,26 +118,33 @@ class ChecklistActivity:AppCompatActivity() {
 
 
 
+
         //상품 등록
+
         ItemAdapter.setItemClickListener(object:ChecklistAdapter.OnItemClicklistener{
             override fun onClick(v: View, position: Int) {
                 val editText = EditText(this@ChecklistActivity)
-//                editText = Gravity.CENTER
-//                editText = InputType.TYPE_CLASS_NUMBER
-//                editText.hint= "수량 입력"
+                editText.gravity = Gravity.CENTER
+                editText.inputType= InputType.TYPE_CLASS_NUMBER
+                editText.hint = "가격 입력"
+
+                AlertDialog.Builder(this@ChecklistActivity)
+                    .setTitle("상품 등록하기")
+                    .setMessage("가격을 입력해주세요")
+                    .setView(editText)
+                    .setPositiveButton("등록", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            val price = editText.text.toString()
+                                //binding.가격 = price
+                                //이렇게 textview에 새로운 가격을 다시 출력해주기!!
+                            Log.e("등록되었습니다","성고옹")
 
 
-//                AlertDialog.Builder(this@ChecklistActivity)
-//                    .setTitle("물품 등록")
-//                    .setMessage("등록하실 수량을 입력해주세요")
-//                    .setView(editText)
-//                    .setPositiveButton("추가",object:DialogInterface.OnClickListener{
-//                        override fun onClick(p0: DialogInterface?, p1: Int) {
-//                            val count = editText.text.toString()
-//                            val data = ChecklistRequest(count.toInt())
-//
-//                        }
-//                    })
+                        }
+                    })
+
+
+
             }
         })
 
@@ -161,4 +177,16 @@ interface ChecklistCategory{
     fun Checklist(
         @Path("categoryId") categoryId:Long
     ): Call<List<CategoryCheckListResponse>>
+}
+
+
+
+
+//상품 일괄 등록
+interface martChecklist{
+
+    @POST("mart/{martId}/list")
+    fun MartCheckItem(
+        @Path("martId") martId:Long
+    ): Call<List<ProductList2>>
 }

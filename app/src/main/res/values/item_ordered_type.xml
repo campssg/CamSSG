@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="item_ordered_type">
+    <item>전체 주문내역</item>
+    <item>요청상품</item>
+    </string-array>
+</resources>

@@ -25,6 +25,12 @@
             android:layout_height="wrap_content"
             android:gravity="center">
 
+            <Button
+                android:id="@+id/btn_registerItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="일괄등록" />
+
             <TextView
                 android:id="@+id/tv_TypeOfItems"
                 android:layout_width="match_parent"
