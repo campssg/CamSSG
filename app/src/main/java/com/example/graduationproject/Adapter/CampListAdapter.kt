@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.graduationproject.Adapter.CartListAdapter
 import com.example.graduationproject.R
 
 class CampListAdapter(val itemList: ArrayList<CampList>): RecyclerView.Adapter<CampListAdapter.ViewHolder>() {
@@ -21,6 +22,10 @@ class CampListAdapter(val itemList: ArrayList<CampList>): RecyclerView.Adapter<C
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it,position)
         }
+        holder.itemView.setOnLongClickListener {
+            itemLongClickListener.onLongClick(it, position)
+            return@setOnLongClickListener true
+        }
         holder.name.text = itemList[position].campName
         holder.tel.text = itemList[position].tel
         holder.address.text = itemList[position].address
@@ -36,9 +41,18 @@ class CampListAdapter(val itemList: ArrayList<CampList>): RecyclerView.Adapter<C
         fun onClick(v: View, position: Int)
     }
 
+    interface OnItemLongClickListener {
+        fun onLongClick(v: View, position: Int)
+    }
+
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener
     }
 
+    fun setItemLongClickListener(onItemLongClickListener: OnItemLongClickListener) {
+        this.itemLongClickListener = onItemLongClickListener
+    }
+
     private lateinit var itemClickListener : OnItemClickListener
+    private lateinit var itemLongClickListener: CampListAdapter.OnItemLongClickListener
 }
