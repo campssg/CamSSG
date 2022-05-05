@@ -126,7 +126,11 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 intent.putExtra("menu", 2)
                 startActivity(intent)
             }
-            // 가격 흥정  R.id.price_deal->{startActivity(Intent(this, SetMartActivity::class.java))}
+            R.id.price_deal->{
+                val intent = Intent(this, MartListActivity::class.java)
+                intent.putExtra("menu", 3)
+                startActivity(intent)
+            }
             R.id.owner_mypage1->startActivity(Intent(this, OwnerInfoActivity::class.java))
             R.id.owner_mypage2->{
                 val intent = Intent(this, MartListActivity::class.java)

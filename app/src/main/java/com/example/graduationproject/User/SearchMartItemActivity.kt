@@ -80,7 +80,6 @@ class SearchMartItemActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .client(client).build()
 
-        val service = retrofit.create(SearchMartItemService::class.java)
         val service2 = retrofit.create(AddCartItemService::class.java)
 
         // 스피너 설정
@@ -114,9 +113,13 @@ class SearchMartItemActivity : AppCompatActivity() {
         if (martId != null) {
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(p0: AdapterView<*>?) {
+                    get_totalItem(martId)
                 }
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                     when (position) {
+                        0 -> {
+                            get_totalItem(martId)
+                        }
                         1 -> {
                             searchCategory(1, martId)
                         }
@@ -147,27 +150,6 @@ class SearchMartItemActivity : AppCompatActivity() {
                     }
                 }
             }
-
-            service.search_item(martId)
-                .enqueue(object : Callback<SearchMartItemResponse> {
-                    override fun onResponse(
-                        call: Call<SearchMartItemResponse>,
-                        response: Response<SearchMartItemResponse>
-                    ) {
-                        if (response.isSuccessful) {
-                            val result = response.body()
-                            Log.e("조회 완료", "${result}")
-
-                            // 리사이클러뷰에 결과 출력 요청 함수
-                            AddItemToList(result!!.data)
-                        } else {
-                            Log.d("마트 상품 조회", "실패")
-                        }
-                    }
-                    override fun onFailure(call: Call<SearchMartItemResponse>, t: Throwable) {
-                        Log.e("연결실패", t.message.toString())
-                    }
-                })
 
             // 리사이클러뷰 클릭 이벤트
             searchMartItemListAdapter.setItemClickListener(object: SearchMartItemListAdapter.OnItemClickListener {
@@ -295,6 +277,47 @@ class SearchMartItemActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<SearchMartCategoryResponse>, t: Throwable) {
+                    Log.e("연결실패", t.message.toString())
+                }
+            })
+    }
+
+    private fun get_totalItem(martId: Long) {
+
+        // 로그인 후 저장해둔 JWT 토큰 가져오기
+        val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
+        val jwt = sharedPreferences.getString("jwt", "")
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(AddHeaderJWT(jwt.toString())) // JWT header 달아주는 interceptor 추가
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS).build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://13.124.13.202:8080/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client).build()
+
+        val service = retrofit.create(SearchMartItemService::class.java)
+
+        service.search_item(martId)
+            .enqueue(object : Callback<SearchMartItemResponse> {
+                override fun onResponse(
+                    call: Call<SearchMartItemResponse>,
+                    response: Response<SearchMartItemResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val result = response.body()
+                        Log.e("조회 완료", "${result}")
+
+                        // 리사이클러뷰에 결과 출력 요청 함수
+                        AddItemToList(result!!.data)
+                    } else {
+                        Log.d("마트 상품 조회", "실패")
+                    }
+                }
+                override fun onFailure(call: Call<SearchMartItemResponse>, t: Throwable) {
                     Log.e("연결실패", t.message.toString())
                 }
             })

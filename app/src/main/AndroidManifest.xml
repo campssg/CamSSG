@@ -25,7 +25,7 @@
         android:theme="@style/Theme.GraduationProject"
         android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".ItemRequestActivity"></activity>
+        <activity android:name=".Owner.ItemRequestActivity"/>
         <activity android:name=".User.Compare_priceActivity" />
         <activity android:name=".UserSigning.RegisterActivity_Mart2" />
         <activity android:name=".UserSigning.RegisterActivity_Mart" />

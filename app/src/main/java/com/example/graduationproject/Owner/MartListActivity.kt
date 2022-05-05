@@ -103,9 +103,9 @@ class MartListActivity : AppCompatActivity() {
                     intent.putExtra("martId", listItems[position].martId)
                     startActivity(intent)
                 } else if (menu == 3) {
-                    //val intent = Intent(this@MartListActivity, ManageItemActivity::class.java)
-                    //intent.putExtra("martId", listItems[position].martId)
-                    //startActivity(intent)
+                    val intent = Intent(this@MartListActivity, ItemRequestActivity::class.java)
+                    intent.putExtra("martId", listItems[position].martId)
+                    startActivity(intent)
                 } else if (menu == 4) {
                     val intent = Intent(this@MartListActivity, EditMartActivity::class.java)
                     intent.putExtra("martId", listItems[position].martId)
