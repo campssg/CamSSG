@@ -22,6 +22,10 @@ class MartListAdapter(val itemList: ArrayList<MartListResponse>): RecyclerView.A
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
         }
+        holder.itemView.setOnLongClickListener {
+            itemLongClickListener.onLongClick(it, position)
+            return@setOnLongClickListener true
+        }
         holder.name.text = itemList[position].martName
         holder.time.text = "${itemList[position].openTime}~${itemList[position].closeTime}"
         holder.address.text = itemList[position].martAddress
@@ -37,9 +41,18 @@ class MartListAdapter(val itemList: ArrayList<MartListResponse>): RecyclerView.A
         fun onClick(v: View, position: Int)
     }
 
+    interface OnItemLongClickListener {
+        fun onLongClick(v: View, position: Int)
+    }
+
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener
     }
 
+    fun setItemLongClickListener(onItemLongClickListener: MartListAdapter.OnItemLongClickListener) {
+        this.itemLongClickListener = onItemLongClickListener
+    }
+
     private lateinit var itemClickListener : OnItemClickListener
+    private lateinit var itemLongClickListener: MartListAdapter.OnItemLongClickListener
 }

@@ -26,7 +26,8 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import com.example.graduationproject.Api.Request.CampWishRequest
+import com.example.graduationproject.Api.Response.ResultResponse
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.naver.maps.map.*
@@ -110,7 +111,6 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         })
 
-
         // 로그인 후 저장해둔 JWT 토큰 가져오기
         val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
         val jwt = sharedPreferences.getString("jwt", "")
@@ -128,6 +128,51 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val service = retrofit.create(CampSearchService::class.java)
         val service2 = retrofit.create(CampListService::class.java)
+
+        camplistAdapter.setItemLongClickListener(object : CampListAdapter.OnItemLongClickListener {
+            override fun onLongClick(v: View, position: Int) {
+                AlertDialog.Builder(this@CampSearchActivity)
+                    .setTitle("즐겨찾기 추가")
+                    .setMessage("${listItems[position].campName}을 즐겨찾기에 추가하시겠습니까?")
+                    .setPositiveButton("예", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            var address = listItems[position].address
+                            if (!listItems[position].detailAddress.isNullOrEmpty()) {
+                                address = listItems[position].address + " " + listItems[position].detailAddress
+                            }
+                            val data = CampWishRequest(address, listItems[position].campName, listItems[position].tel, listItems[position].mapY.toDouble(), listItems[position].mapX.toDouble())
+                            service2.add_wish(data)
+                                .enqueue(object : Callback<ResultResponse> {
+                                    override fun onResponse(
+                                        call: Call<ResultResponse>,
+                                        response: retrofit2.Response<ResultResponse>
+                                    ) {
+                                        if (response.isSuccessful) {
+                                            val result = response.body()
+                                            Log.e("성공", "${result}")
+                                            Toast.makeText(this@CampSearchActivity, "즐겨찾기에 추가되었습니다", Toast.LENGTH_SHORT).show()
+                                        } else {
+                                            Log.d("즐겨찾기 추가", "실패")
+                                        }
+                                    }
+
+                                    override fun onFailure(
+                                        call: Call<ResultResponse>,
+                                        t: Throwable
+                                    ) {
+                                        Log.e("연결실패", t.message.toString())
+                                    }
+                                })
+                        }
+                    })
+                    .setNegativeButton("아니오", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                        }
+                    })
+                    .create()
+                    .show()
+            }
+        })
 
         // 위치 검색 버튼 클릭 시 현재 위치 좌표 반환
         binding.searchAround.setOnClickListener {
@@ -321,6 +366,11 @@ interface CampListService {
         @Path("tel") tel: String,
         @Path("address") address: String
     ): Call<CampResult>
+
+    @POST("wish/add/camp")
+    fun add_wish(
+        @Body request : CampWishRequest
+    ): Call<ResultResponse>
 }
 
 // API 호출 intercept 해서 JWT 헤더에 담는 interceptor
