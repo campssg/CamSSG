@@ -26,6 +26,7 @@ class UserCartActivity : AppCompatActivity() {
 
      val listItems_Cart = arrayListOf<CartItem>()
      val cartlistAdapter = CartListAdapter(listItems_Cart)
+     var martId: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +68,6 @@ class UserCartActivity : AppCompatActivity() {
         val userName = sharedPreferences2.getString("userName","")
 
         binding.textView38.setText(userName)
-
 
         // 리사이클러뷰 클릭 이벤트
         cartlistAdapter.setItemClickListener(object: CartListAdapter.OnItemClickListener{
@@ -120,6 +120,13 @@ class UserCartActivity : AppCompatActivity() {
             }
         })
 
+        // 주문하기 버튼
+        binding.orderCartlistBtn.setOnClickListener() {
+            val intent = Intent(this, PickupTimeActivity::class.java)
+            intent.putExtra("martId", martId)
+            startActivity(intent)
+        }
+
         // 사용자 장바구니 API 호출
         service.get_userCart()
             .enqueue(object : Callback<UserCartInfoResponse> {
@@ -131,6 +138,7 @@ class UserCartActivity : AppCompatActivity() {
                         val result = response.body()
                         Log.e("조회 완료", "${result}")
 
+                        martId = result?.data?.martId
                         itemNum.setText(result?.data?.totalCount.toString())
                         totalprice.setText(result?.data?.totalPrice.toString())
                         if (result != null) {

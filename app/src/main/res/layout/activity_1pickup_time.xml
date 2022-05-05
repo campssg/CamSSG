@@ -106,7 +106,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:gravity="center"
-        android:hint="2022-01-01"
+        android:hint="캘린더 버튼을 눌러 날짜를 선택해주세요!"
         android:textSize="18sp"
         android:textColor="@color/black"/>
 
@@ -150,13 +150,24 @@
         android:textSize="20sp"
         android:textColor="#000000"/>
 
-    <Button
-        android:id="@+id/setBtn"
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="계속하기"
-        android:backgroundTint="@color/main_purple"
-        android:textSize="22sp"
-        android:textStyle="bold"/>
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/request"
+            android:layout_width="183dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#C4C1C1"
+            android:text="물품 요청하기"
+            android:layout_margin="10dp"
+            android:textColor="#121111" />
 
+        <Button
+            android:id="@+id/payment"
+            android:layout_width="183dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:backgroundTint="@color/main_purple"
+            android:text="결제 하기" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </LinearLayout>

@@ -110,7 +110,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/order_cartlist"
+            android:id="@+id/order_cartlist_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="주문하기" />
