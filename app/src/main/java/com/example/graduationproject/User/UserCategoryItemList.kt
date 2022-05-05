@@ -101,42 +101,62 @@ class UserCategoryItemList : AppCompatActivity() {
         val latitude = intent.getDoubleExtra("latitude", 0.0)
         val longitude = intent.getDoubleExtra("longitude", 0.0)
 
+        if (latitude != 0.0 && longitude != 0.0) {
+            service.compare_result(latitude, longitude)
+                .enqueue(object : Callback<CompareCartResponse> {
+                    override fun onResponse(
+                        call: Call<CompareCartResponse>,
+                        response: retrofit2.Response<CompareCartResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            val result = response.body()
+                            Log.e("조회 완료", "${result}")
+                            AddItemToList(result)
+                        } else {
+                            Log.d("가격 비교 조회", "실패")
+                        }
+                    }
 
-        // 이하 현재 위치 탐색
-        val locationManager = this.getSystemService(LOCATION_SERVICE) as LocationManager
+                    override fun onFailure(call: Call<CompareCartResponse>, t: Throwable) {
+                        Log.e("연결실패", t.message.toString())
+                    }
+                })
+        } else {
+            // 이하 현재 위치 탐색
+            val locationManager = this.getSystemService(LOCATION_SERVICE) as LocationManager
 
-        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+            locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        var currentLocation: Location?
+            var currentLocation: Location?
 
 
-        if (ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_FINE_LOCATION
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
-        ) {
-        } else { // 권한이 없으면 권한 요구
-            val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE)
-        }
-        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-            // 위치 설정이 켜져있지 않을 경우 위치 설정 화면으로 이동
-            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            ) {
+            } else { // 권한이 없으면 권한 요구
+                val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE)
             }
-            currentLocation = location
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                // 위치 설정이 켜져있지 않을 경우 위치 설정 화면으로 이동
+                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }
+                currentLocation = location
 
-            val position = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
+                val position = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
 
-            service.compare_result(position.latitude, position.longitude)
+                service.compare_result(position.latitude, position.longitude)
                     .enqueue(object : Callback<CompareCartResponse> {
                         override fun onResponse(
-                                call: Call<CompareCartResponse>,
-                                response: retrofit2.Response<CompareCartResponse>
+                            call: Call<CompareCartResponse>,
+                            response: retrofit2.Response<CompareCartResponse>
                         ) {
                             if (response.isSuccessful) {
                                 val result = response.body()
@@ -152,9 +172,8 @@ class UserCategoryItemList : AppCompatActivity() {
                         }
                     })
 
+            }
         }
-
-
 
         // 리사이클러뷰 클릭시 상세보기 이동
         CompareCartAdapter.setItemClickListener(object : CompareCartAdapter.OnItemClickListener{
@@ -167,7 +186,6 @@ class UserCategoryItemList : AppCompatActivity() {
                 startActivity(intent)
             }
         })
-
     }
 
 
