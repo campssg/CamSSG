@@ -115,9 +115,11 @@ class AddRequestProductActivity : AppCompatActivity() {
                                                     // finish()
 
                                                     // 메인
-                                                    // startActivity(Intent(this@AddRequestProductActivity, UserMainActivity::class.java)
+                                                    startActivity(Intent(this@AddRequestProductActivity, UserMainActivity::class.java))
                                                 }
                                             })
+                                            .create()
+                                            .show()
                                 } else {
                                     Log.d("요청 상품 등록", "실패")
                                 }
