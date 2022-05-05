@@ -156,12 +156,13 @@ class SetMartActivity : AppCompatActivity() {
                 var startDt = binding.martOpendtEdit.text.toString()
                 var openTime = binding.martTimeStart.selectedItem.toString()
                 var closeTime = binding.martTimeStart.selectedItem.toString()
+                var martNum = binding.martNum1.text.toString() + "-" +  binding.martNum2.text.toString() + "-" + binding.martNum3.text.toString()
 
                 martAddress += " " + binding.martAddressEditDetail.text.toString()
 
                 val service = retrofit.create(AddMart::class.java)
 
-                val data = MartAddRequest(martName, lon.toString(), lat.toString(), startDt, martAddress.toString()
+                val data = MartAddRequest(martName, martNum, lon.toString(), lat.toString(), startDt, martAddress.toString()
                     , openTime, closeTime, requestYn.toString())
 
                 service.addMart(data)

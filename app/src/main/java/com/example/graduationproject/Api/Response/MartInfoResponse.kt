@@ -9,6 +9,8 @@ data class MartInfoResponse(
     val martName:String,
     @SerializedName("martNumber")
     val martNumber:String,
+    @SerializedName("requestYn")
+    val requestYn:Long,
     @SerializedName("martAddress")
     val martAddress: String
 )

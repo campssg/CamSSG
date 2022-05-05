@@ -2,6 +2,7 @@ package com.example.graduationproject.Api.Request
 
 data class MartAddRequest (
     val martName:String,
+    val martNumber:String,
     val longitude:String,
     val latitude:String,
     val startDt:String,
