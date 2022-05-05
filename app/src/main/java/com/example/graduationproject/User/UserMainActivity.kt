@@ -89,6 +89,7 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             R.id.user_mypage3->startActivity(Intent(this, UserInfoActivity::class.java))
             //R.id.user_mypage4->startActivity(Intent(this, CampSearchActivity::class.java))
             R.id.user_mypage5->startActivity(Intent(this, SelectWhatToLoginActivity::class.java))
+            R.id.user_mart3->startActivity(Intent(this, CheckRequestActivity::class.java))
         }
         return false
     }

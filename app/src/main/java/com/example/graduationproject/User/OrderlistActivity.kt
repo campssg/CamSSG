@@ -71,10 +71,14 @@ class OrderlistActivity : AppCompatActivity() {
         }
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
+                get_total()
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 when (position) {
+                    0 -> {
+                        get_total()
+                    }
                     1 -> {
                         service.prepared_order()
                             .enqueue(object : Callback<List<UserOrderListResponse>> {
@@ -98,6 +102,25 @@ class OrderlistActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun get_total() {
+        // 로그인 후 저장해둔 JWT 토큰 가져오기
+        val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
+        val jwt = sharedPreferences.getString("jwt", "")
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(AddHeaderJWT(jwt.toString())) // JWT header 달아주는 interceptor 추가
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS).build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://13.124.13.202:8080/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client).build()
+
+        val service = retrofit.create(UserOrderListService::class.java)
 
         // 전체 주문 내역 조회
         service.total_order()
