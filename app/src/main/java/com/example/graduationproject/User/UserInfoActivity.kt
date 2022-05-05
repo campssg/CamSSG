@@ -3,6 +3,7 @@ package com.example.graduationproject.User
 import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -13,17 +14,25 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.graduationproject.Api.Request.UserNickRequest
+import com.example.graduationproject.Api.Response.UserImgUpdatedResponse
 import com.example.graduationproject.Api.Response.UserInfoResponse
 import com.example.graduationproject.databinding.Activity1mypageBinding
 import kotlinx.android.synthetic.main.activity_1mypage.*
 import kotlinx.android.synthetic.main.activity_martinfo.*
+import okhttp3.MediaType.Companion.parse
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 
@@ -88,6 +97,9 @@ class UserInfoActivity : AppCompatActivity() {
                         if (result?.userNickname!=null) {
                             binding.mypage1nickedit.setText(result.userNickname)
                         }
+                        if (result?.userImgUrl != null) {
+                            Glide.with(this@UserInfoActivity).load(result.userImgUrl).into(binding.mypage1img)
+                        }
                     } else {
                         Log.d("사용자 정보 조회", "실패")
                     }
@@ -145,6 +157,35 @@ class UserInfoActivity : AppCompatActivity() {
             @Suppress("DEPRECATION")
             startActivityForResult(albumInternet, 0)
         }
+
+        // 임시로 롱클릭으로 설정해둠
+        img_1selectbtn.setOnLongClickListener {
+            val file = File(absolutePath(photoUri!!))
+            val requestBody : RequestBody = file.asRequestBody("multipart/form-data".toMediaType())
+            val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("file", file.name, requestBody)
+            Toast.makeText(this,"${uploadImg.body}, ${uploadImg.headers}", Toast.LENGTH_SHORT).show()
+            service.update_img(uploadImg)
+                .enqueue(object : Callback<UserImgUpdatedResponse> {
+                    override fun onResponse(
+                        call: Call<UserImgUpdatedResponse>,
+                        response: Response<UserImgUpdatedResponse>
+                    ) {
+                        println(response)
+                        if (response.isSuccessful) {
+                            val result = response.body()
+                            Log.d("성공", "${result}")
+                        } else {
+                            Log.d("실패", ".")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<UserImgUpdatedResponse>, t: Throwable) {
+                        Log.e("실패", t.message.toString())
+                    }
+                })
+
+            return@setOnLongClickListener true
+        }
         // 비밀번호 변경
         binding.mypage1pass.setOnClickListener {
             val intent = Intent(this, UserPassChangeActivity::class.java)
@@ -163,14 +204,30 @@ class UserInfoActivity : AppCompatActivity() {
             //사진 업로드
             if (photoUri != null) {
                 Glide.with(this).load(photoUri).into(binding.mypage1img)
-
             }
         }
 
+        Toast.makeText(this, "이미지 선택 버튼을 길게 누르면 변경한 이미지가 저장됩니다.", Toast.LENGTH_SHORT).show()
     }
+
+    private fun absolutePath(uri: Uri) : String {
+        val proj : Array<String> = arrayOf(MediaStore.Images.Media.DATA)
+        val c: Cursor? = contentResolver.query(uri, proj, null, null, null)
+        val index = c?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        c!!.moveToFirst()
+        val result = c.getString(index!!)
+        return result
+    }
+
     interface UserInfo {
         @GET("user/info")
         fun get_userInfo(): Call<UserInfoResponse>
+
+        @Multipart
+        @PATCH("user/update/img")
+        fun update_img(
+            @Part file: MultipartBody.Part
+        ): Call<UserImgUpdatedResponse>
     }
 
     interface UserNickChange{
@@ -195,7 +252,6 @@ class UserInfoActivity : AppCompatActivity() {
                     DialogInterface.BUTTON_POSITIVE ->
                         Log.d("닉네임", "다이얼로그")
                 }
-
             }
         }
         dialog.setPositiveButton("확인", dialog_listener)

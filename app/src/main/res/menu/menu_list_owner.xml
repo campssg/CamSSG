@@ -14,7 +14,10 @@
         android:title=" > 상품 관리"/>
     <item
         android:id="@+id/price_deal"
-        android:title=" > 가격 흥정"/>
+        android:title=" > 요청 상품"/>
+    <item
+        android:id="@+id/qr_scan"
+        android:title=" > QR 스캔"/>
     <item
         android:id="@+id/owner_mypage"
         android:title="마이페이지"/>

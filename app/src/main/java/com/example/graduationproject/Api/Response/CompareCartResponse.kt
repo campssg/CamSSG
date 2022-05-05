@@ -10,7 +10,8 @@ data class CompareCartResponse(
     @SerializedName("message")
     val message: String,
     @SerializedName("data")
-    val data: Data?
+    val data: Data,
+
 )
 
 data class Data(
@@ -25,8 +26,13 @@ data class CartComparisonItem(
     val martName: String,
     @SerializedName("notExistsCnt")
     val notExistCnt: Int,
+    @SerializedName("notExistTotalcnt")
+    val notExistTotalCnt: Int,
     @SerializedName("totalPrice")
-    val totalPrice: Int
+    val totalPrice: Int,
+    val closeTime: String,
+    val martAddress: String,
+    val martId: Long
 )
 
 @Keep

@@ -5,13 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
 import com.example.graduationproject.Owner.AddItemOneActivity
+import com.example.graduationproject.Owner.ItemRequestActivity
 import com.example.graduationproject.Owner.ManageItemModifyActivity
 import com.example.graduationproject.Owner.SetMartActivity
-import com.example.graduationproject.User.CampSearchActivity
-import com.example.graduationproject.User.UserCartActivity
-import com.example.graduationproject.User.UserMainActivity
-import com.example.graduationproject.UserSigning.LoginActivity_User
-import com.example.graduationproject.UserSigning.RegisterActivity_User
+import com.example.graduationproject.User.*
 import com.example.graduationproject.UserSigning.SelectWhatToLoginActivity
 import com.example.graduationproject.UserSigning.SelectWhatToRegisterActivity
 import com.example.graduationproject.databinding.ActivityMainBinding
@@ -76,6 +73,18 @@ class MainActivity : AppCompatActivity() {
 
         binding.button17.setOnClickListener {
             val intent = Intent(this, AddItemOneActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.button18.setOnClickListener {
+            val intent = Intent(this, ChecklistCategoryActivity::class.java)
+            startActivity(intent)
+        }
+
+        //요청상품 마트 버전
+
+        binding.button19.setOnClickListener {
+            val intent = Intent(this, ItemRequestActivity::class.java)
             startActivity(intent)
         }
 

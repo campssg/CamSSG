@@ -89,25 +89,37 @@ class MartListActivity : AppCompatActivity() {
                 }
             })
 
+        val menu = intent.getIntExtra("menu", 0)
+
         // 리사이클러뷰 클릭 이벤트 - 데이터 가져오기
         martListAdapter.setItemClickListener(object : MartListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
-                AlertDialog.Builder(this@MartListActivity)
-                    .setTitle("상품 등록")
-                    .setMessage("${listItems[position].martName}에 상품을 등록하시겠습니까?")
-                    .setPositiveButton("예", object : DialogInterface.OnClickListener {
-                        override fun onClick(p0: DialogInterface?, p1: Int) {
-                            val intent = Intent(this@MartListActivity, AddItemOneActivity::class.java)
-                            intent.putExtra("martId", listItems[position].martId)
-                            startActivity(intent)
-                        }
-                    })
-                    .setNegativeButton("아니오", object : DialogInterface.OnClickListener {
-                        override fun onClick(p0: DialogInterface?, p1: Int) {
-                        }
-                    })
-                    .create()
-                    .show()
+                if (menu == 1) {
+                    val intent = Intent(this@MartListActivity, SelectAddOneOrManyActivity::class.java)
+                    intent.putExtra("martId", listItems[position].martId)
+                    startActivity(intent)
+                } else if (menu == 2) {
+                    val intent = Intent(this@MartListActivity, ManagerItemListActivity::class.java)
+                    intent.putExtra("martId", listItems[position].martId)
+                    startActivity(intent)
+                } else if (menu == 3) {
+                    val intent = Intent(this@MartListActivity, ItemRequestActivity::class.java)
+                    intent.putExtra("martId", listItems[position].martId)
+                    startActivity(intent)
+                } else if (menu == 4) {
+                    val intent = Intent(this@MartListActivity, EditMartActivity::class.java)
+                    intent.putExtra("martId", listItems[position].martId)
+                    intent.putExtra("martName", listItems[position].martName)
+                    intent.putExtra("martAddress", listItems[position].martAddress)
+                    intent.putExtra("openTime", listItems[position].openTime)
+                    intent.putExtra("closeTime", listItems[position].closeTime)
+                    intent.putExtra("requestYn", listItems[position].requestYn)
+                    startActivity(intent)
+                } else if (menu == 5) {
+                    val intent = Intent(this@MartListActivity, OrderListActivity::class.java)
+                    intent.putExtra("martId", listItems[position].martId)
+                    startActivity(intent)
+                }
             }
         })
     }

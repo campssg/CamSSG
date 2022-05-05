@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".User.UserCompareCartDetail">
 
     <TextView
         android:layout_width="match_parent"
@@ -114,7 +115,7 @@
         android:layout_width="match_parent"
         android:layout_height="320dp"
         android:background="#E8EAF6"
-        tools:listitem="@layout/recyclerview_compare_detail_item" />
+        tools:listitem="@layout/recyclerview_search_mart_itemlist" />
 
     <LinearLayout
         android:layout_width="match_parent"

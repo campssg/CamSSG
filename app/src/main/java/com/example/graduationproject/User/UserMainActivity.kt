@@ -63,10 +63,16 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             startActivity(Intent(this, MartSearchActivity::class.java))
         }
 
-        //내정보수정
+        //내정보 수정
         binding.umainUserimg.setOnClickListener {
             startActivity(Intent(this, UserInfoActivity::class.java))
         }
+
+        // 가격 비교
+        binding.umainOrder.setOnClickListener {
+            startActivity(Intent(this, UserCategoryItemList::class.java))
+        }
+
 
         navigationView = binding.navView
         navigationView.setNavigationItemSelectedListener(this)
@@ -83,6 +89,7 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             R.id.user_mypage3->startActivity(Intent(this, UserInfoActivity::class.java))
             //R.id.user_mypage4->startActivity(Intent(this, CampSearchActivity::class.java))
             R.id.user_mypage5->startActivity(Intent(this, SelectWhatToLoginActivity::class.java))
+            R.id.user_mart3->startActivity(Intent(this, CheckRequestActivity::class.java))
         }
         return false
     }

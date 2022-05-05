@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="item_request">
+        <item>전체</item>
+        <item>가격흥정</item>
+        <item>요청완료</item>
+    </string-array>
+
+
+</resources>

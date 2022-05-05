@@ -19,6 +19,9 @@
         android:id="@+id/user_mart2"
         android:title=" > 마트 즐겨찾기"/>
     <item
+        android:id="@+id/user_mart3"
+        android:title=" > 요청상품"/>
+    <item
         android:id="@+id/user_mypage"
         android:title="마이페이지"/>
     <item

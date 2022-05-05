@@ -7,124 +7,43 @@
     android:orientation="vertical"
     tools:context=".Owner.ManagerItemListActivity">
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Spinner
+            android:id="@+id/item_category"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="육류"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <View
-                android:id="@+id/view4"
-                android:layout_width="300dp"
-                android:layout_height="2dp"
-                android:layout_marginStart="64dp"
-                android:background="#363333" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/manageitem_meat_recycle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="채소류"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="300dp"
-                android:layout_height="2dp"
-                android:layout_marginStart="64dp"
-                android:background="#363333" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/manageitem_vegetable_recycle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="과일류"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="300dp"
-                android:layout_height="2dp"
-                android:layout_marginStart="64dp"
-                android:background="#363333" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/manageitem_fruit_recycle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="간편식품류"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="300dp"
-                android:layout_height="2dp"
-                android:layout_marginStart="64dp"
-                android:background="#363333" />
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:spinnerMode="dropdown"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
 
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/manageitem_simple_recycle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 
 
+    <View
+        android:id="@+id/bar1"
+        android:layout_gravity="center"
+        android:layout_width="400dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="#A7A2A2" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="양념류"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="300dp"
-                android:layout_height="2dp"
-                android:layout_marginStart="64dp"
-                android:background="#363333" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/manageitem_seasoning_recycle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-        </LinearLayout>
-    </ScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="20dp"
+        android:id="@+id/rv_list_manage_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E8EAF6"
+        tools:listitem="@layout/recyclerview_manage_item" />
 
 
 </LinearLayout>
