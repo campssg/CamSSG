@@ -93,5 +93,4 @@ dependencies {
 
     //네이버 map
     implementation 'com.google.android.gms:play-services-location:19.0.1'
-
 }

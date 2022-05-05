@@ -13,10 +13,12 @@ data class UserCartInfoResponse (
     val data:Cart,
 )
 data class Cart (
+    @SerializedName("martId")
+    val martId: Long,
     @SerializedName("totalCount")
-    val totalCount:Int,
+    val totalCount: Int,
     @SerializedName("totalPrice")
-    val totalPrice:Int,
+    val totalPrice: Int,
     @SerializedName("cartItemList")
     val cartItemList: List<CartItem>
 )
