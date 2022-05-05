@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" 가격 흥정을 요청할 상품을 선택하세요! "
+        android:text=" 요청할 상품의 정보를 입력하세요! "
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/main_purple"
@@ -19,10 +21,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="※흥정이 완료되기 전까지는 결제가 불가능합니다."
+        android:text="※요청이 수락되기 전까지는 결제가 불가능합니다."
         android:textColor="@android:color/holo_red_light"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="15dp"/>
 
 
     <View
@@ -33,29 +35,116 @@
         android:layout_marginTop="20dp"
         android:background="#A7A2A2" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_list_select_request"
-        android:layout_width="match_parent"
-        android:layout_height="550dp"
-        android:background="#E8EAF6"
-        tools:listitem="@layout/recyclerview_add_request_product" />
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="요청 상품명"
+        android:textSize="20sp"
+        android:textColor="#676767"
+        android:id="@+id/Textview1"/>
 
-    <LinearLayout
-        android:id="@+id/finish_requestBtn"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:background="@color/main_purple">
+    <EditText
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/name_requestItem"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:hint="새우깡"/>
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="흥정 상품 등록 끝내기"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:textColor="@color/white"/>
-    </LinearLayout>
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="요청 가격"
+        android:textSize="20sp"
+        android:textColor="#676767"
+        android:id="@+id/Textview3"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="25dp"
+        android:text="*적당한 가격을 입력해주세요."
+        android:textColor="@android:color/holo_red_light"/>
+
+    <EditText
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/price_requestItem"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="2000"/>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="요청 갯수"
+        android:textSize="20sp"
+        android:textColor="#676767"
+        android:id="@+id/Textview2"/>
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/count_requestItem"
+        android:inputType="number"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:hint="1"/>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="상품 참고 링크"
+        android:textSize="20sp"
+        android:textColor="#676767"
+        android:id="@+id/Textview4"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="25dp"
+        android:text="*해당 상품이 어떤 것인지 알 수 있게 url을 입력해주세요!"
+        android:textColor="@android:color/holo_red_light"/>
+
+    <EditText
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/reference_requestItem"
+        android:inputType="number"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:hint="http://www.saewookkang.com/main/index"/>
+
+
+    <TextView
+        android:layout_width="350dp"
+        android:layout_height="50dp"/>
+
+    <Button
+        android:id="@+id/RequestBtn"
+        android:backgroundTint="@color/main_purple"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:text="요청하기"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:textColor="@color/white"/>
 
 </LinearLayout>
