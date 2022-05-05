@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Adapter.MartListAdapter
+import com.example.graduationproject.Api.Response.MartListInfo
 import com.example.graduationproject.Api.Response.MartListResponse
 import com.example.graduationproject.R
 import com.example.graduationproject.databinding.Activity1martsearchBinding
@@ -212,6 +213,30 @@ class MartSearchActivity : AppCompatActivity(), OnMapReadyCallback {
             }
 
         }
+
+        binding.btnSearch.setOnClickListener {
+            val keyword = binding.etSearchField.text.toString()
+            service.search_keyword(keyword)
+                .enqueue(object : Callback<MartListInfo> {
+                    override fun onResponse(
+                        call: Call<MartListInfo>,
+                        response: Response<MartListInfo>
+                    ) {
+                        if (response.isSuccessful) {
+                            val result = response.body()
+                            Log.e("조회 완료", "${result}")
+                            // 리사이클러뷰에 결과 출력 요청 함수
+                            AddItemToList(result?.data)
+                        } else {
+                            Log.d("마트 조회", "실패")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<MartListInfo>, t: Throwable) {
+                        Log.e("연결실패", t.message.toString())
+                    }
+                })
+        }
     }
 
     // 검색 결과 받아와서 리사이클러뷰에 추가
@@ -269,4 +294,9 @@ interface MartSearchService {
         @Path("latitude") latitude: Double,
         @Path("longitude") longitude:Double
     ): Call<List<MartListResponse>>
+
+    @GET("mart/{martName}")
+    fun search_keyword(
+        @Path("martName") martName: String
+    ): Call<MartListInfo>
 }
