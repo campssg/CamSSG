@@ -31,6 +31,7 @@ class RequestProductAdapter(val itemList: ArrayList<RequestProductResponse>): Re
         holder.count.text = itemList[position].requestedProductCount.toString()
         holder.reference.text = itemList[position].requestedProductReference
         holder.state.text = itemList[position].requestedProductState
+        holder.martName.text = itemList[position].martName
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
