@@ -81,9 +81,9 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.user_camping1->startActivity(Intent(this, CampSearchActivity::class.java))
-            //R.id.user_camping2->startActivity(Intent(this, CampSearchActivity::class.java))
+            R.id.user_camping2->startActivity(Intent(this, bookmark_campingActivity::class.java))
             R.id.user_mart1->startActivity(Intent(this, MartSearchActivity::class.java))
-            //R.id.user_mart2->startActivity(Intent(this, CampSearchActivity::class.java))
+            R.id.user_mart2->startActivity(Intent(this, bookmark_martActivity::class.java))
             R.id.user_mypage1->startActivity(Intent(this, UserCartActivity::class.java))
             R.id.user_mypage2->startActivity(Intent(this, OrderlistActivity::class.java))
             R.id.user_mypage3->startActivity(Intent(this, UserInfoActivity::class.java))
