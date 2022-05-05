@@ -7,7 +7,7 @@ data class RequestProductResponse(
     val requestedProductName: String,
     val requestedProductPrice: Int,
     val requestedProductCount: Int,
-    @SerializedName("requestedProductImg")
     val requestedProductReference : String,
-    val requestedProductState: String
+    val requestedProductState: String,
+    val martName: String
 )
