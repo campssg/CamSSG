@@ -17,8 +17,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Adapter.MartListAdapter
+import com.example.graduationproject.Api.Request.CampWishRequest
 import com.example.graduationproject.Api.Response.MartListInfo
 import com.example.graduationproject.Api.Response.MartListResponse
+import com.example.graduationproject.Api.Response.ResultResponse
 import com.example.graduationproject.R
 import com.example.graduationproject.databinding.Activity1martsearchBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -34,6 +36,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
@@ -123,6 +126,46 @@ class MartSearchActivity : AppCompatActivity(), OnMapReadyCallback {
             .client(client).build()
 
         val service = retrofit.create(MartSearchService::class.java)
+
+        martListAdapter.setItemLongClickListener(object : MartListAdapter.OnItemLongClickListener {
+            override fun onLongClick(v: View, position: Int) {
+                AlertDialog.Builder(this@MartSearchActivity)
+                    .setTitle("즐겨찾기 추가")
+                    .setMessage("${listItems[position].martName}을 즐겨찾기에 추가하시겠습니까?")
+                    .setPositiveButton("예", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            service.add_wish(listItems[position].martId)
+                                .enqueue(object : Callback<ResultResponse> {
+                                    override fun onResponse(
+                                        call: Call<ResultResponse>,
+                                        response: retrofit2.Response<ResultResponse>
+                                    ) {
+                                        if (response.isSuccessful) {
+                                            val result = response.body()
+                                            Log.e("성공", "${result}")
+                                            Toast.makeText(this@MartSearchActivity, "즐겨찾기에 추가되었습니다", Toast.LENGTH_SHORT).show()
+                                        } else {
+                                            Log.d("즐겨찾기 추가", "실패")
+                                        }
+                                    }
+
+                                    override fun onFailure(
+                                        call: Call<ResultResponse>,
+                                        t: Throwable
+                                    ) {
+                                        Log.e("연결실패", t.message.toString())
+                                    }
+                                })
+                        }
+                    })
+                    .setNegativeButton("아니오", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                        }
+                    })
+                    .create()
+                    .show()
+            }
+        })
 
         // 인탠트 해왔을 경우
         val latitude = intent.getStringExtra("lat")
@@ -299,4 +342,9 @@ interface MartSearchService {
     fun search_keyword(
         @Path("martName") martName: String
     ): Call<MartListInfo>
+
+    @POST("wish/add/{martId}")
+    fun add_wish(
+        @Path("martId") martId: Long
+    ): Call<ResultResponse>
 }
