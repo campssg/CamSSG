@@ -1,6 +1,8 @@
 package com.example.graduationproject.User
 
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -21,10 +23,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import java.util.*
 import java.util.concurrent.TimeUnit
-import android.R
-import android.view.View
-import android.widget.Spinner
-
+import android.content.Intent
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import com.example.graduationproject.Api.Response.AddOrderResponse
 
 class PickupTimeActivity : AppCompatActivity() {
     private lateinit var binding : Activity1pickupTimeBinding
@@ -76,6 +78,10 @@ class PickupTimeActivity : AppCompatActivity() {
                         martname.text = result?.martName
                         martnum.text = result?.martNumber
                         martadr.text = result?.martAddress
+                        if (result?.requestYn == 1) {
+                            binding.requestBtn.setText("물품 요청 불가 매장")
+                            binding.requestBtn.isEnabled = false
+                        }
                     } else {
                         Log.d("마트 정보 조회", "실패")
                     }
@@ -128,8 +134,7 @@ class PickupTimeActivity : AppCompatActivity() {
             dlg.show()
         }
 
-        binding.paymentBtn.setOnClickListener {
-
+        binding.requestBtn.setOnClickListener {
             val jwt = sharedPreferences.getString("jwt", "")
 
             val client = OkHttpClient.Builder()
@@ -145,31 +150,84 @@ class PickupTimeActivity : AppCompatActivity() {
 
             val service = retrofit.create(AddOrder::class.java)
             var data = AddOrderRequest(reservedDate, text)
-            print(data)
+
+            AlertDialog.Builder(this@PickupTimeActivity)
+                .setTitle("주문서 등록")
+                .setMessage("현재 픽업 날짜와 시간을 확정하시겠습니까? 물품 요청 페이지 이후엔, 변경이 불가능합니다.")
+                .setPositiveButton("예", object : DialogInterface.OnClickListener {
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                        service.addOrder(data)
+                            .enqueue(object : Callback<AddOrderResponse> {
+                                override fun onResponse(
+                                    call: Call<AddOrderResponse>,
+                                    response: Response<AddOrderResponse>
+                                ) {
+                                    if (response.isSuccessful) {
+                                        val result = response.body()
+
+                                        var intent = Intent(this@PickupTimeActivity, AddRequestProductActivity::class.java)
+                                        intent.putExtra("orderId", result?.orderId)
+                                        startActivity(intent)
+                                    } else {
+                                        Log.d("주문서 생성", "실패")
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<AddOrderResponse>, t: Throwable) {
+                                    Log.e("연결실패", t.message.toString())
+                                }
+                            })
+                    }
+                })
+                .setNegativeButton("아니오", object : DialogInterface.OnClickListener {
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                        finish()
+                    }
+                })
+                .create()
+                .show()
+        }
+
+        binding.paymentBtn.setOnClickListener {
+            val jwt = sharedPreferences.getString("jwt", "")
+
+            val client = OkHttpClient.Builder()
+                .addInterceptor(AddHeaderJWT(jwt.toString())) // JWT header 달아주는 interceptor 추가
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS).build()
+
+            val retrofit = Retrofit.Builder()
+                .baseUrl("http://13.124.13.202:8080/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client).build()
+
+            val service = retrofit.create(AddOrder::class.java)
+            var data = AddOrderRequest(reservedDate, text)
+
             service.addOrder(data)
-                .enqueue(object : Callback<MartInfoResponse> {
+                .enqueue(object : Callback<AddOrderResponse> {
                     override fun onResponse(
-                        call: Call<MartInfoResponse>,
-                        response: Response<MartInfoResponse>
+                        call: Call<AddOrderResponse>,
+                        response: Response<AddOrderResponse>
                     ) {
+                        Log.d("주문서 생성", "성공")
                         if (response.isSuccessful) {
                             val result = response.body()
                             print(result)
-
+                            Toast.makeText(this@PickupTimeActivity, "주문서 생성을 완료하였습니다.", Toast.LENGTH_SHORT).show()
+                            var outintent = Intent(applicationContext, UserMainActivity::class.java)
+                            setResult(Activity.RESULT_OK, outintent)
                         } else {
                             Log.d("주문서 생성", "실패")
                         }
                     }
 
-                    override fun onFailure(call: Call<MartInfoResponse>, t: Throwable) {
+                    override fun onFailure(call: Call<AddOrderResponse>, t: Throwable) {
                         Log.e("연결실패", t.message.toString())
                     }
                 })
-
-
         }
-
-
     }
 
     interface MartInfo {
@@ -184,6 +242,6 @@ class PickupTimeActivity : AppCompatActivity() {
         @Headers("content-type: application/json", "accept: application/json")
         fun addOrder(
             @Body request: AddOrderRequest
-        ): Call<MartInfoResponse>
+        ): Call<AddOrderResponse>
     }
 }

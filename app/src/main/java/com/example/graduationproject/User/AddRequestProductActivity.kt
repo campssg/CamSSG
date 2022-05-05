@@ -12,6 +12,7 @@ import com.example.graduationproject.Api.Request.AddRequestProductRequest
 import com.example.graduationproject.Api.Response.AddCartResponse
 import com.example.graduationproject.Api.Response.AddRequestProductResponse
 import com.example.graduationproject.Owner.ManagerItemListActivity
+import com.example.graduationproject.Owner.OrderListActivity
 import com.example.graduationproject.databinding.Activity1addRequestBinding
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -56,8 +57,7 @@ class AddRequestProductActivity : AppCompatActivity() {
         val service = retrofit.create(AddRequestProductService::class.java)
 
         // 결제 전에 주문번호 받아서 인텐트 넘어옴
-        val orderId = intent.getLongExtra("orderId", 0)
-
+        val orderId = intent.getStringExtra("orderId")
 
         binding.RequestBtn.setOnClickListener {
             // 빈칸이 있을 경우
@@ -82,7 +82,7 @@ class AddRequestProductActivity : AppCompatActivity() {
                 // 참고링크
                 val requestedProductReference = binding.referenceRequestItem.text.toString()
 
-                val data = AddRequestProductRequest(orderId, count, requestedProductName, price, requestedProductReference)
+                val data = AddRequestProductRequest(orderId.toString(), count, requestedProductName, price, requestedProductReference)
                 service.add_request(data)
                         .enqueue(object : Callback<AddRequestProductResponse> {
                             override fun onResponse(

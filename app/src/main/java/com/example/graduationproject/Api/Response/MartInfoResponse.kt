@@ -10,7 +10,7 @@ data class MartInfoResponse(
     @SerializedName("martNumber")
     val martNumber:String,
     @SerializedName("requestYn")
-    val requestYn:Long,
+    val requestYn:Int,
     @SerializedName("martAddress")
     val martAddress: String
 )
