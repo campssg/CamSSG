@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.graduationproject.Api.Response.MartListResponse
 import com.example.graduationproject.R
+import org.w3c.dom.Text
 
 class MartListAdapter(val itemList: ArrayList<MartListResponse>): RecyclerView.Adapter<MartListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MartListAdapter.ViewHolder {
@@ -29,12 +30,14 @@ class MartListAdapter(val itemList: ArrayList<MartListResponse>): RecyclerView.A
         holder.name.text = itemList[position].martName
         holder.time.text = "${itemList[position].openTime}~${itemList[position].closeTime}"
         holder.address.text = itemList[position].martAddress
+        holder.distance.text = itemList[position].distance.toInt().toString()+"m"
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.tv_list_name)
         val time: TextView = itemView.findViewById(R.id.tv_list_time)
         val address: TextView = itemView.findViewById(R.id.tv_list_address)
+        val distance: TextView = itemView.findViewById(R.id.distance)
     }
 
     interface OnItemClickListener {
