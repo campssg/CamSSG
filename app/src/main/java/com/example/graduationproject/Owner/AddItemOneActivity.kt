@@ -42,7 +42,6 @@ class AddItemOneActivity: AppCompatActivity() {
     private lateinit var binding: ActivityAddItemOneBinding
     private var photoUri: Uri? = null
 
-
     val permission_list = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.ACCESS_MEDIA_LOCATION

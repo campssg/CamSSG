@@ -9,10 +9,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.graduationproject.Api.Response.GetMartInfoResponse
-import com.example.graduationproject.MainActivity
 import com.example.graduationproject.R
 import com.example.graduationproject.User.AddHeaderJWT
-import com.example.graduationproject.User.OrderlistActivity
 import com.example.graduationproject.UserSigning.SelectWhatToLoginActivity
 import com.example.graduationproject.databinding.ActivityOwnermainBinding
 import com.google.android.material.navigation.NavigationView
@@ -134,6 +132,10 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 intent.putExtra("menu", 3)
                 startActivity(intent)
             }
+            R.id.qr_scan->{
+                val intent = Intent(this, OwnerQrScannerActivity::class.java)
+                startActivity(intent)
+            }
             R.id.owner_mypage1->startActivity(Intent(this, OwnerInfoActivity::class.java))
             R.id.owner_mypage2->{
                 val intent = Intent(this, MartListActivity::class.java)
@@ -157,7 +159,7 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         if(System.currentTimeMillis() - pressedTime >=1500){
             pressedTime = System.currentTimeMillis()
             Toast.makeText(this, "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
-        } else{
+        } else {
             // 모든 액티비티 종료
             finishAffinity()
             System.runFinalization()
