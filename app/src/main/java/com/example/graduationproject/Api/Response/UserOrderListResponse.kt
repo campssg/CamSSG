@@ -27,6 +27,8 @@ data class UserDetailOrderListResponse(
     val order_phoneNumber: String,
     val pickup_day : String,
     val pickup_time: String,
+    //qr 변수 넣어야 해
+    val userName:String,
 
     val requestedProductList:List<RequestedProductList>
 )

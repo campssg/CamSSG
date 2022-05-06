@@ -9,6 +9,9 @@ import com.example.graduationproject.Api.Response.UserOrderListResponse
 import com.example.graduationproject.R
 
 class UserOrderListAdapter(val itemList: ArrayList<UserOrderListResponse>):RecyclerView.Adapter<UserOrderListAdapter.ViewHolder>() {
+
+    private lateinit var itemClickListener : OnItemClickListener
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -50,5 +53,4 @@ class UserOrderListAdapter(val itemList: ArrayList<UserOrderListResponse>):Recyc
         this.itemClickListener = onItemClickListener
     }
 
-    private lateinit var itemClickListener : OnItemClickListener
 }

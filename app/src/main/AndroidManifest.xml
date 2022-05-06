@@ -49,6 +49,7 @@
         <activity android:name=".User.UserCartActivity" />
         <activity android:name=".User.AddRequestProductActivity" />
         <activity android:name=".User.PickupTimeActivity" />
+        <activity android:name=".User.DetailOrderListActivity"/>
         <activity android:name=".User.bookmark_martActivity" />
         <activity android:name=".Owner.OwnerMainActivity" />
         <activity android:name=".Owner.ManagerItemListActivity" />

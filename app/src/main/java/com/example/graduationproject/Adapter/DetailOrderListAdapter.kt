@@ -10,6 +10,34 @@ import com.example.graduationproject.R
 import com.example.graduationproject.User.CampListAdapter
 
 class DetailOrderListAdapter(val itemList:ArrayList<orderlist>): RecyclerView.Adapter<DetailOrderListAdapter.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.recyclerview_detail_order_list_user, parent, false)
+        return ViewHolder(view)
+
+    }
+
+    override fun getItemCount(): Int {
+        return itemList.size
+    }
+
+    override fun onBindViewHolder(holder:ViewHolder, position: Int) {
+
+
+        holder.itemView.setOnClickListener {
+            itemClickListener.onClick(it,position)
+        }
+
+        holder.count.text = itemList[position].orderItemCount.toString()
+        holder.name.text = itemList[position].orderItemName
+        holder.price.text = itemList[position].orderItemPrice.toString()
+
+
+
+
+    }
+
+
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         val name:TextView = itemView.findViewById(R.id.detailorderlist_itemname)
@@ -18,28 +46,8 @@ class DetailOrderListAdapter(val itemList:ArrayList<orderlist>): RecyclerView.Ad
 
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_detail_order_list_user,parent,false)
-        return ViewHolder(view)
 
-    }
 
-    override fun onBindViewHolder(holder:DetailOrderListAdapter.ViewHolder, position: Int) {
-        holder.itemView.setOnClickListener {
-            itemClickListener.onClick(it,position)
-        }
-
-        holder.count.text = itemList[position].orderItemCount.toString()
-        holder.name.text = itemList[position].orderItemName
-        holder.price.text = itemList[position].orderItemPrice.toString()
-    }
-
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
 
 
 

@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Adapter.DetailOrderListAdapter
@@ -11,15 +12,15 @@ import com.example.graduationproject.Api.Response.UserDetailOrderListResponse
 import com.example.graduationproject.Api.Response.orderlist
 import com.example.graduationproject.R
 import com.example.graduationproject.databinding.Activity1detailOrderListBinding
+import kotlinx.android.synthetic.main.activity_1detail_order_list.*
+import kotlinx.android.synthetic.main.recyclerview_order_item_mart.*
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
-import java.util.ArrayList
 import java.util.concurrent.TimeUnit
 
 
@@ -49,6 +50,22 @@ class DetailOrderListActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+
+
+        val martName = binding.tvMartName
+//        val NumberOfMart = binding.tvNumberofmart
+        val UserName = binding.tvNumberofmart
+        val orderPhoneNumber = binding.tvOrdernumber
+//        val PaymentType = binding.tvPaymenttype
+        val totalPrice = binding.tvTotalprice
+        val PickUpDate = binding.tvPickupdate
+        val orderState = binding.tvOrderstate
+        val TotalPrice = binding.tvTotalprice
+        val OrderId = binding.tvOrdernumber
+
+
+        val OrderNumber = binding.tvOrdernumber
+        val PickUpTime = binding.tvPickuptimeDetail
 
         binding.rvDetailorderlist.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         binding.rvDetailorderlist.adapter = detailOrderListAdapter
@@ -81,10 +98,11 @@ class DetailOrderListActivity : AppCompatActivity() {
         val service = retrofit.create(DetailOrderList::class.java)
 
 
+//        val sharedPreferences2 = getSharedPreferences("userInfo", MODE_PRIVATE)
+//        val userName =sharedPreferences2.getString("userName","")
+//        binding.tvUsername.setText(userName)
 
-
-
-
+        //주문 상세 내역 조회
         service.ShowDetailOrderList(orderId)
             .enqueue(object:Callback<UserDetailOrderListResponse>{
 
@@ -92,12 +110,25 @@ class DetailOrderListActivity : AppCompatActivity() {
 
                 override fun onResponse(
                     call: Call<UserDetailOrderListResponse>,
-                    response: Response<UserDetailOrderListResponse>
+                    response: retrofit2.Response<UserDetailOrderListResponse>
                 ) {
                     if (response.isSuccessful) {
                         val result = response.body()
                         Log.e("조회 완료", "${result}")
-//                        AddItemToList(result)
+
+                        martName.setText(result!!.martName)
+//                        order_phoneNumber.setText(result!!.order_phoneNumber)
+                        UserName.setText(result!!.userName)
+                        orderState.setText(result!!.orderState)
+                        TotalPrice.setText(result!!.totalPrice.toString())
+                        PickUpDate.setText(result!!.pickup_day)
+                        PickUpTime.setText(result!!.pickup_time)
+                        OrderId.setText(result!!.orderId.toString())
+
+
+
+
+                        AddItemToList(result)
                     } else {
                         Log.d("조회", "실패")
                     }
@@ -107,6 +138,16 @@ class DetailOrderListActivity : AppCompatActivity() {
 
                 }
             })
+
+
+        detailOrderListAdapter.setItemClickListener(object:DetailOrderListAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+
+            }
+
+        })
+
+
 
 
 
@@ -129,22 +170,17 @@ class DetailOrderListActivity : AppCompatActivity() {
     }
 
     // 조회 결과 리사이클러뷰에 추가
-//    private fun AddItemToList(searchResult:UserDetailOrderListResponse) {
-//        listItems.clear()
-//        for (orderList in searchResult!!) {
-//            listItems.add(orderList)
-//        }
-//        DetailOrderListAdapter.notifyDataSetChanged()
-//    }
-}
-
-private fun <E> ArrayList<E>.add(element: UserDetailOrderListResponse) {
+    private fun AddItemToList(searchResult: UserDetailOrderListResponse?) {
+        listItems.clear()
+        for (orderList in searchResult!!.orderItemList) {
+            listItems.add(orderList)
+        }
+        detailOrderListAdapter.notifyDataSetChanged()
+    }
 
 }
 
-private fun <T> Call<T>.enqueue(callback: Callback<List<UserDetailOrderListResponse>>) {
 
-}
 
 
 interface DetailOrderList{

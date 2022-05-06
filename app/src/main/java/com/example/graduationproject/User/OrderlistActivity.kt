@@ -1,5 +1,6 @@
 package com.example.graduationproject.User
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -62,6 +63,14 @@ class OrderlistActivity : AppCompatActivity() {
             .client(client).build()
 
         val service = retrofit.create(UserOrderListService::class.java)
+
+        userOrderListAdapter.setItemClickListener(object:UserOrderListAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                val intent = Intent(this@OrderlistActivity, DetailOrderListActivity::class.java)
+                intent.putExtra("orderId",listItems[position].orderId)
+                startActivity(intent)
+            }
+        })
 
         val spinner = binding.orderlistSpinner
         ArrayAdapter.createFromResource(
