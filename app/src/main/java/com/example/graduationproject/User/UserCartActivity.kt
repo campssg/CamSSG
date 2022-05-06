@@ -80,43 +80,42 @@ class UserCartActivity : AppCompatActivity() {
         cartlistAdapter.setItemLongClickListener(object : CartListAdapter.OnItemLongClickListener {
             override fun onLongClick(v: View, position: Int) {
                 // 리사이클러뷰 롱클릭 -> 바로 삭제
-                service2.delete_item(listItems_Cart[position].cartItemId)
-                    .enqueue(object : Callback<UserCartInfoResponse> {
-                        override fun onResponse(
-                            call: Call<UserCartInfoResponse>,
-                            response: Response<UserCartInfoResponse>
-                        ) {
-                            if (response.isSuccessful) {
-                                val result = response.body()
-                                Log.e("성공", "${result}")
+                // 다이얼로그 띄우기
+                AlertDialog.Builder(this@UserCartActivity)
+                    .setTitle("장바구니 물품 삭제")
+                    .setMessage("${listItems_Cart[position].cartItemName} ${listItems_Cart[position].cartItemCount}개를 장바구니에서 삭제하시겠습니까?")
+                    .setPositiveButton("확인", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            service2.delete_item(listItems_Cart[position].cartItemId)
+                                .enqueue(object : Callback<UserCartInfoResponse> {
+                                    override fun onResponse(
+                                        call: Call<UserCartInfoResponse>,
+                                        response: Response<UserCartInfoResponse>
+                                    ) {
+                                        if (response.isSuccessful) {
+                                            val result = response.body()
+                                            Log.e("성공", "${result}")
 
-                                // 다이얼로그 띄우기
-                                AlertDialog.Builder(this@UserCartActivity)
-                                    .setTitle("장바구니 물품 삭제")
-                                    .setMessage("${listItems_Cart[position].cartItemName} ${listItems_Cart[position].cartItemCount}개가 장바구니에서 삭제되었습니다")
-                                    .setPositiveButton("확인", object : DialogInterface.OnClickListener {
-                                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                                            // 장바구니 갱신
+                                            itemNum.setText(result?.data?.totalCount.toString())
+                                            totalprice.setText(result?.data?.totalPrice.toString())
+                                            listItems_Cart.removeAt(position) // 리사이클러뷰에서도 삭제
+                                            cartlistAdapter.notifyDataSetChanged() // 리사이클러뷰 갱신
+                                        } else {
+                                            Log.d("장바구니 삭제", "실패")
                                         }
-                                    })
-                                    .create()
-                                    .show()
-
-                                // 장바구니 갱신
-                                itemNum.setText(result?.data?.totalCount.toString())
-                                totalprice.setText(result?.data?.totalPrice.toString())
-                                listItems_Cart.removeAt(position) // 리사이클러뷰에서도 삭제
-                                cartlistAdapter.notifyDataSetChanged() // 리사이클러뷰 갱신
-                            } else {
-                                Log.d("장바구니 삭제", "실패")
-                            }
-                        }
-                        override fun onFailure(
-                            call: Call<UserCartInfoResponse>,
-                            t: Throwable
-                        ) {
-                            Log.e("연결실패", t.message.toString())
+                                    }
+                                    override fun onFailure(
+                                        call: Call<UserCartInfoResponse>,
+                                        t: Throwable
+                                    ) {
+                                        Log.e("연결실패", t.message.toString())
+                                    }
+                                })
                         }
                     })
+                    .create()
+                    .show()
             }
         })
 

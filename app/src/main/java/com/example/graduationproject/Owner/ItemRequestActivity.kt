@@ -146,8 +146,10 @@ class ItemRequestActivity : AppCompatActivity() {
                                                 val result = response.body()
                                                 Log.e("성공", "${result}")
                                                 Toast.makeText(this@ItemRequestActivity, "승인이 완료되었습니다", Toast.LENGTH_SHORT).show()
-                                                listItems.removeAt(position)
-                                                requestProductAdapter.notifyDataSetChanged()
+                                                val intent = Intent(this@ItemRequestActivity, ItemRequestActivity::class.java)
+                                                intent.putExtra("martId", martId)
+                                                startActivity(intent)
+                                                finish()
                                             } else {
                                                 Log.d("승인", "실패")
                                             }

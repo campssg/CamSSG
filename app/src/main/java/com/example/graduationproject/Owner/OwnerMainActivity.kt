@@ -16,6 +16,7 @@ import com.example.graduationproject.User.OrderlistActivity
 import com.example.graduationproject.UserSigning.SelectWhatToLoginActivity
 import com.example.graduationproject.databinding.ActivityOwnermainBinding
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.menubar_header.view.*
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,8 +39,14 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         setContentView(binding.root)
         actionBar?.hide()
 
-        val pref = getSharedPreferences("userInfo", MODE_PRIVATE)
+        val pref = getSharedPreferences("token", MODE_PRIVATE)
         val userName = pref.getString("userName", "")
+        val userEmail = pref.getString("userEmail", "")
+
+        navigationView = binding.navView
+        val menubarHeader = navigationView.getHeaderView(0)
+        val text = menubarHeader.account
+        text.setText(userEmail)
 
         binding.omainUsername.setText(userName)
 

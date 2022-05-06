@@ -97,6 +97,9 @@ class LoginActivity_User : AppCompatActivity() {
                             val sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
                             val editor = sharedPreference.edit()
                             editor.putString("jwt", token.toString())
+                            editor.putString("userEmail", result?.data?.userEmail)
+                            editor.putString("userName", result?.data?.userName)
+                            editor.putString("userNickname", result?.data?.userNickname)
                             editor.apply()
 
                             Toast.makeText(this@LoginActivity_User, "서비스 이용자 로그인 성공", Toast.LENGTH_SHORT).show()
