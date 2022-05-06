@@ -62,7 +62,7 @@ class AddRequestProductActivity : AppCompatActivity() {
         binding.RequestBtn.setOnClickListener {
             // 빈칸이 있을 경우
             if (binding.nameRequestItem.text.toString()=="" || binding.priceRequestItem.text.toString()==""
-                    || binding.countRequestItem.text.toString()=="" || binding.referenceRequestItem.text.toString()==""){
+                    || binding.countRequestItem.text.toString()==""){
                 Toast.makeText(this@AddRequestProductActivity, "빈칸을 채워주세요", Toast.LENGTH_SHORT).show()
             }
 
@@ -144,5 +144,22 @@ class AddRequestProductActivity : AppCompatActivity() {
         ): Call<AddRequestProductResponse>
     }
 
+    // 뒤로가기 이벤트
+    override fun onBackPressed() {
+        AlertDialog.Builder(this@AddRequestProductActivity)
+                .setTitle("상품 요청 취소")
+                .setMessage("상품 요청을 그만두시겠습니까?")
+                .setPositiveButton("예", object : DialogInterface.OnClickListener{
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                        finish()
+                    }
+                })
+                .setNegativeButton("아니오", object :DialogInterface.OnClickListener{
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
 
+                    }
+                })
+                .create()
+                .show()
+    }
 }

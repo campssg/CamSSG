@@ -1,5 +1,6 @@
 package com.example.graduationproject.User
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
@@ -20,6 +21,8 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     private lateinit var binding: Activity1usermainBinding
 
     lateinit var navigationView: NavigationView
+
+    var pressedTime = 0L //뒤로가기 버튼 클릭했을 때의 시간
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,5 +95,19 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             R.id.user_mart3->startActivity(Intent(this, CheckRequestActivity::class.java))
         }
         return false
+    }
+
+    //뒤로가기 2번 -> 앱 종료 이벤트
+    override fun onBackPressed() {
+
+        if(System.currentTimeMillis() - pressedTime >=1500){
+            pressedTime = System.currentTimeMillis()
+            Toast.makeText(this, "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        } else{
+            // 모든 액티비티 종료
+            finishAffinity()
+            System.runFinalization()
+            System.exit(0)
+        }
     }
 }
