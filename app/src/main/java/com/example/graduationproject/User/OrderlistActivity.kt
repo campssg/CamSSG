@@ -19,6 +19,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
 //주문내역
@@ -99,6 +100,26 @@ class OrderlistActivity : AppCompatActivity() {
                                 }
                             })
                     }
+                    2 -> {
+                        service.get_state("결제대기중")
+                            .enqueue(object : Callback<List<UserOrderListResponse>> {
+                                override fun onResponse(
+                                    call: Call<List<UserOrderListResponse>>,
+                                    response: Response<List<UserOrderListResponse>>
+                                ) {
+                                    if (response.isSuccessful) {
+                                        val result = response.body()
+                                        Log.e("성공", "${result}")
+                                        AddItemToList(result)
+                                    } else {
+                                        Log.d("주문 내역 조회", "실패")
+                                    }
+                                }
+                                override fun onFailure(call: Call<List<UserOrderListResponse>>, t: Throwable) {
+                                    Log.e("연결실패", t.message.toString())
+                                }
+                            })
+                    }
                 }
             }
         }
@@ -160,6 +181,11 @@ interface UserOrderListService {
 
     @GET("order/prepared")
     fun prepared_order():Call<List<UserOrderListResponse>>
+
+    @GET("order/get/{orderState}")
+    fun get_state(
+        @Path("orderState") orderState: String
+    ): Call<List<UserOrderListResponse>>
 }
 
 
