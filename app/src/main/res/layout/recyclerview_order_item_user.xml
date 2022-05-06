@@ -57,6 +57,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.132" />
 
+
     <TextView
         android:id="@+id/pickuptime_orderItem"
         android:layout_width="wrap_content"
@@ -64,11 +65,9 @@
         android:text="10:00-13:00"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.132" />
-
 
     <TextView
         android:id="@+id/textView33"
@@ -132,20 +131,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.664" />
-
-    <TextView
-        android:id="@+id/howtopay_orderItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="휴대폰 결제"
-        android:textSize="18sp"
-        android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.91"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.335" />
 
     <View
         android:id="@+id/view10"

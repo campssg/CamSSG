@@ -60,7 +60,7 @@ class EditMartActivity :AppCompatActivity(){
         binding.martTimeStart.setText(openTime)
         binding.martTimeEnd.setText(closeTime)
         binding.martAddressEdit.inputType = InputType.TYPE_NULL
-        if (requestYn == 1) {
+        if (requestYn == 0) {
             binding.martRequestYes.toggle()
         } else {
             binding.martRequestNo.toggle()
@@ -88,9 +88,9 @@ class EditMartActivity :AppCompatActivity(){
             openTime = binding.martTimeStart.text.toString()
             closeTime = binding.martTimeEnd.text.toString()
             if (binding.martRequestYes.isChecked) {
-                requestYn = 1
-            } else {
                 requestYn = 0
+            } else {
+                requestYn = 1
             }
             val data = MartEditRequest(martId, martName.toString(), openTime.toString(), closeTime.toString(), requestYn.toLong())
             println(data)
@@ -144,7 +144,6 @@ class EditMartActivity :AppCompatActivity(){
             //사진 업로드
             if (photoUri != null) {
                 Glide.with(this).load(photoUri).into(binding.martImg)
-
             }
         }
 

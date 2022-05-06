@@ -8,5 +8,6 @@ data class MartListResponse(
     val closeTime: String,
     val latitude: Double,
     val longitude: Double,
-    val requestYn: Long
+    val requestYn: Long,
+    val distance : Double
 )

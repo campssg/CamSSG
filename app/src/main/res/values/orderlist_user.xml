@@ -3,5 +3,6 @@
     <string-array name="orderlist_spinner_array">
         <item>전체 주문 내역</item>
         <item>픽업준비완료된 주문 내역</item>
+        <item>결제대기중인 주문 내역</item>
     </string-array>
 </resources>

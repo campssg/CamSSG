@@ -32,7 +32,7 @@ class CompareCartAdapter(val itemList: ArrayList<CartComparisonItem>): RecyclerV
             holder.notexist.text = "물품 품목 ${itemList[position].notExistCnt}개, 총 ${itemList[position].notExistTotalCnt}개 재고 없음"
         }
         holder.totalprice.text = itemList[position].totalPrice.toString() + "원"
-
+        holder.distance.text = itemList[position].distance.toInt().toString() + "m"
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -40,6 +40,7 @@ class CompareCartAdapter(val itemList: ArrayList<CartComparisonItem>): RecyclerV
         val martname: TextView = itemView.findViewById(R.id.compare_cartlist_martname)
         val notexist: TextView = itemView.findViewById(R.id.compare_cartlist_itempresence)
         val totalprice: TextView = itemView.findViewById(R.id.compare_cartlist_totalprice)
+        val distance: TextView = itemView.findViewById(R.id.distance)
     }
 
     interface OnItemClickListener {

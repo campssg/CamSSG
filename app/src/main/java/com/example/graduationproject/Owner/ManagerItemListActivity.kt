@@ -214,41 +214,40 @@ class ManagerItemListActivity : AppCompatActivity() {
 
             ManagerItemListAdapter.setItemLongClickListener(object : ManagerItemListAdapter.OnItemLongClickListener{
                 override fun onLongClick(v: View, position: Int) {
-                    // 리사이클러뷰 롱클릭 -> 바로 삭제
-                    service2.delete_item(listItems[position].productId)
-                            .enqueue(object : Callback<DeleteProductResponse> {
-                                override fun onResponse(
-                                        call: Call<DeleteProductResponse>,
-                                        response: Response<DeleteProductResponse>
-                                ) {
-                                    if (response.isSuccessful) {
-                                        val result = response.body()
-                                        Log.e("성공", "${result}")
+                    // 다이얼로그 띄우기
+                    AlertDialog.Builder(this@ManagerItemListActivity)
+                        .setTitle("마트 상품 삭제")
+                        .setMessage("${listItems[position].productName}을(를) 마트 판매 상품에서 삭제하시겠습니까?")
+                        .setPositiveButton("확인", object : DialogInterface.OnClickListener {
+                            override fun onClick(p0: DialogInterface?, p1: Int) {
+                                service2.delete_item(listItems[position].productId)
+                                    .enqueue(object : Callback<DeleteProductResponse> {
+                                        override fun onResponse(
+                                            call: Call<DeleteProductResponse>,
+                                            response: Response<DeleteProductResponse>
+                                        ) {
+                                            if (response.isSuccessful) {
+                                                val result = response.body()
+                                                Log.e("성공", "${result}")
 
-                                        // 다이얼로그 띄우기
-                                        AlertDialog.Builder(this@ManagerItemListActivity)
-                                                .setTitle("마트 상품 삭제")
-                                                .setMessage("${listItems[position].productName}이(가) 마트 판매 상품에서 삭제되었습니다")
-                                                .setPositiveButton("확인", object : DialogInterface.OnClickListener {
-                                                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                                                    }
-                                                })
-                                                .create()
-                                                .show()
-                                        // 리사이클러뷰 갱신
-                                        listItems.removeAt(position) // 리사이클러뷰에서도 삭제
-                                        ManagerItemListAdapter.notifyDataSetChanged() // 리사이클러뷰 갱신
-                                    } else {
-                                        Log.d("장바구니 삭제", "실패")
-                                    }
-                                }
-                                override fun onFailure(
-                                        call: Call<DeleteProductResponse>,
-                                        t: Throwable
-                                ) {
-                                    Log.e("연결실패", t.message.toString())
-                                }
-                            })
+                                                // 리사이클러뷰 갱신
+                                                listItems.removeAt(position) // 리사이클러뷰에서도 삭제
+                                                ManagerItemListAdapter.notifyDataSetChanged() // 리사이클러뷰 갱신
+                                            } else {
+                                                Log.d("장바구니 삭제", "실패")
+                                            }
+                                        }
+                                        override fun onFailure(
+                                            call: Call<DeleteProductResponse>,
+                                            t: Throwable
+                                        ) {
+                                            Log.e("연결실패", t.message.toString())
+                                        }
+                                    })
+                            }
+                        })
+                        .create()
+                        .show()
                 }
             })
 

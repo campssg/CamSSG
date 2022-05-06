@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ import com.example.graduationproject.databinding.Activity1bookmarkCampingBinding
 import com.example.graduationproject.databinding.Activity1usermainBinding
 import com.example.graduationproject.databinding.ActivityLoginBinding
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.menubar_header.view.*
 
 class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: Activity1usermainBinding
@@ -34,8 +36,14 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         actionBar = supportActionBar
         actionBar?.hide()
 
-        val sharedPreferences = getSharedPreferences("userInfo", MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
         val userName = sharedPreferences.getString("userName", "")
+        val userEmail = sharedPreferences.getString("userEmaill", "")
+
+        navigationView = binding.navView
+        val menubarHeader = navigationView.getHeaderView(0)
+        val text = menubarHeader.account
+        text.setText(userEmail)
 
         binding.umainUsername.setText(userName)
 
