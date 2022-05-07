@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.graduationproject.Api.Response.orderlist
 import com.example.graduationproject.R
-import com.example.graduationproject.User.CampListAdapter
 
 class DetailOrderListAdapter(val itemList:ArrayList<orderlist>): RecyclerView.Adapter<DetailOrderListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

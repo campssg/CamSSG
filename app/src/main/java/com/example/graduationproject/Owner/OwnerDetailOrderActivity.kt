@@ -11,7 +11,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Adapter.DetailOrderListAdapter
-import com.example.graduationproject.Adapter.RequestProductAdapter
+import com.example.graduationproject.Api.Response.MartOrderListResponse
 import com.example.graduationproject.Api.Response.RequestedProductList
 import com.example.graduationproject.Api.Response.UserDetailOrderListResponse
 import com.example.graduationproject.Api.Response.orderlist
@@ -29,19 +29,21 @@ import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
 
-//주문 상세내역 조회
+//hj 마트 운영자 - 주문  현황
 
-
-//1. 스피너 등록(전체 주문, 요청했던 상품)
 //2. QR발급 버튼 누르면 페이지 이동
 //3. recyclerview 등록 (itemclicklistener )
 //4. retrofit 작성 (recyclerview 에 item 을 출력하기, 총 주문금액 출력하기)
+
+
+
+//1. 스피너 등록(전체 주문, 요청했던 상품)
 //5. 스피너에 따라 recyclerview 내용 바뀌기-selectMartItem의 스피너 참고하기
 
 
 
 
-class DetailOrderListActivity : AppCompatActivity() {
+class OwnerDetailOrderListActivity : AppCompatActivity() {
 
     private lateinit var binding: Activity1detailOrderListBinding
 
@@ -50,10 +52,9 @@ class DetailOrderListActivity : AppCompatActivity() {
     val detailOrderListAdapter = DetailOrderListAdapter(listItems)
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = Activity1detailOrderListBinding.inflate(layoutInflater)
+        binding =Activity1detailOrderListBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
         //액션바 숨기기
@@ -62,9 +63,14 @@ class DetailOrderListActivity : AppCompatActivity() {
         actionBar?.hide()
 
 
+
+
+
+        binding.OrderQRBtn.isVisible = false
+
+
         val UserName = binding.tvUsername
         val martName = binding.tvMartName
-        val extraFee = binding.extraFee
 
         val orderState = binding.tvOrderstate
         val TotalPrice = binding.tvTotalprice
@@ -72,24 +78,22 @@ class DetailOrderListActivity : AppCompatActivity() {
         val PickUpDate = binding.tvPickupdate
         val PickUpTime = binding.tvPickuptime
 
-        val requestedItemName = binding.requestedName
-        val requestedItemNum = binding.requestedItemNum
-        val requestedItemPrice = binding.requestedItemprice
-        binding.rvDetailorderlist.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvDetailorderlist.adapter = detailOrderListAdapter
-
-
-        val orderId = intent.getLongExtra("orderId", 0)
-
-        binding.rvDetailorderlist.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvDetailorderlist.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         binding.rvDetailorderlist.adapter = detailOrderListAdapter
 
 
 
 
 
+
+        val orderId = intent.getLongExtra("orderId",0)
+
+        binding.rvDetailorderlist.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvDetailorderlist.adapter = detailOrderListAdapter
+
+
+        // 로그인 후 저장해둔 JWT 토큰 가져오기
         val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
         val jwt = sharedPreferences.getString("jwt", "")
 
@@ -105,14 +109,12 @@ class DetailOrderListActivity : AppCompatActivity() {
             .client(client).build()
 
 
+        val service = retrofit.create(OwnerDetailOrderList::class.java)
 
 
 
-
-        val service = retrofit.create(DetailOrderList::class.java)
 
         //주문 상세 내역 조회
-
         service.ShowDetailOrderList(orderId)
             .enqueue(object:Callback<UserDetailOrderListResponse>{
 
@@ -130,35 +132,9 @@ class DetailOrderListActivity : AppCompatActivity() {
                         UserName.setText("사용자명 : " +result!!.userName)
                         orderState.setText("주문상태 : " +result!!.orderState)
                         TotalPrice.setText(result!!.totalPrice.toString())
-                        extraFee.setText(result!!.charge.toString())
                         PickUpDate.setText("픽업날짜 : " +result!!.pickup_day)
                         PickUpTime.setText("픽업시간 : " +result!!.pickup_time)
                         OrderId.setText("주문번호 : " +result!!.orderId.toString())
-
-
-
-                        if(result!!.orderState=="결제대기중"){
-                            binding.MoveToPay.isVisible = true
-                        }
-
-
-                        if(result!!.requestedProductList!=null) {
-
-                            for (requestedList in result!!.requestedProductList) {
-                                requestedItemName.setText("요청상품명 : "+requestedList.requestedPRoductName)
-                                requestedItemNum.setText("요청상품 갯수 : "+requestedList.requestedProductCount.toString())
-                                requestedItemPrice.setText("요청상품가격 : "+requestedList.requestedProductPrice.toString())
-
-                            }
-                        }
-
-
-
-
-
-
-
-
 
 
 
@@ -175,20 +151,14 @@ class DetailOrderListActivity : AppCompatActivity() {
             })
 
 
+        detailOrderListAdapter.setItemClickListener(object:DetailOrderListAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+
+            }
+
+        })
 
 
-
-
-
-
-        //주문 QR이미지 발급 페이지로 이동
-        binding.OrderQRBtn.setOnClickListener{
-            val intent = Intent(this,OrderQRImageActivity::class.java)
-            intent.putExtra("orderId",orderId)
-
-            startActivity(intent)
-
-        }
 
     }
 
@@ -201,26 +171,14 @@ class DetailOrderListActivity : AppCompatActivity() {
         detailOrderListAdapter.notifyDataSetChanged()
     }
 
-
-
-
-
-
-
 }
 
 
-private fun <E> ArrayList<E>.add(element: RequestedProductList) {
-
-}
 
 
-interface DetailOrderList{
+interface OwnerDetailOrderList{
     @GET("/order/{orderId}")
     fun ShowDetailOrderList(
         @Path("orderId") orderId:Long
     ): Call<UserDetailOrderListResponse>
-
-
-
 }

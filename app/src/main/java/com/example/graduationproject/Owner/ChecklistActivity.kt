@@ -1,21 +1,15 @@
 package com.example.graduationproject.Owner
 
-import android.content.DialogInterface
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
-import android.view.Gravity
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Adapter.ChecklistAdapter
-import com.example.graduationproject.Api.Request.ChecklistRequest
 import com.example.graduationproject.Api.Response.CategoryCheckListResponse
-import com.example.graduationproject.Api.Response.ProductList2
+import com.example.graduationproject.Api.Response.CheckListResponse
 import com.example.graduationproject.User.AddHeaderJWT
 import com.example.graduationproject.databinding.ActivityChecklistBinding
 import okhttp3.OkHttpClient
@@ -30,10 +24,12 @@ import retrofit2.http.Path
 import java.util.ArrayList
 import java.util.concurrent.TimeUnit
 
+
+//hj 물품 체크리스트 등록
 class ChecklistActivity:AppCompatActivity() {
     private lateinit var binding: ActivityChecklistBinding
 
-    val listItems = arrayListOf<CategoryCheckListResponse>()
+    val listItems = arrayListOf<CheckListResponse>()
     val ItemAdapter = ChecklistAdapter(listItems)
 
     override fun onCreate(savedInstanceState: Bundle?){
@@ -78,13 +74,42 @@ class ChecklistActivity:AppCompatActivity() {
         val service2= retrofit.create(martChecklist::class.java)
         //카테고리 아이디 intent로 넘겨오기
         val categoryId = intent.getStringExtra("categoryId")
+        //mart아이디 intent 로 넘겨오기
+        val martId = intent.getLongExtra("martId",0)
         Toast.makeText(this,categoryId,Toast.LENGTH_SHORT).show()
 
 
 
 
+        binding.btnRegisterItem.setOnClickListener {
+
+            service2.MartCheckItem(martId)
+                .enqueue(object : Callback<List<CheckListResponse>> {
+
+                    override fun onResponse(
+                        call: Call<List<CheckListResponse>>,
+                        response: Response<List<CheckListResponse>>
+                    ) {
+                        println(response)
+                        if (response.isSuccessful) {
+                            val result = response.body()
+                            Log.e("조회 완료", "${result}")
+                            //리사이클러뷰에 결과 출력
+                            AddItemToList(result)
+                        }
+                    }
+
+                    override fun onFailure(
+                        call: Call<List<CheckListResponse>>,
+                        t: Throwable
+                    ) {
+                        Log.e("연결실패", t.message.toString())
+
+                    }
 
 
+                })
+        }
 
 
         if (categoryId != null) {
@@ -100,7 +125,7 @@ class ChecklistActivity:AppCompatActivity() {
                             val result = response.body()
                             Log.e("조회 완료", "${result}")
                             //리사이클러뷰에 결과 출력
-                            AddItemToList(result)
+//                            AddItemToList(result)
                         }
                     }
 
@@ -123,35 +148,15 @@ class ChecklistActivity:AppCompatActivity() {
 
         ItemAdapter.setItemClickListener(object:ChecklistAdapter.OnItemClicklistener{
             override fun onClick(v: View, position: Int) {
-                val editText = EditText(this@ChecklistActivity)
-                editText.gravity = Gravity.CENTER
-                editText.inputType= InputType.TYPE_CLASS_NUMBER
-                editText.hint = "가격 입력"
-
-                AlertDialog.Builder(this@ChecklistActivity)
-                    .setTitle("상품 등록하기")
-                    .setMessage("가격을 입력해주세요")
-                    .setView(editText)
-                    .setPositiveButton("등록", object : DialogInterface.OnClickListener {
-                        override fun onClick(p0: DialogInterface?, p1: Int) {
-                            val price = editText.text.toString()
-                                //binding.가격 = price
-                                //이렇게 textview에 새로운 가격을 다시 출력해주기!!
-                            Log.e("등록되었습니다","성고옹")
-
-
-                        }
-                    })
 
 
 
-            }
+        }
         })
 
     }
 
-    //이게 리스트로 해야되는 건가?
-    private fun AddItemToList(searchResult: List<CategoryCheckListResponse>?) {
+    private fun AddItemToList(searchResult: List<CheckListResponse>?) {
         listItems.clear()
         if (searchResult != null) {
             for(productList in searchResult){
@@ -188,5 +193,5 @@ interface martChecklist{
     @POST("mart/{martId}/list")
     fun MartCheckItem(
         @Path("martId") martId:Long
-    ): Call<List<ProductList2>>
+    ): Call<List<CheckListResponse>>
 }

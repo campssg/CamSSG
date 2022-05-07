@@ -1,13 +1,16 @@
 package com.example.graduationproject.Owner
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Adapter.MartOrderListAdapter
 import com.example.graduationproject.Api.Response.MartOrderListResponse
 import com.example.graduationproject.User.AddHeaderJWT
+import com.example.graduationproject.User.OwnerDetailOrderListActivity
 import com.example.graduationproject.databinding.ActivityOrderlistBinding
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -58,6 +61,14 @@ class OrderListActivity : AppCompatActivity() {
             .client(client).build()
 
         val service = retrofit.create(MartOrderListService::class.java)
+
+        martOrderListAdapter.setItemClickListener(object:MartOrderListAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                val intent = Intent(this@OrderListActivity,OwnerDetailOrderListActivity::class.java)
+                intent.putExtra("orderId",listItems[position].orderId)
+                startActivity(intent)
+            }
+        })
 
         val martId = intent.getLongExtra("martId", 0)
 
