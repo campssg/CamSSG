@@ -4,14 +4,19 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Adapter.DetailOrderListAdapter
 import com.example.graduationproject.Adapter.RequestProductAdapter
+import com.example.graduationproject.Adapter.RequestedDetailAdapter
+import com.example.graduationproject.Api.Response.ProductList
 import com.example.graduationproject.Api.Response.RequestedProductList
 import com.example.graduationproject.Api.Response.UserDetailOrderListResponse
 import com.example.graduationproject.Api.Response.orderlist
@@ -46,9 +51,10 @@ class DetailOrderListActivity : AppCompatActivity() {
     private lateinit var binding: Activity1detailOrderListBinding
 
     val listItems = arrayListOf<orderlist>()
-
     val detailOrderListAdapter = DetailOrderListAdapter(listItems)
 
+    val listItems2 = arrayListOf<RequestedProductList>()
+    val requestedDetailAdapter = RequestedDetailAdapter(listItems2)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,23 +78,16 @@ class DetailOrderListActivity : AppCompatActivity() {
         val PickUpDate = binding.tvPickupdate
         val PickUpTime = binding.tvPickuptime
 
-        val requestedItemName = binding.requestedName
-        val requestedItemNum = binding.requestedItemNum
-        val requestedItemPrice = binding.requestedItemprice
-        binding.rvDetailorderlist.layoutManager =
+        binding.rvOrderItemList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvDetailorderlist.adapter = detailOrderListAdapter
+        binding.rvOrderItemList.adapter = detailOrderListAdapter
 
 
         val orderId = intent.getLongExtra("orderId", 0)
 
-        binding.rvDetailorderlist.layoutManager =
+        binding.rvRequestedItemList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvDetailorderlist.adapter = detailOrderListAdapter
-
-
-
-
+        binding.rvRequestedItemList.adapter = requestedDetailAdapter
 
         val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
         val jwt = sharedPreferences.getString("jwt", "")
@@ -104,19 +103,12 @@ class DetailOrderListActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .client(client).build()
 
-
-
-
-
-
         val service = retrofit.create(DetailOrderList::class.java)
 
         //주문 상세 내역 조회
 
         service.ShowDetailOrderList(orderId)
             .enqueue(object:Callback<UserDetailOrderListResponse>{
-
-
 
                 override fun onResponse(
                     call: Call<UserDetailOrderListResponse>,
@@ -135,35 +127,16 @@ class DetailOrderListActivity : AppCompatActivity() {
                         PickUpTime.setText("픽업시간 : " +result!!.pickup_time)
                         OrderId.setText("주문번호 : " +result!!.orderId.toString())
 
+                        AddItemToList(result)
 
-
-                        if(result!!.orderState=="결제대기중"){
+                        if(result.orderState=="결제대기중"){
                             binding.MoveToPay.isVisible = true
                         }
 
-
-                        if(result!!.requestedProductList!=null) {
-
-                            for (requestedList in result!!.requestedProductList) {
-                                requestedItemName.setText("요청상품명 : "+requestedList.requestedPRoductName)
-                                requestedItemNum.setText("요청상품 갯수 : "+requestedList.requestedProductCount.toString())
-                                requestedItemPrice.setText("요청상품가격 : "+requestedList.requestedProductPrice.toString())
-
-                            }
+                        if(!result.requestedProductList.isNullOrEmpty()) {
+                            binding.requestedProduct.isVisible = true
+                            AddItemToList2(result.requestedProductList)
                         }
-
-
-
-
-
-
-
-
-
-
-
-
-                        AddItemToList(result)
                     } else {
                         Log.d("조회", "실패")
                     }
@@ -174,13 +147,6 @@ class DetailOrderListActivity : AppCompatActivity() {
                 }
             })
 
-
-
-
-
-
-
-
         //주문 QR이미지 발급 페이지로 이동
         binding.OrderQRBtn.setOnClickListener{
             val intent = Intent(this,OrderQRImageActivity::class.java)
@@ -189,7 +155,6 @@ class DetailOrderListActivity : AppCompatActivity() {
             startActivity(intent)
 
         }
-
     }
 
     // 조회 결과 리사이클러뷰에 추가
@@ -201,17 +166,13 @@ class DetailOrderListActivity : AppCompatActivity() {
         detailOrderListAdapter.notifyDataSetChanged()
     }
 
-
-
-
-
-
-
-}
-
-
-private fun <E> ArrayList<E>.add(element: RequestedProductList) {
-
+    private fun AddItemToList2(searchResult: List<RequestedProductList>) {
+        listItems2.clear()
+        for (requestedList in searchResult) {
+            listItems2.add(requestedList)
+        }
+        requestedDetailAdapter.notifyDataSetChanged()
+    }
 }
 
 
@@ -220,7 +181,4 @@ interface DetailOrderList{
     fun ShowDetailOrderList(
         @Path("orderId") orderId:Long
     ): Call<UserDetailOrderListResponse>
-
-
-
 }

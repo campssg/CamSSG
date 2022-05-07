@@ -13,7 +13,6 @@ class DetailOrderListAdapter(val itemList:ArrayList<orderlist>): RecyclerView.Ad
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.recyclerview_detail_order_list_user, parent, false)
         return ViewHolder(view)
-
     }
 
     override fun getItemCount(): Int {
@@ -21,41 +20,14 @@ class DetailOrderListAdapter(val itemList:ArrayList<orderlist>): RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder:ViewHolder, position: Int) {
-
-
-        holder.itemView.setOnClickListener {
-            itemClickListener.onClick(it,position)
-        }
-
         holder.count.text = itemList[position].orderItemCount.toString()
         holder.name.text = itemList[position].orderItemName
         holder.price.text = itemList[position].orderItemPrice.toString()
-
-
-
-
     }
-
-
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         val name:TextView = itemView.findViewById(R.id.detailorderlist_itemname)
         val count:TextView = itemView.findViewById(R.id.detailorderlist_itemcount)
         val price:TextView = itemView.findViewById(R.id.detailorderlist_itemprice)
-
     }
-
-
-
-
-
-
-    interface OnItemClickListener{
-        fun onClick(v:View,position: Int)
-    }
-
-    fun setItemClickListener(onItemClickListener: OnItemClickListener){
-        this.itemClickListener = onItemClickListener
-    }
-    private lateinit var itemClickListener:OnItemClickListener
 }

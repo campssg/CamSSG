@@ -11,6 +11,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Adapter.DetailOrderListAdapter
+import com.example.graduationproject.Adapter.RequestedDetailAdapter
 import com.example.graduationproject.Api.Response.MartOrderListResponse
 import com.example.graduationproject.Api.Response.RequestedProductList
 import com.example.graduationproject.Api.Response.UserDetailOrderListResponse
@@ -48,9 +49,10 @@ class OwnerDetailOrderListActivity : AppCompatActivity() {
     private lateinit var binding: Activity1detailOrderListBinding
 
     val listItems = arrayListOf<orderlist>()
-
     val detailOrderListAdapter = DetailOrderListAdapter(listItems)
 
+    val listItems2 = arrayListOf<RequestedProductList>()
+    val requestedDetailAdapter = RequestedDetailAdapter(listItems2)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,10 +63,6 @@ class OwnerDetailOrderListActivity : AppCompatActivity() {
         var actionBar: ActionBar?
         actionBar = supportActionBar
         actionBar?.hide()
-
-
-
-
 
         binding.OrderQRBtn.isVisible = false
 
@@ -78,20 +76,14 @@ class OwnerDetailOrderListActivity : AppCompatActivity() {
         val PickUpDate = binding.tvPickupdate
         val PickUpTime = binding.tvPickuptime
 
-        binding.rvDetailorderlist.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
-        binding.rvDetailorderlist.adapter = detailOrderListAdapter
-
-
-
-
-
+        binding.rvOrderItemList.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+        binding.rvOrderItemList.adapter = detailOrderListAdapter
 
         val orderId = intent.getLongExtra("orderId",0)
 
-        binding.rvDetailorderlist.layoutManager =
+        binding.rvRequestedItemList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvDetailorderlist.adapter = detailOrderListAdapter
-
+        binding.rvRequestedItemList.adapter = requestedDetailAdapter
 
         // 로그인 후 저장해둔 JWT 토큰 가져오기
         val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
@@ -108,17 +100,11 @@ class OwnerDetailOrderListActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .client(client).build()
 
-
         val service = retrofit.create(OwnerDetailOrderList::class.java)
-
-
-
 
         //주문 상세 내역 조회
         service.ShowDetailOrderList(orderId)
             .enqueue(object:Callback<UserDetailOrderListResponse>{
-
-
 
                 override fun onResponse(
                     call: Call<UserDetailOrderListResponse>,
@@ -136,10 +122,12 @@ class OwnerDetailOrderListActivity : AppCompatActivity() {
                         PickUpTime.setText("픽업시간 : " +result!!.pickup_time)
                         OrderId.setText("주문번호 : " +result!!.orderId.toString())
 
-
-
-
                         AddItemToList(result)
+
+                        if(!result.requestedProductList.isNullOrEmpty()) {
+                            binding.requestedProduct.isVisible = true
+                            AddItemToList2(result.requestedProductList)
+                        }
                     } else {
                         Log.d("조회", "실패")
                     }
@@ -149,17 +137,6 @@ class OwnerDetailOrderListActivity : AppCompatActivity() {
 
                 }
             })
-
-
-        detailOrderListAdapter.setItemClickListener(object:DetailOrderListAdapter.OnItemClickListener{
-            override fun onClick(v: View, position: Int) {
-
-            }
-
-        })
-
-
-
     }
 
     // 조회 결과 리사이클러뷰에 추가
@@ -169,6 +146,14 @@ class OwnerDetailOrderListActivity : AppCompatActivity() {
             listItems.add(orderList)
         }
         detailOrderListAdapter.notifyDataSetChanged()
+    }
+
+    private fun AddItemToList2(searchResult: List<RequestedProductList>) {
+        listItems2.clear()
+        for (requestedList in searchResult) {
+            listItems2.add(requestedList)
+        }
+        requestedDetailAdapter.notifyDataSetChanged()
     }
 
 }

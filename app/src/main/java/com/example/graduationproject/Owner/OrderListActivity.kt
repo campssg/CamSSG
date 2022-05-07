@@ -1,14 +1,17 @@
 package com.example.graduationproject.Owner
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Adapter.MartOrderListAdapter
 import com.example.graduationproject.Api.Response.MartOrderListResponse
+import com.example.graduationproject.Api.Response.ResultResponse
 import com.example.graduationproject.User.AddHeaderJWT
 import com.example.graduationproject.User.OwnerDetailOrderListActivity
 import com.example.graduationproject.databinding.ActivityOrderlistBinding
@@ -19,6 +22,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
@@ -70,6 +75,47 @@ class OrderListActivity : AppCompatActivity() {
             }
         })
 
+        martOrderListAdapter.setItemLongClickListener(object : MartOrderListAdapter.OnItemLongClickListener {
+            override fun onLongClick(v: View, position: Int) {
+                AlertDialog.Builder(this@OrderListActivity)
+                    .setTitle("주문 상태 변경")
+                    .setMessage("주문 상태를 픽업준비완료로 변경하시겠습니까?")
+                    .setPositiveButton("예", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            service.change_status(listItems[position].orderId, "픽업준비완료")
+                                .enqueue(object : Callback<ResultResponse> {
+                                    override fun onResponse(
+                                        call: Call<ResultResponse>,
+                                        response: Response<ResultResponse>
+                                    ) {
+                                        if (response.isSuccessful) {
+                                            val result = response.body()
+                                            Log.e("변경 완료", "${result}")
+                                            startActivity(Intent(this@OrderListActivity, OrderListActivity::class.java))
+                                            finish()
+                                        } else {
+                                            Log.d("주문 상태 변경", "실패")
+                                        }
+                                    }
+
+                                    override fun onFailure(
+                                        call: Call<ResultResponse>,
+                                        t: Throwable
+                                    ) {
+                                        Log.e("연결실패", t.message.toString())
+                                    }
+                                })
+                        }
+                    })
+                    .setNegativeButton("취소", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                        }
+                    })
+                    .create()
+                    .show()
+            }
+        })
+
         val martId = intent.getLongExtra("martId", 0)
 
         service.total_order(martId)
@@ -109,4 +155,10 @@ interface MartOrderListService {
     fun total_order(
         @Path("martId") martId: Long
     ): Call<List<MartOrderListResponse>>
+
+    @PUT("order/{orderId}/{status}")
+    fun change_status(
+        @Path("orderId") orderId: Long,
+        @Path("status") status: String
+    ):Call<ResultResponse>
 }

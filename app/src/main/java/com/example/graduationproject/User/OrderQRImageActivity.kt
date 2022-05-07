@@ -80,7 +80,6 @@ class OrderQRImageActivity : AppCompatActivity() {
         service.showQR(orderId)
             .enqueue(object : Callback<UserDetailOrderListResponse> {
 
-
                 override fun onResponse(
                     call: Call<UserDetailOrderListResponse>,
                     response: retrofit2.Response<UserDetailOrderListResponse>
@@ -89,14 +88,9 @@ class OrderQRImageActivity : AppCompatActivity() {
                         val result = response.body()
                         Log.e("조회 완료", "${result}")
 
-
                         //QR 이미지 띄우기
-
                             Glide.with(this@OrderQRImageActivity).load(result!!.qrcode_url)
                             .into(binding.QRIamge)
-
-
-
                     } else {
                         Log.d("조회", "실패")
                     }
@@ -104,11 +98,8 @@ class OrderQRImageActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<UserDetailOrderListResponse>, t: Throwable) {
                     Log.e("연결실패", t.message.toString())
-
                 }
             })
-
-
     }
 
     interface QRImage {
@@ -117,5 +108,4 @@ class OrderQRImageActivity : AppCompatActivity() {
             @Path("orderId") orderId: Long
         ): Call<UserDetailOrderListResponse>
     }
-
 }

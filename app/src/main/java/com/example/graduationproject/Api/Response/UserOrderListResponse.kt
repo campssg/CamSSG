@@ -42,7 +42,7 @@ data class orderlist(
 
 data class RequestedProductList(
     val requestedProductCount:Int,
-    val requestedPRoductId:Long,
-    val requestedPRoductName:String,
+    val requestedProductId:Long,
+    val requestedProductName:String,
     val requestedProductPrice:Long
 )
