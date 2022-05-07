@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.graduationproject.Api.Response.GetMartInfoResponse
 import com.example.graduationproject.R
@@ -32,10 +33,15 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     var pressedTime = 0L //뒤로가기 버튼 클릭했을 때의 시간
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOwnermainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //액션바 숨기기
+        var actionBar: ActionBar?
+        actionBar = supportActionBar
         actionBar?.hide()
 
         initFirebase()

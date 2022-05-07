@@ -5,17 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.graduationproject.Api.Response.CategoryCheckListResponse
 import com.example.graduationproject.Api.Response.CheckListResponse
 import com.example.graduationproject.R
-import com.example.graduationproject.User.ChecklistCategory
 
-class ChecklistAdapter(val itemList:ArrayList<CategoryCheckListResponse>):RecyclerView.Adapter<ChecklistAdapter.ViewHolder>() {
+class ChecklistAdapter(val itemList: ArrayList<CheckListResponse>):RecyclerView.Adapter<ChecklistAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):ChecklistAdapter.ViewHolder {
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_checklist_item,parent,false)
@@ -29,7 +26,8 @@ class ChecklistAdapter(val itemList:ArrayList<CategoryCheckListResponse>):Recycl
 
     inner class Holder(itemView: View,itemClick:(CheckListResponse) -> Unit):RecyclerView.ViewHolder(itemView){
 
-        //check된 아이템들을 보내야 하는데...그러려면 checkbox 애들도 담을 곳이 필요하지 않나..?
+
+
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
@@ -44,8 +42,7 @@ class ChecklistAdapter(val itemList:ArrayList<CategoryCheckListResponse>):Recycl
         holder.itemView.setOnClickListener{
             itemClickListener.onClick(it,position)
         }
-        holder.checklistItemName.text = itemList[position].categoryName
-        holder.itemPriceEdit.text = itemList[position].productPrice.toString()
+      holder.itemPriceEdit.text = itemList[position].productPrice.toString()
 
         if(!itemList[position].productImgUrl.isNullOrEmpty()){
             Glide.with(holder.itemView.context).load(itemList[position].productImgUrl).into(holder.itemImg)

@@ -18,6 +18,7 @@
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/activity_1check_request.xml" value="0.34375" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/activity_1compare_cart_list_detail.xml" value="0.34375" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/activity_1compare_price.xml" value="0.34375" />
+        <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/activity_1detail_order_list.xml" value="0.34375" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/activity_1login.xml" value="0.34375" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/activity_1martsearch.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/activity_1menubar.xml" value="0.35185185185185186" />
@@ -32,6 +33,8 @@
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/activity_add_item_all.xml" value="0.34375" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/activity_add_item_one.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/activity_checklist.xml" value="0.34375" />
+        <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/activity_checklistcategory.xml" value="0.34375" />
+        <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/activity_hj_user_payment.xml" value="0.34375" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/activity_item_request.xml" value="0.34375" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/activity_login.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/activity_manage_item_list.xml" value="0.3619791666666667" />
@@ -66,6 +69,7 @@
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/recyclerview_compare_cartlist_item.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/recyclerview_compare_detail_item.xml" value="0.34427083333333336" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/recyclerview_comparecheapest_item.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/recyclerview_detail_order_list_user.xml" value="0.34375" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/recyclerview_item_request.xml" value="0.34375" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/recyclerview_manage_item.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/recyclerview_martlist.xml" value="0.3619791666666667" />
@@ -73,6 +77,7 @@
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/recyclerview_order_item_past.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/recyclerview_order_item_present.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/recyclerview_order_item_user.xml" value="0.5" />
+        <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/recyclerview_requested_item.xml" value="0.34375" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/layout/recyclerview_search_mart_itemlist.xml" value="0.34375" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/menu/menu_list_owner.xml" value="0.34375" />
         <entry key="..\:/Users/jin80/AndroidStudioProjects/CamSSG/app/src/main/res/menu/menu_list_user.xml" value="0.3619791666666667" />

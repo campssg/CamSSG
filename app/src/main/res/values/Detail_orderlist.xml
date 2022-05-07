@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="detailorderlist_spinner_array">
+
+    <item>전체 주문내역</item>
+    <item>요청한 상품</item>
+    </string-array>
+
+
+
+</resources>

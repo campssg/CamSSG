@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.graduationproject">
 
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -12,9 +14,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 인터넷 권한 설정 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 인터넷 연결 확인 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" /> <!-- 카메라 권한 설정 -->
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- 카메라 권한 설정 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 카메라 권한 설정 -->
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -27,7 +28,8 @@
         android:theme="@style/Theme.GraduationProject"
         android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".Owner.ItemRequestActivity"/>
+        <activity android:name=".User.HJ_UserPaymentActivity"></activity>
+        <activity android:name=".Owner.ItemRequestActivity" />
         <activity android:name=".User.Compare_priceActivity" />
         <activity android:name=".UserSigning.RegisterActivity_Mart2" />
         <activity android:name=".UserSigning.RegisterActivity_Mart" />
@@ -49,8 +51,10 @@
         <activity android:name=".User.UserCartActivity" />
         <activity android:name=".User.AddRequestProductActivity" />
         <activity android:name=".User.PickupTimeActivity" />
-        <activity android:name=".User.DetailOrderListActivity"/>
+        <activity android:name=".User.DetailOrderListActivity" />
+        <activity android:name=".User.OwnerDetailOrderListActivity" />
         <activity android:name=".User.bookmark_martActivity" />
+        <activity android:name=".User.OrderQRImageActivity" />
         <activity android:name=".Owner.OwnerMainActivity" />
         <activity android:name=".Owner.ManagerItemListActivity" />
         <activity android:name=".Owner.ManageItemActivity" />
@@ -66,7 +70,7 @@
         <activity android:name=".User.SearchMartItemActivity" />
         <activity android:name=".User.MartSearchActivity" />
         <activity android:name=".User.CampSearchActivity" />
-        <activity android:name=".User.CheckRequestActivity"/>
+        <activity android:name=".User.CheckRequestActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -77,13 +81,13 @@
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
-            tools:replace="screenOrientation"/>
-
+            tools:replace="screenOrientation" />
         <activity
             android:name=".Owner.OwnerQrScannerActivity"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             android:windowSoftInputMode="stateAlwaysHidden" />
+
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="thdpx3h194" />

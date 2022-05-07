@@ -25,6 +25,10 @@ class MartOrderListAdapter(val itemList: ArrayList<MartOrderListResponse>):Recyc
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
         }
+        holder.itemView.setOnLongClickListener {
+            itemLongClickListener.onLongClick(it, position)
+            return@setOnLongClickListener true
+        }
         holder.userName.text = itemList[position].userName
         holder.orderId.text = itemList[position].orderId.toString()
         holder.orderState.text = itemList[position].orderState
@@ -48,9 +52,18 @@ class MartOrderListAdapter(val itemList: ArrayList<MartOrderListResponse>):Recyc
         fun onClick(v: View, position: Int)
     }
 
+    interface OnItemLongClickListener {
+        fun onLongClick(v: View, position: Int)
+    }
+
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener
     }
 
+    fun setItemLongClickListener(onItemLongClickListener: MartOrderListAdapter.OnItemLongClickListener) {
+        this.itemLongClickListener = onItemLongClickListener
+    }
+
     private lateinit var itemClickListener : OnItemClickListener
+    private lateinit var itemLongClickListener: MartOrderListAdapter.OnItemLongClickListener
 }

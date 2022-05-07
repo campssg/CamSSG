@@ -5,13 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.graduationproject.Api.Response.RequestedProductList
 import com.example.graduationproject.Api.Response.orderlist
 import com.example.graduationproject.R
 
-class DetailOrderListAdapter(val itemList:ArrayList<orderlist>): RecyclerView.Adapter<DetailOrderListAdapter.ViewHolder>() {
+class RequestedDetailAdapter(val itemList:ArrayList<RequestedProductList>): RecyclerView.Adapter<RequestedDetailAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recyclerview_detail_order_list_user, parent, false)
+            .inflate(R.layout.recyclerview_requested_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -20,9 +21,9 @@ class DetailOrderListAdapter(val itemList:ArrayList<orderlist>): RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder:ViewHolder, position: Int) {
-        holder.count.text = itemList[position].orderItemCount.toString()
-        holder.name.text = itemList[position].orderItemName
-        holder.price.text = itemList[position].orderItemPrice.toString()
+        holder.count.text = itemList[position].requestedProductCount.toString()
+        holder.name.text = itemList[position].requestedProductName
+        holder.price.text = itemList[position].requestedProductPrice.toString()
     }
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
