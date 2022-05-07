@@ -33,8 +33,6 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         actionBar = supportActionBar
         actionBar?.hide()
 
-        initFirebase()
-
         val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
         val userName = sharedPreferences.getString("userName", "")
         val userEmail = sharedPreferences.getString("userEmaill", "")
@@ -115,14 +113,6 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             finishAffinity()
             System.runFinalization()
             System.exit(0)
-        }
-    }
-
-    private fun initFirebase() {
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d("토큰", task.result)
-            }
         }
     }
 }

@@ -7,8 +7,11 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.graduationproject.Api.Request.UserLoginRequest
+import com.example.graduationproject.Api.Response.ResultResponse
+import com.example.graduationproject.User.AddHeaderJWT
 import com.example.graduationproject.User.UserMainActivity
 import com.example.graduationproject.databinding.Activity1loginBinding
+import com.google.firebase.messaging.FirebaseMessaging
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -102,6 +105,8 @@ class LoginActivity_User : AppCompatActivity() {
                             editor.putString("userNickname", result?.data?.userNickname)
                             editor.apply()
 
+                            initFirebase()
+
                             Toast.makeText(this@LoginActivity_User, "서비스 이용자 로그인 성공", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@LoginActivity_User, UserMainActivity::class.java)
                             startActivity(intent)
@@ -120,6 +125,48 @@ class LoginActivity_User : AppCompatActivity() {
         }
     }
 
+    private fun initFirebase() {
+        val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
+        val jwt = sharedPreferences.getString("jwt", "")
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(AddHeaderJWT(jwt.toString())) // JWT header 달아주는 interceptor 추가
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS).build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://13.124.13.202:8080/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client).build()
+
+        val service = retrofit.create(FcmTokenService::class.java)
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d("토큰", task.result)
+                service.add_fcmToken(task.result)
+                    .enqueue(object : Callback<ResultResponse> {
+                        override fun onResponse(
+                            call: Call<ResultResponse>,
+                            response: Response<ResultResponse>
+                        ) {
+                            if (response.isSuccessful) {
+                                val result = response.body()
+                                Log.e("등록 완료", "${result}")
+                            } else {
+                                Log.d("등록", "실패")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ResultResponse>, t: Throwable) {
+                            Log.e("연결실패", t.message.toString())
+                        }
+                    })
+            }
+        }
+    }
+
     // 인터페이스 위치 변경했습니다 (class LoginActivity_User 내부로 위치 변경)
     // 엔드포인트 앞에 / 삭제
     // 전송값을 @Field 에서 @Body로 변경 => @Body는 json 자체를 전송하므로 반드시 Header에 "content-type" 명시
@@ -130,5 +177,12 @@ class LoginActivity_User : AppCompatActivity() {
         fun login(
             @Body request: UserLoginRequest
         ): Call<UserLoginResponse>
+    }
+
+    interface FcmTokenService {
+        @POST("user/add/{fcmToken}")
+        fun add_fcmToken(
+            @Path("fcmToken") fcmToken: String
+        ): Call<ResultResponse>
     }
 }
