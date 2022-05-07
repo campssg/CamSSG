@@ -1,22 +1,19 @@
 package com.example.graduationproject.User
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.drawerlayout.widget.DrawerLayout
-import com.example.graduationproject.MainActivity
 import com.example.graduationproject.R
 import com.example.graduationproject.UserSigning.SelectWhatToLoginActivity
-import com.example.graduationproject.databinding.Activity1bookmarkCampingBinding
 import com.example.graduationproject.databinding.Activity1usermainBinding
-import com.example.graduationproject.databinding.ActivityLoginBinding
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.iid.FirebaseInstanceIdReceiver
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.menubar_header.view.*
 
 class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +32,8 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         var actionBar: ActionBar?
         actionBar = supportActionBar
         actionBar?.hide()
+
+        initFirebase()
 
         val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
         val userName = sharedPreferences.getString("userName", "")
@@ -116,6 +115,14 @@ class UserMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             finishAffinity()
             System.runFinalization()
             System.exit(0)
+        }
+    }
+
+    private fun initFirebase() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d("토큰", task.result)
+            }
         }
     }
 }
