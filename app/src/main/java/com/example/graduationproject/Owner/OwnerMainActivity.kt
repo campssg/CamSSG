@@ -14,6 +14,7 @@ import com.example.graduationproject.User.AddHeaderJWT
 import com.example.graduationproject.UserSigning.SelectWhatToLoginActivity
 import com.example.graduationproject.databinding.ActivityOwnermainBinding
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.menubar_header.view.*
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -36,6 +37,8 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         binding = ActivityOwnermainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         actionBar?.hide()
+
+        initFirebase()
 
         val pref = getSharedPreferences("token", MODE_PRIVATE)
         val userName = pref.getString("userName", "")
@@ -171,6 +174,14 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             finishAffinity()
             System.runFinalization()
             System.exit(0)
+        }
+    }
+
+    private fun initFirebase() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d("토큰", task.result)
+            }
         }
     }
 }
