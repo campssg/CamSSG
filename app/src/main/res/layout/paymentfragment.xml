@@ -9,8 +9,8 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="25dp"
-        tools:context=".ui.main.PaymentFragment">
+        android:background="#D9D0D0"
+        android:padding="25dp">
 
         <View
             android:id="@+id/top"
@@ -24,6 +24,7 @@
             android:id="@+id/back_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:backgroundTint="@color/main_purple_light"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -134,7 +135,6 @@
             app:layout_constraintTop_toBottomOf="@id/merchant_uid" />
 
 
-
         <EditText
             android:id="@+id/card_direct_code"
             android:layout_width="match_parent"
@@ -149,7 +149,6 @@
             app:layout_constraintTop_toBottomOf="@id/amount" />
 
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cert_parent"
             android:layout_width="match_parent"
@@ -162,12 +161,14 @@
                 android:id="@+id/certification_button"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
+                android:backgroundTint="@color/main_purple_light"
                 app:layout_constraintLeft_toLeftOf="parent" />
 
             <Button
                 android:id="@+id/mobileweb_mode_button"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
+                android:backgroundTint="@color/main_purple_light"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintWidth_percent="0.5" />
 
@@ -185,6 +186,7 @@
                 android:id="@+id/payment_button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:backgroundTint="@color/main_purple_light"
                 android:text="@string/buy"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintWidth_percent="0.5" />
@@ -193,6 +195,7 @@
                 android:id="@+id/webview_mode_button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:backgroundTint="@color/main_purple_light"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintWidth_percent="0.5" />
 
