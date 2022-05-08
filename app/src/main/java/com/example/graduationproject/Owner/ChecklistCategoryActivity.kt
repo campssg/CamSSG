@@ -63,6 +63,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
 
         val service = retrofit.create(ChecklistCategory::class.java)
 
+        val martId = intent.getLongExtra("martId", 0)
 
 
         binding.imgKimchi.setOnClickListener{
@@ -72,6 +73,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
 
             val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","2")
+            intent.putExtra("martId", martId)
             startActivity(intent)
 
         }
@@ -81,6 +83,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
 
             val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","1")
+            intent.putExtra("martId", martId)
             startActivity(intent)
 
 
@@ -93,6 +96,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
 
             val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","3")
+            intent.putExtra("martId", martId)
             startActivity(intent)
 
         }
@@ -103,6 +107,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
 
             val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","4")
+            intent.putExtra("martId", martId)
             startActivity(intent)
 
         }
@@ -112,6 +117,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
 
             val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","5")
+            intent.putExtra("martId", martId)
             startActivity(intent)
 
         }
@@ -121,6 +127,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
             //채소
             val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","6")
+            intent.putExtra("martId", martId)
             startActivity(intent)
 
         }
@@ -131,6 +138,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
             //가공식품
             val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","7")
+            intent.putExtra("martId", martId)
             startActivity(intent)
 
         }
@@ -140,6 +148,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
             //생활용품
             val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","8")
+            intent.putExtra("martId", martId)
             startActivity(intent)
 
         }
@@ -151,6 +160,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
 
             val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","9")
+            intent.putExtra("martId", martId)
             startActivity(intent)
 
         }

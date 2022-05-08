@@ -1,24 +1,34 @@
 package com.example.graduationproject.Owner
 
+import android.content.ClipData
+import android.content.DialogInterface
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Adapter.ChecklistAdapter
 import com.example.graduationproject.Api.Response.CategoryCheckListResponse
 import com.example.graduationproject.Api.Response.CheckListResponse
+import com.example.graduationproject.Api.Response.ResultResponse
 import com.example.graduationproject.User.AddHeaderJWT
 import com.example.graduationproject.databinding.ActivityAddItemAllBinding
 import com.example.graduationproject.databinding.ActivityChecklistBinding
+import kotlinx.android.synthetic.main.recyclerview_checklist_item.view.*
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -27,20 +37,14 @@ import java.util.concurrent.TimeUnit
 
 
 //hj 물품 체크리스트 등록
-
-
-class checkBoxData(
-    var checked:Boolean,
-    var id:Long
-)
 class CheckListActivity:AppCompatActivity() {
     private lateinit var binding: ActivityChecklistBinding
 
     val listItems = arrayListOf<CheckListResponse>()
     val ItemAdapter = ChecklistAdapter(listItems)
 
+    val checkedItems = arrayListOf<CheckListResponse>()
 
-    var checkboxList = arrayListOf<checkBoxData>()
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
@@ -48,10 +52,6 @@ class CheckListActivity:AppCompatActivity() {
         setContentView(binding.root)
         val TAG:String = "ChecklistActivity"
         Log.e(TAG,"Log Start :         ")
-
-
-
-
 
         binding.checklistRecycelerView.layoutManager =
             LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
@@ -62,8 +62,6 @@ class CheckListActivity:AppCompatActivity() {
         var actionBar: ActionBar?
         actionBar = supportActionBar
         actionBar?.hide()
-
-
 
         // 로그인 후 저장해둔 JWT 토큰 가져오기
         val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
@@ -89,39 +87,57 @@ class CheckListActivity:AppCompatActivity() {
         val martId = intent.getLongExtra("martId",0)
         Toast.makeText(this,categoryId,Toast.LENGTH_SHORT).show()
 
-
-
+        ItemAdapter.setItemClickListener(object : ChecklistAdapter.OnItemClickListener {
+            override fun onClick(v: View, position: Int) {
+                val priceFirst = listItems[position].productPrice.toInt()
+                // 가격 입력 받을 EditText 생성
+                val priceEdit = EditText(this@CheckListActivity)
+                priceEdit.gravity = Gravity.CENTER
+                priceEdit.inputType = InputType.TYPE_CLASS_NUMBER
+                priceEdit.hint = priceFirst.toString()
+                AlertDialog.Builder(this@CheckListActivity)
+                    .setTitle("상품 정보 등록")
+                    .setMessage("가격을 입력하세요")
+                    .setView(priceEdit)
+                    .setPositiveButton("추가", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            val price = priceEdit.text.toString()
+                            listItems[position].productPrice = price.toInt()
+                            listItems[position].productStock = 0
+                            checkedItems.add(listItems[position])
+                            ItemAdapter.notifyItemChanged(position)
+                        }
+                    })
+                    .setNegativeButton("취소", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                        }
+                    })
+                    .create()
+                    .show()
+            }
+        })
 
         binding.btnRegisterItem.setOnClickListener {
-
-            service2.MartCheckItem(martId)
-                .enqueue(object : Callback<List<CheckListResponse>> {
-
+            service2.MartCheckItem(martId, checkedItems)
+                .enqueue(object : Callback<ResultResponse> {
                     override fun onResponse(
-                        call: Call<List<CheckListResponse>>,
-                        response: Response<List<CheckListResponse>>
+                        call: Call<ResultResponse>,
+                        response: Response<ResultResponse>
                     ) {
                         println(response)
+                        println(checkedItems)
                         if (response.isSuccessful) {
                             val result = response.body()
-                            Log.e("조회 완료", "${result}")
-                            //리사이클러뷰에 결과 출력
-                            AddItemToList(result)
+                            Log.e("등록 완료", "${result}")
+                        } else {
+                            Log.d("등록", "실패")
                         }
                     }
-
-                    override fun onFailure(
-                        call: Call<List<CheckListResponse>>,
-                        t: Throwable
-                    ) {
+                    override fun onFailure(call: Call<ResultResponse>, t: Throwable) {
                         Log.e("연결실패", t.message.toString())
-
                     }
-
-
                 })
         }
-
 
         if (categoryId != null) {
             service.Checklist(categoryId.toLong())
@@ -137,6 +153,8 @@ class CheckListActivity:AppCompatActivity() {
                             Log.e("조회 완료", "${result}")
                             //리사이클러뷰에 결과 출력
                             AddItemToList(result)
+                        } else {
+                            Log.d("조회", "실패")
                         }
                     }
 
@@ -151,20 +169,6 @@ class CheckListActivity:AppCompatActivity() {
 
                 })
         }
-
-
-
-
-        //상품 등록
-
-        ItemAdapter.setItemClickListener(object:ChecklistAdapter.OnItemClicklistener{
-            override fun onClick(v: View, position: Int) {
-
-
-
-        }
-        })
-
     }
 
     private fun AddItemToList(searchResult: List<CheckListResponse>?) {
@@ -176,18 +180,7 @@ class CheckListActivity:AppCompatActivity() {
         }
         ItemAdapter.notifyDataSetChanged()
     }
-
-
-
-
-
-
 }
-
-private fun <E> ArrayList<E>.add(productList: Char) {
-
-}
-
 
 interface ChecklistCategory{
 
@@ -197,14 +190,12 @@ interface ChecklistCategory{
     ): Call<List<CheckListResponse>>
 }
 
-
-
-
 //상품 일괄 등록
 interface martChecklist{
 
     @POST("mart/{martId}/list")
     fun MartCheckItem(
-        @Path("martId") martId:Long
-    ): Call<List<CheckListResponse>>
+        @Path("martId") martId:Long,
+        @Body request: List<CheckListResponse>
+    ): Call<ResultResponse>
 }
