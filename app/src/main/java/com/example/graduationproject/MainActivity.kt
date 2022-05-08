@@ -9,6 +9,7 @@ import com.example.graduationproject.Owner.ItemRequestActivity
 import com.example.graduationproject.Owner.ManageItemModifyActivity
 import com.example.graduationproject.Owner.SetMartActivity
 import com.example.graduationproject.User.*
+import com.example.graduationproject.User.Payment_hj.mainActivity
 import com.example.graduationproject.UserSigning.SelectWhatToLoginActivity
 import com.example.graduationproject.UserSigning.SelectWhatToRegisterActivity
 import com.example.graduationproject.databinding.ActivityMainBinding
@@ -85,6 +86,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.button19.setOnClickListener {
             val intent = Intent(this, ItemRequestActivity::class.java)
+            startActivity(intent)
+        }
+
+
+        //결제시스템
+     binding.button20.setOnClickListener {
+            val intent = Intent(this, mainActivity::class.java)
             startActivity(intent)
         }
 

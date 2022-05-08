@@ -63,6 +63,7 @@
         <activity android:name=".User.UserPassChangeActivity" />
         <activity android:name=".UserSigning.LoginActivity_Mart" />
         <activity android:name=".User.UserInfoActivity" />
+        <activity android:name=".User.Payment_hj.mainActivity"/>
         <activity android:name=".SelectCategoryActivity" />
         <activity android:name=".Owner.CheckListActivity" />
         <activity android:name=".Owner.SelectAddOneOrManyActivity" />
