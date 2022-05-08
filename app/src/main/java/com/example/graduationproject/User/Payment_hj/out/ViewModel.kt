@@ -15,7 +15,7 @@ class ViewModel : ViewModel() {
     var userCode: String = ""
     var paymentName: String = ""
     var merchantUid: String = ""
-    var amount: String = ""
+    var amount: String = "100"
     var cardDirectCode: String = ""
 
     val resultCallback = MutableLiveData<Event<IamPortResponse>>()

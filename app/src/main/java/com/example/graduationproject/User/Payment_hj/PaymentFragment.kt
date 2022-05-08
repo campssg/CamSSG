@@ -128,11 +128,11 @@ class PaymentFragment : BaseFragment<PaymentfragmentBinding>() {
         viewDataBinding.name.doAfterTextChanged {
             viewModel.paymentName = it.toString()
         }
-        viewDataBinding.name.setText("아임포트 Android SDK 결제 테스트")
+        viewDataBinding.name.setText("캠쓱")
         viewDataBinding.amount.doAfterTextChanged {
             viewModel.amount = it.toString()
         }
-        viewDataBinding.amount.setText("1000")
+        viewDataBinding.amount.setText("100")
 
         viewDataBinding.cardDirectCode.doAfterTextChanged {
             viewModel.cardDirectCode = it.toString()
