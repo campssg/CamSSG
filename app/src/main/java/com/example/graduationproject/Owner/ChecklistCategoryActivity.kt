@@ -8,7 +8,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.graduationproject.Api.Response.CategoryCheckListResponse
-import com.example.graduationproject.Owner.ChecklistActivity
+import com.example.graduationproject.Owner.CheckListActivity
 import com.example.graduationproject.UserSigning.RegisterActivity_User
 import com.example.graduationproject.databinding.ActivityChecklistcategoryBinding
 import okhttp3.OkHttpClient
@@ -63,12 +63,14 @@ class ChecklistCategoryActivity: AppCompatActivity() {
 
         val service = retrofit.create(ChecklistCategory::class.java)
 
+
+
         binding.imgKimchi.setOnClickListener{
 
 
             //김치
 
-            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","2")
             startActivity(intent)
 
@@ -77,7 +79,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
         //축산
         binding.imgMeat.setOnClickListener{
 
-            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","1")
             startActivity(intent)
 
@@ -89,7 +91,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
 
             //생수
 
-            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","3")
             startActivity(intent)
 
@@ -99,7 +101,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
 
             //간편식품
 
-            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","4")
             startActivity(intent)
 
@@ -108,7 +110,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
         binding.imgFruits.setOnClickListener{
             //과일/견과
 
-            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","5")
             startActivity(intent)
 
@@ -117,7 +119,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
         binding.imgFresh.setOnClickListener{
 
             //채소
-            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","6")
             startActivity(intent)
 
@@ -127,7 +129,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
 
 
             //가공식품
-            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","7")
             startActivity(intent)
 
@@ -136,7 +138,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
         binding.imgLiving.setOnClickListener{
 
             //생활용품
-            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","8")
             startActivity(intent)
 
@@ -147,13 +149,17 @@ class ChecklistCategoryActivity: AppCompatActivity() {
 
             //가공식품
 
-            val intent =Intent(this@ChecklistCategoryActivity,ChecklistActivity::class.java)
+            val intent =Intent(this@ChecklistCategoryActivity,CheckListActivity::class.java)
             intent.putExtra("categoryId","9")
             startActivity(intent)
 
         }
 
     }
+}
+
+private fun <T> Call<T>.enqueue(callback: Callback<CategoryCheckListResponse>) {
+
 }
 
 

@@ -3,6 +3,7 @@ package com.example.graduationproject.Owner
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.graduationproject.User.ChecklistCategoryActivity
 import com.example.graduationproject.databinding.ActivitySelectAddOneOrManyBinding
 
 class SelectAddOneOrManyActivity : AppCompatActivity () {
@@ -18,6 +19,9 @@ class SelectAddOneOrManyActivity : AppCompatActivity () {
 
         // 체크리스트로 일괄 등록하기
         binding.SelectAddMany.setOnClickListener {
+            val intent = Intent(this,ChecklistCategoryActivity::class.java)
+            intent.putExtra("martId",martId)
+            startActivity(intent)
 
         }
 

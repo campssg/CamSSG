@@ -11,6 +11,7 @@ import com.example.graduationproject.Adapter.ChecklistAdapter
 import com.example.graduationproject.Api.Response.CategoryCheckListResponse
 import com.example.graduationproject.Api.Response.CheckListResponse
 import com.example.graduationproject.User.AddHeaderJWT
+import com.example.graduationproject.databinding.ActivityAddItemAllBinding
 import com.example.graduationproject.databinding.ActivityChecklistBinding
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -26,12 +27,20 @@ import java.util.concurrent.TimeUnit
 
 
 //hj 물품 체크리스트 등록
-class ChecklistActivity:AppCompatActivity() {
+
+
+class checkBoxData(
+    var checked:Boolean,
+    var id:Long
+)
+class CheckListActivity:AppCompatActivity() {
     private lateinit var binding: ActivityChecklistBinding
 
     val listItems = arrayListOf<CheckListResponse>()
     val ItemAdapter = ChecklistAdapter(listItems)
 
+
+    var checkboxList = arrayListOf<checkBoxData>()
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
@@ -53,6 +62,8 @@ class ChecklistActivity:AppCompatActivity() {
         var actionBar: ActionBar?
         actionBar = supportActionBar
         actionBar?.hide()
+
+
 
         // 로그인 후 저장해둔 JWT 토큰 가져오기
         val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
@@ -114,23 +125,23 @@ class ChecklistActivity:AppCompatActivity() {
 
         if (categoryId != null) {
             service.Checklist(categoryId.toLong())
-                .enqueue(object : Callback<List<CategoryCheckListResponse>> {
+                .enqueue(object : Callback<List<CheckListResponse>> {
 
                     override fun onResponse(
-                        call: Call<List<CategoryCheckListResponse>>,
-                        response: Response<List<CategoryCheckListResponse>>
+                        call: Call<List<CheckListResponse>>,
+                        response: Response<List<CheckListResponse>>
                     ) {
                         println(response)
                         if (response.isSuccessful) {
                             val result = response.body()
                             Log.e("조회 완료", "${result}")
                             //리사이클러뷰에 결과 출력
-//                            AddItemToList(result)
+                            AddItemToList(result)
                         }
                     }
 
                     override fun onFailure(
-                        call: Call<List<CategoryCheckListResponse>>,
+                        call: Call<List<CheckListResponse>>,
                         t: Throwable
                     ) {
                         Log.e("연결실패", t.message.toString())
@@ -169,6 +180,8 @@ class ChecklistActivity:AppCompatActivity() {
 
 
 
+
+
 }
 
 private fun <E> ArrayList<E>.add(productList: Char) {
@@ -181,7 +194,7 @@ interface ChecklistCategory{
     @GET("checklist/{categoryId}")
     fun Checklist(
         @Path("categoryId") categoryId:Long
-    ): Call<List<CategoryCheckListResponse>>
+    ): Call<List<CheckListResponse>>
 }
 
 

@@ -64,7 +64,7 @@
         <activity android:name=".UserSigning.LoginActivity_Mart" />
         <activity android:name=".User.UserInfoActivity" />
         <activity android:name=".SelectCategoryActivity" />
-        <activity android:name=".Owner.ChecklistActivity" />
+        <activity android:name=".Owner.CheckListActivity" />
         <activity android:name=".Owner.SelectAddOneOrManyActivity" />
         <activity android:name=".Owner.MartListActivity" />
         <activity android:name=".User.SearchMartItemActivity" />
