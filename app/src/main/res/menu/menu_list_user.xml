@@ -5,35 +5,35 @@
         android:title="캠핑장"/>
     <item
         android:id="@+id/user_camping1"
-        android:title=" > 캠핑장 조회"/>
+        android:title="-----> 캠핑장 조회"/>
     <item
         android:id="@+id/user_camping2"
-        android:title=" > 캠핑장 즐겨찾기"/>
+        android:title="-----> 캠핑장 즐겨찾기"/>
     <item
         android:id="@+id/user_mart"
         android:title="마트"/>
     <item
         android:id="@+id/user_mart1"
-        android:title=" > 마트 조회"/>
+        android:title="-----> 마트 조회"/>
     <item
         android:id="@+id/user_mart2"
-        android:title=" > 마트 즐겨찾기"/>
+        android:title="-----> 마트 즐겨찾기"/>
     <item
         android:id="@+id/user_mart3"
-        android:title=" > 요청상품"/>
+        android:title="-----> 요청상품"/>
     <item
         android:id="@+id/user_mypage"
         android:title="마이페이지"/>
     <item
         android:id="@+id/user_mypage1"
-        android:title=" > 장바구니"/>
+        android:title="-----> 장바구니"/>
     <item
         android:id="@+id/user_mypage2"
-        android:title=" > 주문내역"/>
+        android:title="-----> 주문내역"/>
     <item
         android:id="@+id/user_mypage3"
-        android:title=" > 내 정보 수정"/>
+        android:title="-----> 내 정보 수정"/>
     <item
         android:id="@+id/user_mypage5"
-        android:title=" > 로그아웃"/>
+        android:title="-----> 로그아웃"/>
 </menu>
