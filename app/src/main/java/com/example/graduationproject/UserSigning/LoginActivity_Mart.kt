@@ -55,7 +55,7 @@ class LoginActivity_Mart : AppCompatActivity() {
 
         //회원가입 클릭
         register.setOnClickListener {
-            val intent = Intent(this, RegisterActivity_User::class.java)
+            val intent = Intent(this, RegisterActivity_Mart::class.java)
             startActivity(intent)
         }
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".UserSigning.LoginActivity_User">
 
@@ -43,6 +44,10 @@
                 android:textSize="48sp"
                 android:textStyle="bold|italic" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -61,6 +66,10 @@
 
 
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"/>
 
             <EditText
                 android:id="@+id/editTextTextEmailAddress"
@@ -124,6 +133,10 @@
             </LinearLayout>
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"/>
+
+            <TextView
                 android:id="@+id/QuestionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -142,17 +155,6 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/naverloginimg" />
-
-            <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/kakaologinimg" />
 
         </LinearLayout>
 

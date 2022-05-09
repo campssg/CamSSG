@@ -4,19 +4,106 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
+    android:background="@color/main_purple"
     tools:context=".UserSigning.SelectWhatToLoginActivity">
 
-    <Button
-        android:id="@+id/LoginInUser"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="사용자로 로그인하세요?" />
+        android:gravity="center"
+        android:background="@color/main_purple"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/LoginInMart"
+        <TextView
+            android:id="@+id/Logo1"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_marginRight="10dp"
+            android:text="ping"
+            android:textColor="@color/white"
+            android:textSize="46sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/Logo2"
+            android:layout_width="202dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="cam쓱"
+            android:textColor="@color/white"
+            android:textSize="54sp"
+            android:textStyle="bold|italic" />
+    </LinearLayout>
+
+
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="마트 운영자로 로그인하세요?" />
+        android:layout_height="50dp"/>
+
+    <LinearLayout
+        android:id="@+id/LoginInUser"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:background="@color/main_purple_light">
+
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_marginTop="20dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:srcCompat="@drawable/userlogin" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right|center"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:text="사용자
+            로그인 "
+            android:textSize="40sp"
+            android:textColor="@color/white"
+            android:textStyle="bold|italic"/>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:id="@+id/LoginInMart"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="150dp"
+            android:gravity="left"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:text="마트운영자 로그인"
+            android:textSize="40sp"
+            android:textColor="@color/main_purple"
+            android:textStyle="bold|italic"/>
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:gravity="right"
+            android:layout_marginTop="20dp"
+            android:layout_weight="3"
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            app:srcCompat="@drawable/ownerlogin" />
+
+
+    </LinearLayout>
 </LinearLayout>

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:id="@+id/drawerlayout"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".User.UserMainActivity"
     >
 
@@ -67,22 +68,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.238" />
 
-        <EditText
-            android:id="@+id/umain_itemsearch"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:hint="상품 검색"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="#000000"
-            android:textColorHint="#B6B6B6"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/umain_name"
-            app:layout_constraintVertical_bias="0.105"
-            tools:ignore="TouchTargetSizeCheck" />
-
         <Button
             android:id="@+id/umain_martsearch"
             android:layout_width="130dp"
@@ -96,52 +81,7 @@
             app:layout_constraintHorizontal_bias="0.736"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.533" />
-
-        <Button
-            android:id="@+id/umain_basket"
-            android:layout_width="130dp"
-            android:layout_height="70dp"
-            android:text="장바구니"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:backgroundTint="@color/main_purple_light"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.25"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.671" />
-
-        <Button
-            android:id="@+id/umain_campsearch"
-            android:layout_width="130dp"
-            android:layout_height="100dp"
-            android:text=" 캠핑장   조회"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:backgroundTint="@color/main_purple_light"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.25"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.533" />
-
-        <Button
-            android:id="@+id/umain_ordered"
-            android:layout_width="130dp"
-            android:layout_height="70dp"
-            android:text="주문내역"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:backgroundTint="@color/main_purple_light"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.736"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.671" />
+            app:layout_constraintVertical_bias="0.473" />
 
         <Button
             android:id="@+id/umain_order"
@@ -156,7 +96,52 @@
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.842" />
+            app:layout_constraintVertical_bias="0.786" />
+
+        <Button
+            android:id="@+id/umain_ordered"
+            android:layout_width="130dp"
+            android:layout_height="70dp"
+            android:text="주문내역"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/main_purple_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.736"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.615" />
+
+        <Button
+            android:id="@+id/umain_campsearch"
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:text=" 캠핑장   조회"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/main_purple_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.249"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.473" />
+
+        <Button
+            android:id="@+id/umain_basket"
+            android:layout_width="130dp"
+            android:layout_height="70dp"
+            android:text="장바구니"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/main_purple_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.249"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.615" />
 
         <TextView
             android:id="@+id/umain_ping"
@@ -172,33 +157,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.182" />
-
-        <ImageView
-            android:id="@+id/umain_searchicon"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.119"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.391"
-            app:srcCompat="@drawable/searchicon" />
-
-        <Button
-            android:id="@+id/umain_searchok"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:backgroundTint="@color/main_purple"
-            android:text="검색"
-            android:textSize="8sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.844"
-            app:layout_constraintStart_toStartOf="@+id/umain_itemsearch"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.386"
-            tools:ignore="TouchTargetSizeCheck" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
