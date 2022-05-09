@@ -88,7 +88,7 @@ class UserInfoActivity : AppCompatActivity() {
                         val result = response.body()
                         Log.e("조회완료", "${result}")
 
-                        val sharedPreferences = getSharedPreferences("userInfo", MODE_PRIVATE)
+                        val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
                         sharedPreferences.edit().putString("userName", result?.userName).apply()
 
                         // 조회한 결과로 텍스트 설정
@@ -161,7 +161,7 @@ class UserInfoActivity : AppCompatActivity() {
         // 임시로 롱클릭으로 설정해둠
         img_1selectbtn.setOnLongClickListener {
             val file = File(absolutePath(photoUri!!))
-            val requestBody : RequestBody = file.asRequestBody("multipart/form-data".toMediaType())
+            val requestBody : RequestBody = file.asRequestBody("image/jpeg".toMediaType())
             val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("file", file.name, requestBody)
             Toast.makeText(this,"${uploadImg.body}, ${uploadImg.headers}", Toast.LENGTH_SHORT).show()
             service.update_img(uploadImg)

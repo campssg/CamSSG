@@ -132,7 +132,7 @@ class AddItemOneActivity: AppCompatActivity() {
 
             // 이미지 파일 생성
             val file = File(absolutePath(photoUri!!))
-            val requestBody : RequestBody = file.asRequestBody("image/*".toMediaType())
+            val requestBody : RequestBody = file.asRequestBody("image/jpeg".toMediaType())
             val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("img", file.name, requestBody)
 
             // API 호출

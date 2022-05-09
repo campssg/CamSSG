@@ -2,6 +2,7 @@ package com.example.graduationproject.Owner
 
 import android.content.ClipData
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -19,6 +20,7 @@ import com.example.graduationproject.Api.Response.CategoryCheckListResponse
 import com.example.graduationproject.Api.Response.CheckListResponse
 import com.example.graduationproject.Api.Response.ResultResponse
 import com.example.graduationproject.User.AddHeaderJWT
+import com.example.graduationproject.User.ChecklistCategoryActivity
 import com.example.graduationproject.databinding.ActivityAddItemAllBinding
 import com.example.graduationproject.databinding.ActivityChecklistBinding
 import kotlinx.android.synthetic.main.recyclerview_checklist_item.view.*
@@ -124,11 +126,21 @@ class CheckListActivity:AppCompatActivity() {
                         call: Call<ResultResponse>,
                         response: Response<ResultResponse>
                     ) {
-                        println(response)
-                        println(checkedItems)
                         if (response.isSuccessful) {
                             val result = response.body()
                             Log.e("등록 완료", "${result}")
+
+                            AlertDialog.Builder(this@CheckListActivity)
+                                .setTitle("물품 등록 완료")
+                                .setMessage("물품이 마트에 성공적으로 등록되었습니다.")
+                                .setPositiveButton("확인", object : DialogInterface.OnClickListener {
+                                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                                        startActivity(Intent(this@CheckListActivity, ChecklistCategoryActivity::class.java))
+                                        finish()
+                                    }
+                                })
+                                .create()
+                                .show()
                         } else {
                             Log.d("등록", "실패")
                         }
@@ -147,7 +159,6 @@ class CheckListActivity:AppCompatActivity() {
                         call: Call<List<CheckListResponse>>,
                         response: Response<List<CheckListResponse>>
                     ) {
-                        println(response)
                         if (response.isSuccessful) {
                             val result = response.body()
                             Log.e("조회 완료", "${result}")
