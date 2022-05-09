@@ -127,6 +127,20 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             startActivity(Intent(this, OwnerInfoActivity::class.java))
         }
 
+        // 주문 현황
+        binding.omainOrderplus.setOnClickListener {
+            val intent = Intent(this, MartListActivity::class.java)
+            intent.putExtra("menu", 5)
+            startActivity(intent)
+        }
+
+        // 요청 물품
+        binding.itemrequestBtn.setOnClickListener {
+            val intent = Intent(this, MartListActivity::class.java)
+            intent.putExtra("menu", 3)
+            startActivity(intent)
+        }
+
         navigationView = binding.navView
         navigationView.setNavigationItemSelectedListener(this)
     }
@@ -165,7 +179,6 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 intent.putExtra("menu", 5)
                 startActivity(intent)
             }
-            // 회원 탈퇴  R.id.owner_mypage4->startActivity(Intent(this, ::class.java))
             R.id.owner_mypage5->startActivity(Intent(this, SelectWhatToLoginActivity::class.java))
         }
         return false

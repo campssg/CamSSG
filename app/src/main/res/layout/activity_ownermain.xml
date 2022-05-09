@@ -6,36 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawerlayout"
+    android:background="@color/white"
     tools:context=".Owner.OwnerMainActivity"
     >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-
-        <ImageView
-            android:id="@+id/omain_gb1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.866"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.815"
-            app:srcCompat="@drawable/graybar" />
-
-        <ImageView
-            android:id="@+id/omain_gb2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.143"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.815"
-            app:srcCompat="@drawable/graybar" />
 
         <ImageView
             android:id="@+id/omain_gb3"
@@ -141,139 +118,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.286" />
 
-        <TextView
-            android:id="@+id/omain_requestT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="요청 물품"
-            android:textColor="#000000"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.813" />
-
-        <TableLayout
-            android:id="@+id/tableLayout"
-            android:layout_width="300dp"
-            android:layout_height="90dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.648">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="#E3E3E3">
-
-                <TextView
-                    android:id="@+id/omain_pT"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="픽업 일자"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/omain_pnT"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="상품 개수"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/omain_ppT"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="가격"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/row1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/omain_table_p1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/omain_table_n1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/omain_table_pr1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/omain_table_p2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/omain_table_n2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/omain_table_pr2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/omain_table_p3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/omain_table_n3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/omain_table_pr3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp" />
-            </TableRow>
-
-        </TableLayout>
 
         <TextView
             android:id="@+id/omain_orderT"
@@ -292,17 +136,18 @@
 
         <Button
             android:id="@+id/omain_orderplus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="더보기 >>"
-            android:textColor="#000000"
-            app:backgroundTint="#00FFFFFF"
+            android:layout_width="250dp"
+            android:layout_height="120dp"
+            android:backgroundTint="@color/main_purple"
+            android:text="주문 현황 보러가기"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.822"
+            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.751" />
+            app:layout_constraintVertical_bias="0.655" />
 
         <TextView
             android:id="@+id/omain_ping"
@@ -379,8 +224,8 @@
 
         <Button
             android:id="@+id/itemrequestBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="120dp"
             android:backgroundTint="@color/main_purple"
             android:text="요청 보러가기"
             android:textSize="20sp"
@@ -389,7 +234,46 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/omain_requestT"
-            app:layout_constraintVertical_bias="0.39" />
+            app:layout_constraintVertical_bias="0.195" />
+
+        <TextView
+            android:id="@+id/omain_requestT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="요청 물품"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.765" />
+
+        <ImageView
+            android:id="@+id/omain_gb2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.143"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.766"
+            app:srcCompat="@drawable/graybar" />
+
+        <ImageView
+            android:id="@+id/omain_gb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.865"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.766"
+            app:srcCompat="@drawable/graybar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

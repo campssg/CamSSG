@@ -34,9 +34,6 @@
         android:id="@+id/user_mypage3"
         android:title=" > 내 정보 수정"/>
     <item
-        android:id="@+id/user_mypage4"
-        android:title=" > 회원 탈퇴"/>
-    <item
         android:id="@+id/user_mypage5"
         android:title=" > 로그아웃"/>
 </menu>
