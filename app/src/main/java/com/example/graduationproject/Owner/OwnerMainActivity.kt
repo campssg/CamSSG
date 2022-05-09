@@ -123,6 +123,10 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             startActivity(intent)
         }
 
+        binding.omainUserimg.setOnClickListener {
+            startActivity(Intent(this, OwnerInfoActivity::class.java))
+        }
+
         navigationView = binding.navView
         navigationView.setNavigationItemSelectedListener(this)
     }
