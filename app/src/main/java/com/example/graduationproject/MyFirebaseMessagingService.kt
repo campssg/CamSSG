@@ -21,8 +21,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-
-        // TODO: 서버에 fcm 토큰 등록
     }
 
     override fun onMessageReceived(message: RemoteMessage) {

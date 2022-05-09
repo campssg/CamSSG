@@ -123,6 +123,16 @@ class OwnerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             startActivity(intent)
         }
 
+        binding.omainOrderplus.setOnClickListener {
+            startActivity(Intent(this, OrderListActivity::class.java))
+        }
+
+        binding.itemrequestBtn.setOnClickListener {
+            val intent = Intent(this, MartListActivity::class.java)
+            intent.putExtra("menu", 3)
+            startActivity(intent)
+        }
+
         binding.omainUserimg.setOnClickListener {
             startActivity(Intent(this, OwnerInfoActivity::class.java))
         }
