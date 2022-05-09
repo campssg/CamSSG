@@ -146,7 +146,7 @@ class UserInfoActivity : AppCompatActivity() {
 
         }
 
-        img_1selectbtn.setOnClickListener {
+        binding.img1selectbtn.setOnClickListener {
             val albumInternet =
                 Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             // 실행할 액티비티의 타입을 설정(이미지를 선택할 수 있는 것)
@@ -159,7 +159,7 @@ class UserInfoActivity : AppCompatActivity() {
         }
 
         // 임시로 롱클릭으로 설정해둠
-        img_1selectbtn.setOnLongClickListener {
+        binding.img1selectbtn.setOnLongClickListener {
             val file = File(absolutePath(photoUri!!))
             val requestBody : RequestBody = file.asRequestBody("image/jpeg".toMediaType())
             val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("file", file.name, requestBody)
