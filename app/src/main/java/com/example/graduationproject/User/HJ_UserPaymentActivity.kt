@@ -1,70 +1,75 @@
-//package com.example.graduationproject.User
-//
-//import android.app.Application
-//import androidx.appcompat.app.AppCompatActivity
-//import android.os.Bundle
-//import com.example.graduationproject.databinding.ActivityHjUserPaymentBinding
-//import com.iamport.sdk.data.sdk.IamPortRequest
-//import com.iamport.sdk.data.sdk.PayMethod
-//import com.iamport.sdk.domain.core.Iamport
-//
-//
-////hj 결제 페이지
-//class HJ_UserPaymentActivity : AppCompatActivity() {
-//    private lateinit var binding : ActivityHjUserPaymentBinding
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        binding = ActivityHjUserPaymentBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-//        Iamport.init(this)
-//
-//
-//    }
-//
-//
-//
-//
-//}
-//
-//private fun Iamport.create(app: HJ_UserPaymentActivity) {
-//    TODO("Not yet implemented")
-//}
-//
-//
-//class BaseApplication : Application() {
-//    override fun onCreate() {
-//        super.onCreate()
-//        Iamport.create(this)
-//
-//        fun onCreate() {
-//            Iamport.init(this)
-//
-//        }
-//
-//
-//// SDK 종료
-//// 명시적으로 화면을 나가는 시점, 꺼지는 시점 등에 추가
-//        Iamport.close()
-//
-//
-//// SDK 에 결제 요청할 데이터 구성
-//        val request = IamPortRequest(
-//            pg = "chai",                                 // PG 사
-//            pay_method = PayMethod.trans.name,          // 결제수단
-//            name = "여기주문이요",                         // 주문명
-//            merchant_uid = "mid_123456",               // 주문번호
-//            amount = "3000",                           // 결제금액
-//            buyer_name = "홍길동"
-//        )
-//
-//
-//// 결제요청
-//        Iamport.payment("imp123456", request,
-//            approveCallback = { /* (Optional) CHAI 최종 결제전 콜백 함수. */ },
-//            paymentResultCallback = { /* 최종 결제결과 콜백 함수. */ })
-//
-//
-//    }
-//
-//
-//}
+package com.example.graduationproject.User
+
+import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import com.example.graduationproject.databinding.ActivityHjUserPaymentBinding
+import kr.co.bootpay.Bootpay
+import kr.co.bootpay.BootpayAnalytics
+import kr.co.bootpay.enums.Method
+import kr.co.bootpay.enums.PG
+import kr.co.bootpay.enums.UX
+import kr.co.bootpay.model.BootExtra
+import kr.co.bootpay.model.BootUser
+
+class HJ_UserPaymentActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityHjUserPaymentBinding
+
+    val application_id = "애플리케이션 아이디 붙여넣기"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityHjUserPaymentBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        BootpayAnalytics.init(this, application_id)
+
+        val orderId = intent.getLongExtra("orderId", 0).toString()
+        val phoneNumber = intent.getStringExtra("phoneNumber").toString()
+
+        binding.buttonFirst.setOnClickListener {
+            goBootpayRequest(orderId, phoneNumber)
+        }
+
+    }
+
+    fun goBootpayRequest(orderId:String, phoneNumber:String) {
+        val bootUser = BootUser().setPhone(phoneNumber)
+        val bootExtra = BootExtra().setQuotas(intArrayOf(0, 2, 3))
+
+        val stuck = 1 //재고 있음
+
+        Bootpay.init(this)
+            .setApplicationId(application_id) // 해당 프로젝트(안드로이드)의 application id 값
+            .setContext(this)
+            .setBootUser(bootUser)
+            .setBootExtra(bootExtra)
+            .setUX(UX.PG_DIALOG)
+            .setPG(PG.KCP)
+            .setMethod(Method.KAKAO)
+            .setName("캠쓱 픽업 상품") // 결제할 상품명
+            .setOrderId(orderId) // 결제 고유번호
+            .setPrice(100) // 결제할 금액
+            .onConfirm { message ->
+                if (0 < stuck) Bootpay.confirm(message); // 재고 있음
+                else Bootpay.removePaymentWindow(); // 재고 없음 -> 결제창 중간에 캔슬
+                Log.d("confirm", message);
+            }
+            .onDone { message ->
+                Log.d("done", message)
+            }
+            .onReady { message ->
+                Log.d("ready", message)
+            }
+            .onCancel { message ->
+                Log.d("cancel", message)
+            }
+            .onError{ message ->
+                Log.d("error", message)
+            }
+            .onClose { message ->
+                Log.d("close", "close")
+            }
+            .request();
+    }
+}

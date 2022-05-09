@@ -216,8 +216,10 @@ class PickupTimeActivity : AppCompatActivity() {
                             val result = response.body()
                             print(result)
                             Toast.makeText(this@PickupTimeActivity, "주문서 생성을 완료하였습니다.", Toast.LENGTH_SHORT).show()
-                            var outintent = Intent(applicationContext, UserMainActivity::class.java)
-                            setResult(Activity.RESULT_OK, outintent)
+                            var outintent = Intent(this@PickupTimeActivity, HJ_UserPaymentActivity::class.java)
+                            outintent.putExtra("orderId", result?.orderId)
+                            outintent.putExtra("phoneNumber", result?.order_phoneNumber)
+                            startActivity(outintent)
                         } else {
                             Log.d("주문서 생성", "실패")
                         }
