@@ -3,6 +3,7 @@ package com.example.graduationproject.User
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.graduationproject.Api.Response.ResultResponse
 import com.example.graduationproject.databinding.ActivityHjUserPaymentBinding
 import kr.co.bootpay.Bootpay
 import kr.co.bootpay.BootpayAnalytics
@@ -11,6 +12,12 @@ import kr.co.bootpay.enums.PG
 import kr.co.bootpay.enums.UX
 import kr.co.bootpay.model.BootExtra
 import kr.co.bootpay.model.BootUser
+import okhttp3.OkHttpClient
+import retrofit2.*
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.PUT
+import retrofit2.http.Path
+import java.util.concurrent.TimeUnit
 
 class HJ_UserPaymentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHjUserPaymentBinding
@@ -69,7 +76,55 @@ class HJ_UserPaymentActivity : AppCompatActivity() {
             }
             .onClose { message ->
                 Log.d("close", "close")
+                change_state(orderId.toLong())
             }
             .request();
     }
+
+    private fun change_state(orderId: Long) {
+
+        // 로그인 후 저장해둔 JWT 토큰 가져오기
+        val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
+        val jwt = sharedPreferences.getString("jwt", "")
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(AddHeaderJWT(jwt.toString())) // JWT header 달아주는 interceptor 추가
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS).build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://13.124.13.202:8080/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client).build()
+
+        val service = retrofit.create(StatusService::class.java)
+
+        service.change_status(orderId, "결제완료")
+            .enqueue(object : Callback<ResultResponse> {
+                override fun onResponse(
+                    call: Call<ResultResponse>,
+                    response: Response<ResultResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val result = response.body()
+                        Log.e("변경 완료", "${result}")
+                    } else {
+                        Log.d("주문 상태 변경", "실패")
+                    }
+                }
+
+                override fun onFailure(call: Call<ResultResponse>, t: Throwable) {
+                    Log.e("연결실패", t.message.toString())
+                }
+            })
+    }
+}
+
+interface StatusService {
+    @PUT("order/{orderId}/{status}")
+    fun change_status(
+        @Path("orderId") orderId: Long,
+        @Path("status") status: String
+    ): Call<ResultResponse>
 }

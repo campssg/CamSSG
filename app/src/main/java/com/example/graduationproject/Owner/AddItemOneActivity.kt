@@ -174,7 +174,7 @@ class AddItemOneActivity: AppCompatActivity() {
                 })
         }
 
-        itemimg_select.setOnClickListener {
+        binding.itemimgSelect.setOnClickListener {
             val albumInternet =
                 Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             // 실행할 액티비티의 타입을 설정(이미지를 선택할 수 있는 것)

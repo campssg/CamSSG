@@ -121,9 +121,13 @@ class UserCartActivity : AppCompatActivity() {
 
         // 주문하기 버튼
         binding.orderCartlistBtn.setOnClickListener() {
-            val intent = Intent(this, PickupTimeActivity::class.java)
-            intent.putExtra("martId", martId)
-            startActivity(intent)
+            if (totalprice.equals(0)) {
+                Toast.makeText(this, "장바구니가 비어있습니다.", Toast.LENGTH_SHORT).show()
+            } else {
+                val intent = Intent(this, PickupTimeActivity::class.java)
+                intent.putExtra("martId", martId)
+                startActivity(intent)
+            }
         }
 
         // 사용자 장바구니 API 호출

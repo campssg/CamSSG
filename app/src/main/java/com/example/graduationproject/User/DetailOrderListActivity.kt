@@ -105,6 +105,13 @@ class DetailOrderListActivity : AppCompatActivity() {
 
         val service = retrofit.create(DetailOrderList::class.java)
 
+        binding.MoveToPay.setOnClickListener {
+            val outintent = Intent(this, HJ_UserPaymentActivity::class.java)
+            outintent.putExtra("orderId", orderId)
+            outintent.putExtra("phoneNumber", "010-1234-1234")
+            startActivity(outintent)
+        }
+
         //주문 상세 내역 조회
 
         service.ShowDetailOrderList(orderId)

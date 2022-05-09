@@ -3,6 +3,7 @@ package com.example.graduationproject.Owner
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -21,15 +22,18 @@ import com.example.graduationproject.databinding.ActivitySetMartBinding
 import com.example.graduationproject.Owner.AddressActivity.Companion.ADDRESS_REQUEST_CODE
 import com.example.graduationproject.User.AddHeaderJWT
 import kotlinx.android.synthetic.main.activity_set_mart.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 class SetMartActivity : AppCompatActivity() {
@@ -151,6 +155,11 @@ class SetMartActivity : AppCompatActivity() {
 
         //등록하기 누르면 메인화면으로
         binding.martInfoSubmit.setOnClickListener {
+            // 이미지 파일 생성
+            val file = File(absolutePath(photoUri!!))
+            val requestBody : RequestBody = file.asRequestBody("image/jpeg".toMediaType())
+            val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("img", file.name, requestBody)
+
             if (canNextStep) {
                 var martName = binding.martNameEdit.text.toString()
                 var startDt = binding.martOpendtEdit.text.toString()
@@ -162,10 +171,8 @@ class SetMartActivity : AppCompatActivity() {
 
                 val service = retrofit.create(AddMart::class.java)
 
-                val data = MartAddRequest(martName, martNum, lon.toString(), lat.toString(), startDt, martAddress.toString()
-                    , openTime, closeTime, requestYn.toString())
-
-                service.addMart(data)
+                service.addMart(martName, martNum, lon.toString(), lat.toString(), startDt, martAddress.toString()
+                    , openTime, closeTime, requestYn.toString(), uploadImg)
                     .enqueue(object : Callback<AddMartResponse> {
                         override fun onResponse(call: Call<AddMartResponse>, response: Response<AddMartResponse>) {
                             if (response.isSuccessful) {
@@ -194,9 +201,20 @@ class SetMartActivity : AppCompatActivity() {
     }
 
     interface AddMart {
+        @Multipart
         @POST("mart")
-        @Headers("content-type: application/json", "accept: application/json")
-        fun addMart(@Body request: MartAddRequest): Call<AddMartResponse>
+        fun addMart(
+            @Query("martName") martName: String,
+            @Query("martNumber") martNumber: String,
+            @Query("longitude") longitude: String,
+            @Query("latitude") latitude: String,
+            @Query("startDt") startDt: String,
+            @Query("martAddress") martAddress: String,
+            @Query("openTime") openTime: String,
+            @Query("closeTime") closeTime: String,
+            @Query("requestYn") requestYn: String,
+            @Part img: MultipartBody.Part?
+        ): Call<AddMartResponse>
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -218,8 +236,17 @@ class SetMartActivity : AppCompatActivity() {
             //사진 업로드
             if (photoUri != null) {
                 Glide.with(this).load(photoUri).into(binding.martImg)
-
+                (Toast.makeText(this, photoUri.toString(), Toast.LENGTH_SHORT)).show()
             }
         }
+    }
+
+    private fun absolutePath(uri: Uri) : String {
+        val proj : Array<String> = arrayOf(MediaStore.Images.Media.DATA)
+        val c: Cursor? = contentResolver.query(uri, proj, null, null, null)
+        val index = c?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        c!!.moveToFirst()
+        val result = c.getString(index!!)
+        return result
     }
 }
