@@ -188,4 +188,23 @@ class RegisterActivity_Mart : AppCompatActivity() {
         dialog.setPositiveButton("확인", dialog_listener)
         dialog.show()
     }
+
+
+    // 뒤로가기 이벤트
+    override fun onBackPressed() {
+        AlertDialog.Builder(this@RegisterActivity_Mart)
+            .setTitle("가입 취소")
+            .setMessage("회원 가입을 그만두시겠습니까?")
+            .setPositiveButton("예", object : DialogInterface.OnClickListener{
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    finish()
+                }
+            })
+            .setNegativeButton("아니오", object :DialogInterface.OnClickListener{
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                }
+            })
+            .create()
+            .show()
+    }
 }
