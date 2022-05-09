@@ -15,7 +15,7 @@ import kr.co.bootpay.model.BootUser
 class HJ_UserPaymentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHjUserPaymentBinding
 
-    val application_id = "애플리케이션 아이디 붙여넣기"
+    val application_id = "6277defe270180001ef6a3fb"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
