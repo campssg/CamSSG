@@ -27,6 +27,7 @@ class SelectAddOneOrManyActivity : AppCompatActivity () {
             val intent = Intent(this,ChecklistCategoryActivity::class.java)
             intent.putExtra("martId",martId)
             startActivity(intent)
+            finish()
         }
 
         // 하나만 등록하기
@@ -34,6 +35,8 @@ class SelectAddOneOrManyActivity : AppCompatActivity () {
             val intent = Intent(this, AddItemOneActivity::class.java)
             intent.putExtra("martId", martId)
             startActivity(intent)
+            finish()
+
         }
     }
 
