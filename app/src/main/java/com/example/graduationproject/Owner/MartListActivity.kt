@@ -114,6 +114,7 @@ class MartListActivity : AppCompatActivity() {
                     intent.putExtra("openTime", listItems[position].openTime)
                     intent.putExtra("closeTime", listItems[position].closeTime)
                     intent.putExtra("requestYn", listItems[position].requestYn)
+                    intent.putExtra("martImg", listItems[position].martImg)
                     startActivity(intent)
                 } else if (menu == 5) {
                     val intent = Intent(this@MartListActivity, OrderListActivity::class.java)

@@ -9,5 +9,6 @@ data class MartListResponse(
     val latitude: Double,
     val longitude: Double,
     val requestYn: Long,
-    val distance : Double
+    val distance : Double,
+    val martImg: String
 )

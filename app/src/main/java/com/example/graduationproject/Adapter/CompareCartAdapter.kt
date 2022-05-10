@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.graduationproject.CartComparisonItem
 import com.example.graduationproject.R
 
@@ -23,7 +24,12 @@ class CompareCartAdapter(val itemList: ArrayList<CartComparisonItem>): RecyclerV
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
         }
-        // 반환값에 이미지 url 추가 후 Glide.with(holder.itemView.context).load(itemList[position].productImgUrl).into(holder.image)
+        if (!itemList[position].martImg.isNullOrEmpty()) {
+            Glide.with(holder.itemView.context).load(itemList[position].martImg).into(holder.image)
+        } else {
+            Glide.with(holder.itemView.context).load(R.drawable.exampleofmart).into(holder.image)
+        }
+
         holder.martname.text = itemList[position].martName
         if (itemList[position].notExistCnt==0){
             holder.notexist.text = "모든 장바구니 재고 있음"

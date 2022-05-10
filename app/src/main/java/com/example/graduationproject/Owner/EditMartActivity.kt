@@ -54,6 +54,7 @@ class EditMartActivity :AppCompatActivity(){
         var openTime = intent.getStringExtra("openTime")
         var closeTime = intent.getStringExtra("closeTime")
         var requestYn = intent.getLongExtra("requestYn", 0).toInt()
+        val martImg = intent.getStringExtra("martImg")
 
         binding.martNameEdit.setText(martName)
         binding.martAddressEdit.setText(martAddress)
@@ -64,6 +65,11 @@ class EditMartActivity :AppCompatActivity(){
             binding.martRequestYes.toggle()
         } else {
             binding.martRequestNo.toggle()
+        }
+        if (!martImg.isNullOrEmpty()) {
+            Glide.with(this).load(martImg).into(binding.martImg)
+        } else {
+            Glide.with(this).load(R.drawable.itemimg).into(binding.martImg)
         }
 
         // 로그인 후 저장해둔 JWT 토큰 가져오기

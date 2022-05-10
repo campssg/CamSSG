@@ -17,20 +17,19 @@ import com.example.graduationproject.Api.Request.MartAddRequest
 import com.example.graduationproject.Api.Request.MartAuthRequest
 import com.example.graduationproject.Api.Response.AddMartResponse
 import com.example.graduationproject.Api.Response.MartAuthResponse
+import com.example.graduationproject.Api.Response.UserImgUpdatedResponse
 import com.example.graduationproject.R
 import com.example.graduationproject.databinding.ActivitySetMartBinding
 import com.example.graduationproject.Owner.AddressActivity.Companion.ADDRESS_REQUEST_CODE
 import com.example.graduationproject.User.AddHeaderJWT
+import com.example.graduationproject.User.UserInfoActivity
 import kotlinx.android.synthetic.main.activity_set_mart.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
+import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import java.io.File
@@ -99,6 +98,8 @@ class SetMartActivity : AppCompatActivity() {
             .client(client).build()
 
         val service = retrofit.create(AuthMart::class.java)
+        val service2 = retrofit.create(AddMart::class.java)
+
 
         binding.martimgSelect.setOnClickListener {
             val albumInternet =
@@ -155,10 +156,6 @@ class SetMartActivity : AppCompatActivity() {
 
         //등록하기 누르면 메인화면으로
         binding.martInfoSubmit.setOnClickListener {
-            // 이미지 파일 생성
-            val file = File(absolutePath(photoUri!!))
-            val requestBody : RequestBody = file.asRequestBody("image/jpeg".toMediaType())
-            val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("img", file.name, requestBody)
 
             if (canNextStep) {
                 var martName = binding.martNameEdit.text.toString()
@@ -169,9 +166,12 @@ class SetMartActivity : AppCompatActivity() {
 
                 martAddress += " " + binding.martAddressEditDetail.text.toString()
 
-                val service = retrofit.create(AddMart::class.java)
+                // 이미지 파일 생성
+                val file = File(absolutePath(photoUri!!))
+                val requestBody : RequestBody = file.asRequestBody("image/png".toMediaType())
+                val uploadImg : MultipartBody.Part = MultipartBody.Part.createFormData("img", file.name, requestBody)
 
-                service.addMart(martName, martNum, lon.toString(), lat.toString(), startDt, martAddress.toString()
+                service2.addMart(martName, martNum, lon.toString(), lat.toString(), startDt, martAddress.toString()
                     , openTime, closeTime, requestYn.toString(), uploadImg)
                     .enqueue(object : Callback<AddMartResponse> {
                         override fun onResponse(call: Call<AddMartResponse>, response: Response<AddMartResponse>) {
@@ -190,6 +190,31 @@ class SetMartActivity : AppCompatActivity() {
                     })
             } else {
                 Toast.makeText(this@SetMartActivity, "사업자 인증 후 진행해주세요.", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        @Suppress("DEPRECATION")
+        super.onActivityResult(requestCode, resultCode, data)
+
+        val addressData = data?.extras?.getString("address")
+        if (addressData != null) {
+            lat = addressData.split("|")[0]
+            lon = addressData.split("|")[1]
+            martAddress = addressData.split("|")[2]
+            address.setText(martAddress)
+        }
+
+        if (resultCode == AppCompatActivity.RESULT_OK) {
+            // 선택한 이미지의 경로 데이터를 관리하는 Uri 객체를 추출한다.
+            photoUri = data?.data
+
+            //사진 업로드
+            if (photoUri != null) {
+                Glide.with(this).load(photoUri).into(binding.martImg)
+                (Toast.makeText(this, photoUri.toString(), Toast.LENGTH_SHORT)).show()
             }
         }
     }
@@ -215,30 +240,6 @@ class SetMartActivity : AppCompatActivity() {
             @Query("requestYn") requestYn: String,
             @Part img: MultipartBody.Part?
         ): Call<AddMartResponse>
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        @Suppress("DEPRECATION")
-        super.onActivityResult(requestCode, resultCode, data)
-
-        val addressData = data?.extras?.getString("address")
-        if (addressData != null) {
-            lat = addressData.split("|")[0]
-            lon = addressData.split("|")[1]
-            martAddress = addressData.split("|")[2]
-            address.setText(martAddress)
-        }
-
-        if (resultCode == AppCompatActivity.RESULT_OK) {
-            // 선택한 이미지의 경로 데이터를 관리하는 Uri 객체를 추출한다.
-            photoUri = data?.data
-
-            //사진 업로드
-            if (photoUri != null) {
-                Glide.with(this).load(photoUri).into(binding.martImg)
-                (Toast.makeText(this, photoUri.toString(), Toast.LENGTH_SHORT)).show()
-            }
-        }
     }
 
     private fun absolutePath(uri: Uri) : String {

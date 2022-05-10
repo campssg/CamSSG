@@ -33,7 +33,7 @@ data class CartComparisonItem(
     val closeTime: String,
     val martAddress: String,
     val martId: Long,
-    val distance: Double
+    val distance: Double,
 )
 
 @Keep
