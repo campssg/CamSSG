@@ -88,6 +88,7 @@ class MartSearchActivity : AppCompatActivity(), OnMapReadyCallback {
         actionBar = supportActionBar
         actionBar?.hide()
 
+
         // 리사이클러뷰 클릭 이벤트 - 데이터 가져오기
         martListAdapter.setItemClickListener(object: MartListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
@@ -99,6 +100,7 @@ class MartSearchActivity : AppCompatActivity(), OnMapReadyCallback {
                             val intent = Intent(this@MartSearchActivity, SearchMartItemActivity::class.java)
                             intent.putExtra("martId", listItems[position].martId)
                             startActivity(intent)
+                            finish()
                         }
                     })
                     .setNegativeButton("아니오", object : DialogInterface.OnClickListener {

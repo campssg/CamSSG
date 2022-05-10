@@ -69,6 +69,7 @@ class OrderlistActivity : AppCompatActivity() {
                 val intent = Intent(this@OrderlistActivity, DetailOrderListActivity::class.java)
                 intent.putExtra("orderId",listItems[position].orderId)
                 startActivity(intent)
+                finish()
             }
         })
 
