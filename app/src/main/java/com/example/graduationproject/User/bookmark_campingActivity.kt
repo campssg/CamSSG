@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Adapter.CampWishListAdapter
 import com.example.graduationproject.Api.Response.CampWishResponse
@@ -32,6 +33,12 @@ class bookmark_campingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = Activity1bookmarkCampingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //액션바 숨기기
+        var actionBar: ActionBar?
+        actionBar = supportActionBar
+        actionBar?.hide()
+
 
         // 리사이클러 뷰 레이아웃 매니저 설정, 어댑터 추가
         binding.rvList.layoutManager =

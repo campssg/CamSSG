@@ -75,6 +75,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
             intent.putExtra("categoryId","2")
             intent.putExtra("martId", martId)
             startActivity(intent)
+            finish()
 
         }
 
@@ -85,6 +86,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
             intent.putExtra("categoryId","1")
             intent.putExtra("martId", martId)
             startActivity(intent)
+            finish()
 
 
         }
@@ -98,6 +100,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
             intent.putExtra("categoryId","3")
             intent.putExtra("martId", martId)
             startActivity(intent)
+            finish()
 
         }
 
@@ -109,6 +112,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
             intent.putExtra("categoryId","4")
             intent.putExtra("martId", martId)
             startActivity(intent)
+            finish()
 
         }
 
@@ -119,6 +123,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
             intent.putExtra("categoryId","5")
             intent.putExtra("martId", martId)
             startActivity(intent)
+            finish()
 
         }
 
@@ -129,6 +134,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
             intent.putExtra("categoryId","6")
             intent.putExtra("martId", martId)
             startActivity(intent)
+            finish()
 
         }
 
@@ -140,6 +146,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
             intent.putExtra("categoryId","7")
             intent.putExtra("martId", martId)
             startActivity(intent)
+            finish()
 
         }
 
@@ -150,6 +157,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
             intent.putExtra("categoryId","8")
             intent.putExtra("martId", martId)
             startActivity(intent)
+            finish()
 
         }
 
@@ -162,6 +170,7 @@ class ChecklistCategoryActivity: AppCompatActivity() {
             intent.putExtra("categoryId","9")
             intent.putExtra("martId", martId)
             startActivity(intent)
+            finish()
 
         }
 

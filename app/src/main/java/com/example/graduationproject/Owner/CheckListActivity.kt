@@ -126,6 +126,7 @@ class CheckListActivity:AppCompatActivity() {
                         call: Call<ResultResponse>,
                         response: Response<ResultResponse>
                     ) {
+                        println(response)
                         if (response.isSuccessful) {
                             val result = response.body()
                             Log.e("등록 완료", "${result}")
@@ -135,7 +136,9 @@ class CheckListActivity:AppCompatActivity() {
                                 .setMessage("물품이 마트에 성공적으로 등록되었습니다.")
                                 .setPositiveButton("확인", object : DialogInterface.OnClickListener {
                                     override fun onClick(p0: DialogInterface?, p1: Int) {
-                                        startActivity(Intent(this@CheckListActivity, ChecklistCategoryActivity::class.java))
+                                        val intent = Intent(this@CheckListActivity, ChecklistCategoryActivity::class.java)
+                                        intent.putExtra("martId", martId)
+                                        startActivity(intent)
                                         finish()
                                     }
                                 })
