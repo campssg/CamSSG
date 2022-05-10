@@ -127,6 +127,7 @@ class UserCartActivity : AppCompatActivity() {
                 val intent = Intent(this, PickupTimeActivity::class.java)
                 intent.putExtra("martId", martId)
                 startActivity(intent)
+                finish()
             }
         }
 

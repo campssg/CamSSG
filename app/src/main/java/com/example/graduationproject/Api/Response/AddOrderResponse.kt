@@ -8,6 +8,5 @@ data class AddOrderResponse(
     val userName: String,
     val order_phoneNumber: String,
     val orderState: String,
-    val requestYn: String,
     val totalPrice: String
 )

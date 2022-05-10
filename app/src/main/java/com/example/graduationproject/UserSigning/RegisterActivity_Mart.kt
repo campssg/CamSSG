@@ -128,7 +128,7 @@ class RegisterActivity_Mart : AppCompatActivity() {
 
 
                 //사업자번호 입력 페이지로 이동
-                val intent = Intent(this, RegisterActivity_Mart2::class.java)
+                val intent = Intent(this, LoginActivity_Mart::class.java)
                 startActivity(intent)
 
             } else {

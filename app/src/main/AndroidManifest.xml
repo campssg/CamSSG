@@ -36,7 +36,13 @@
         <activity android:name=".UserSigning.LoginActivity_User" />
         <activity android:name=".User.UserMainActivity" />
         <activity android:name=".UserSigning.SelectWhatToRegisterActivity" />
-        <activity android:name=".UserSigning.SelectWhatToLoginActivity" />
+        <activity android:name=".UserSigning.SelectWhatToLoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".User.ChecklistCategoryActivity" />
         <activity android:name=".Owner.OrderListActivity" />
         <activity android:name=".User.UserCategoryItemList" />
@@ -72,11 +78,6 @@
         <activity android:name=".User.CampSearchActivity" />
         <activity android:name=".User.CheckRequestActivity" />
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"

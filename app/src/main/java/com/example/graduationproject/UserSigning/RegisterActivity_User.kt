@@ -127,7 +127,7 @@ class RegisterActivity_User : AppCompatActivity() {
                 editor.apply()
 
 
-                val intent = Intent(this, UserMainActivity::class.java)
+                val intent = Intent(this, LoginActivity_User::class.java)
                 startActivity(intent)
 
             } else {

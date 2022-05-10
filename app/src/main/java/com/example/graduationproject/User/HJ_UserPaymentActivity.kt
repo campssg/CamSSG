@@ -31,13 +31,26 @@ class HJ_UserPaymentActivity : AppCompatActivity() {
 
         BootpayAnalytics.init(this, application_id)
 
-        val orderId = intent.getLongExtra("orderId", 0).toString()
+        val orderId = intent.getStringExtra("orderId")
         val phoneNumber = intent.getStringExtra("phoneNumber").toString()
+        val name = intent.getStringExtra("name")
+        val pickup_day = intent.getStringExtra("pickup_day")
+        val pickup_time = intent.getStringExtra("pickup_time")
+        val martName = intent.getStringExtra("martName")
+        val total_price = intent.getStringExtra("total_price")
+
+        binding.orderPhoneNumber.text = phoneNumber
+        binding.orderName.text = name
+        binding.pickupDay.text = pickup_day
+        binding.pickupTime.text = pickup_time
+        binding.martName.text = martName
+        binding.totalPrice.text = total_price
 
         binding.buttonFirst.setOnClickListener {
-            goBootpayRequest(orderId, phoneNumber)
+            if (orderId != null) {
+                goBootpayRequest(orderId, phoneNumber)
+            }
         }
-
     }
 
     fun goBootpayRequest(orderId:String, phoneNumber:String) {
@@ -106,9 +119,11 @@ class HJ_UserPaymentActivity : AppCompatActivity() {
                     call: Call<ResultResponse>,
                     response: Response<ResultResponse>
                 ) {
+                    println(response)
                     if (response.isSuccessful) {
                         val result = response.body()
                         Log.e("변경 완료", "${result}")
+                        finish()
                     } else {
                         Log.d("주문 상태 변경", "실패")
                     }
