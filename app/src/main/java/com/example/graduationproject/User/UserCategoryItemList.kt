@@ -98,16 +98,17 @@ class UserCategoryItemList : AppCompatActivity() {
         val service = retrofit.create(CompareCartService::class.java)
 
         // 나중에 캠핑장 즐겨찾기에서 캠핑장 기준 가격비교 추가
-        val latitude = intent.getDoubleExtra("latitude", 0.0)
-        val longitude = intent.getDoubleExtra("longitude", 0.0)
+        val latitude = intent.getStringExtra("latitude")
+        val longitude = intent.getStringExtra("longitude")
 
-        if (latitude != 0.0 && longitude != 0.0) {
+        if (!latitude.isNullOrEmpty() && !longitude.isNullOrEmpty()) {
             service.compare_result(latitude, longitude)
                 .enqueue(object : Callback<CompareCartResponse> {
                     override fun onResponse(
                         call: Call<CompareCartResponse>,
                         response: retrofit2.Response<CompareCartResponse>
                     ) {
+                        println(response)
                         if (response.isSuccessful) {
                             val result = response.body()
                             Log.e("조회 완료", "${result}")
@@ -152,7 +153,7 @@ class UserCategoryItemList : AppCompatActivity() {
 
                 val position = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
 
-                service.compare_result(position.latitude, position.longitude)
+                service.compare_result(position.latitude.toString(), position.longitude.toString())
                     .enqueue(object : Callback<CompareCartResponse> {
                         override fun onResponse(
                             call: Call<CompareCartResponse>,
@@ -201,8 +202,8 @@ class UserCategoryItemList : AppCompatActivity() {
     interface CompareCartService {
         @GET("cart/{latitude}/{longitude}")
         fun compare_result(
-            @Path("latitude") latitude: Double,
-            @Path("longitude") longitude: Double
+            @Path("latitude") latitude: String,
+            @Path("longitude") longitude: String
         ): Call<CompareCartResponse>
     }
 }

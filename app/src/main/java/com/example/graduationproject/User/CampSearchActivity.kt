@@ -140,7 +140,7 @@ class CampSearchActivity : AppCompatActivity(), OnMapReadyCallback {
                             if (!listItems[position].detailAddress.isNullOrEmpty()) {
                                 address = listItems[position].address + " " + listItems[position].detailAddress
                             }
-                            val data = CampWishRequest(address, listItems[position].campName, listItems[position].tel, listItems[position].mapY.toDouble(), listItems[position].mapX.toDouble())
+                            val data = CampWishRequest(address, listItems[position].campName, listItems[position].tel, listItems[position].mapY, listItems[position].mapX)
                             service2.add_wish(data)
                                 .enqueue(object : Callback<ResultResponse> {
                                     override fun onResponse(

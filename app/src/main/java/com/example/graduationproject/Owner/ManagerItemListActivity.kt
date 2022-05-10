@@ -184,8 +184,10 @@ class ManagerItemListActivity : AppCompatActivity() {
                                                         Toast.makeText(this@ManagerItemListActivity, "재고 추가 완료", Toast.LENGTH_SHORT).show()
 
                                                         // 리사이클러뷰 갱신
-                                                        ManagerItemListAdapter.notifyDataSetChanged()
-
+                                                        val intent = Intent(this@ManagerItemListActivity, ManagerItemListActivity::class.java)
+                                                        intent.putExtra("martId", martId)
+                                                        startActivity(intent)
+                                                        finish()
                                                     } else {
                                                         Log.d("재고 추가", "${Count}실패")
                                                     }
