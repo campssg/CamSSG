@@ -24,6 +24,8 @@ import retrofit2.http.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import android.content.Intent
+import android.view.View
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.graduationproject.Api.Response.AddOrderResponse
@@ -49,6 +51,7 @@ class PickupTimeActivity : AppCompatActivity() {
         val martadr = binding.martAddress
 
         var reservedDate = ""
+        var reservedTime = ""
 
         // 로그인 후 저장해둔 JWT 토큰 가져오기
         val sharedPreferences = getSharedPreferences("token", MODE_PRIVATE)
@@ -98,10 +101,34 @@ class PickupTimeActivity : AppCompatActivity() {
         val spinner1 = binding.timePick
 
         spinner1.adapter = ArrayAdapter.createFromResource(this, com.example.graduationproject.R.array.pu_time_array, android.R.layout.simple_spinner_item)
+        spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                reservedTime = spinner1.selectedItem.toString()
+            }
 
-        val text = spinner1.selectedItem.toString()
-
-        sharedPreferences.edit().putString("putime", text).apply()
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                when (position) {
+                    0 -> {
+                        reservedTime = spinner1.selectedItem.toString()
+                    }
+                    1 -> {
+                        reservedTime = spinner1.selectedItem.toString()
+                    }
+                    2 -> {
+                        reservedTime = spinner1.selectedItem.toString()
+                    }
+                    3 -> {
+                        reservedTime = spinner1.selectedItem.toString()
+                    }
+                    4 -> {
+                        reservedTime = spinner1.selectedItem.toString()
+                    }
+                    5 -> {
+                        reservedTime = spinner1.selectedItem.toString()
+                    }
+                }
+            }
+        }
 
         settingDate.setOnClickListener {
             val today = GregorianCalendar()
@@ -149,7 +176,7 @@ class PickupTimeActivity : AppCompatActivity() {
                 .client(client).build()
 
             val service = retrofit.create(AddOrder::class.java)
-            var data = AddOrderRequest(reservedDate, text)
+            var data = AddOrderRequest(reservedDate, reservedTime)
 
             AlertDialog.Builder(this@PickupTimeActivity)
                 .setTitle("주문서 등록")
@@ -203,7 +230,7 @@ class PickupTimeActivity : AppCompatActivity() {
                 .client(client).build()
 
             val service = retrofit.create(AddOrder::class.java)
-            var data = AddOrderRequest(reservedDate, text)
+            var data = AddOrderRequest(reservedDate, reservedTime)
 
             service.addOrder(data)
                 .enqueue(object : Callback<AddOrderResponse> {

@@ -75,8 +75,10 @@ class DetailOrderListActivity : AppCompatActivity() {
         val orderState = binding.tvOrderstate
         val TotalPrice = binding.tvTotalprice
         val OrderId = binding.tvOrdernumber
+        var order_number: String = ""
         val PickUpDate = binding.tvPickupdate
         val PickUpTime = binding.tvPickuptime
+        var phoneNumber : String = ""
 
         binding.rvOrderItemList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -107,8 +109,13 @@ class DetailOrderListActivity : AppCompatActivity() {
 
         binding.MoveToPay.setOnClickListener {
             val outintent = Intent(this, HJ_UserPaymentActivity::class.java)
-            outintent.putExtra("orderId", orderId)
-            outintent.putExtra("phoneNumber", "010-1234-1234")
+            outintent.putExtra("orderId", order_number)
+            outintent.putExtra("phoneNumber", phoneNumber)
+            outintent.putExtra("name", UserName.text)
+            outintent.putExtra("pickup_day", PickUpDate.text)
+            outintent.putExtra("pickup_time", PickUpTime.text)
+            outintent.putExtra("martName", martName.text)
+            outintent.putExtra("total_price", TotalPrice.text)
             startActivity(outintent)
         }
 
@@ -134,6 +141,8 @@ class DetailOrderListActivity : AppCompatActivity() {
                         PickUpTime.setText("픽업시간 : " +result!!.pickup_time)
                         OrderId.setText("주문번호 : " +result!!.orderId.toString())
 
+                        phoneNumber = result.order_phoneNumber
+                        order_number = result.orderId.toString()
                         AddItemToList(result)
 
                         if(result.orderState=="결제대기중"){
